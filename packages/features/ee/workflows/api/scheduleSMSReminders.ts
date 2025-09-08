@@ -239,7 +239,7 @@ export async function handler(req: NextRequest) {
           retryCount: reminder.retryCount + 1,
         },
       });
-      console.log(`Error scheduling SMS with error ${error}`);
+      logger.log(`Error scheduling SMS with error ${error}`);
     }
   }
 

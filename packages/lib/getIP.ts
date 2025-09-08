@@ -29,7 +29,7 @@ export function isIpInBanlist(request: Request | NextApiRequest) {
   const rawBanListJson = process.env.IP_BANLIST || "[]";
   const banList = banlistSchema.parse(JSON.parse(rawBanListJson));
   if (banList.includes(IP)) {
-    console.log(`Found banned IP: ${IP} in IP_BANLIST`);
+    logger.log(`Found banned IP: ${IP} in IP_BANLIST`);
     return true;
   }
   return false;
@@ -39,7 +39,7 @@ export function isIpInBanListString(identifer: string) {
   const rawBanListJson = process.env.IP_BANLIST || "[]";
   const banList = banlistSchema.parse(JSON.parse(rawBanListJson));
   if (banList.includes(identifer)) {
-    console.log(`Found banned IP: ${identifer} in IP_BANLIST`);
+    logger.log(`Found banned IP: ${identifer} in IP_BANLIST`);
     return true;
   }
   return false;

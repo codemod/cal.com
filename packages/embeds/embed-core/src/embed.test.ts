@@ -78,7 +78,7 @@ function compareUrlSearchParams(actual: URLSearchParams, expected: URLSearchPara
   const expectedObj = Object.fromEntries(expected.entries());
 
   if (JSON.stringify(actualObj) !== JSON.stringify(expectedObj)) {
-    console.log({
+    logger.log({
       actual: actualObj,
       expected: expectedObj,
     });

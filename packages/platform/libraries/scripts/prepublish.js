@@ -45,7 +45,7 @@ async function main() {
     // Get and increment version
     const currentVersion = await getCurrentVersion();
     const newVersion = incrementPatchVersion(currentVersion);
-    console.log(`Current version in npm: ${currentVersion}. Incremented locally to ${newVersion}`);
+    logger.log(`Current version in npm: ${currentVersion}. Incremented locally to ${newVersion}`);
 
     // Update libraries package.json version
     const librariesPath = path.join(__dirname, "..");
@@ -55,7 +55,7 @@ async function main() {
     librariesPackageJson.version = newVersion;
     fs.writeFileSync(librariesPackageJsonPath, `${JSON.stringify(librariesPackageJson, null, 2)}\n`);
 
-    console.log("Successfully incremented @calcom/platform-libraries package.json version.");
+    logger.log("Successfully incremented @calcom/platform-libraries package.json version.");
   } catch (error) {
     console.error("Error:", error);
     process.exit(1);

@@ -112,7 +112,7 @@ const createTeam = async (team: Prisma.TeamCreateInput) => {
     });
   } catch (_err) {
     if (_err instanceof Error && _err.message.indexOf("Unique constraint failed on the fields") !== -1) {
-      console.log(`Team '${team.name}' already exists, skipping.`);
+      logger.log(`Team '${team.name}' already exists, skipping.`);
       return;
     }
     throw _err;
@@ -160,9 +160,7 @@ async function createPlatformAndSetupUser({
 
   const platformUser = await setupPlatformUser(user);
 
-  console.log(
-    `👤 Upserted '${user.username}' with email "${user.email}" & password "${user.password}". Booking page 👉 ${process.env.NEXT_PUBLIC_WEBAPP_URL}/${user.username}`
-  );
+  logger.log(`👤 Upserted '${user.username}' with email "${user.email}" & password "${user.password}". Booking page 👉 ${process.env.NEXT_PUBLIC_WEBAPP_URL}/${user.username}`);
 
   const { username } = platformUser;
 
@@ -197,7 +195,7 @@ async function createPlatformAndSetupUser({
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWNtZSAiLCJwZXJtaXNzaW9ucyI6MTAyMywicmVkaXJlY3RVcmlzIjpbImh0dHA6Ly9sb2NhbGhvc3Q6NDMyMSJdLCJib29raW5nUmVkaXJlY3RVcmkiOiIiLCJib29raW5nQ2FuY2VsUmVkaXJlY3RVcmkiOiIiLCJib29raW5nUmVzY2hlZHVsZVJlZGlyZWN0VXJpIjoiIiwiYXJlRW1haWxzRW5hYmxlZCI6dHJ1ZSwiaWF0IjoxNzE5NTk1ODA4fQ.L5_jSS14fcKLCD_9_DAOgtGd6lUSZlU5CEpCPaPt41I",
       },
     });
-    console.log(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${membershipRole}'`);
+    logger.log(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${membershipRole}'`);
   }
 }
 
@@ -231,7 +229,7 @@ async function createTeamAndAddUsers(
       });
     } catch (_err) {
       if (_err instanceof Error && _err.message.indexOf("Unique constraint failed on the fields") !== -1) {
-        console.log(`Team '${team.name}' already exists, skipping.`);
+        logger.log(`Team '${team.name}' already exists, skipping.`);
         return;
       }
       throw _err;
@@ -243,9 +241,7 @@ async function createTeamAndAddUsers(
     return;
   }
 
-  console.log(
-    `🏢 Created team '${teamInput.name}' - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`
-  );
+  logger.log(`🏢 Created team '${teamInput.name}' - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`);
 
   for (const user of users) {
     const { role = MembershipRole.OWNER, id, username } = user;
@@ -258,7 +254,7 @@ async function createTeamAndAddUsers(
         accepted: true,
       },
     });
-    console.log(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${role}'`);
+    logger.log(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${role}'`);
   }
 
   return team;
@@ -292,7 +288,7 @@ async function createOrganizationAndAddMembersAndTeams({
     email: string;
   }[];
 }) {
-  console.log(`\n🏢 Creating organization "${orgData.name}"`);
+  logger.log(`\n🏢 Creating organization "${orgData.name}"`);
   const orgMembersInDb: (User & {
     inTeams: { slug: string; role: MembershipRole }[];
     orgMembership: Partial<Membership>;
@@ -356,7 +352,7 @@ async function createOrganizationAndAddMembersAndTeams({
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        console.log(`One of the organization members already exists, skipping the entire seeding`);
+        logger.log(`One of the organization members already exists, skipping the entire seeding`);
         return;
       }
     }

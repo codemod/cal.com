@@ -16,7 +16,7 @@ const missingTranslationLocales: string[] = [];
   if (locale === TEMPLATE_LANGUAGE) return;
   if (!ALL_LOCALES.includes(locale)) {
     missingTranslationLocales.push(locale);
-    console.log(`
+    logger.log(`
     ❌ ${locale} is not found in ${LOCALES_PATH}!
     If you want to create a new locale, Please create common.json under ${join(LOCALES_PATH, locale)}.
     `);
@@ -44,8 +44,8 @@ const missingTranslationLocales: string[] = [];
 });
 
 if (missingTranslationLocales.length) {
-  console.log("🌍 The following locales need to be translated: ");
-  console.log(`  ${missingTranslationLocales.join(", ")}`);
+  logger.log("🌍 The following locales need to be translated: ");
+  logger.log(`  ${missingTranslationLocales.join(", ")}`);
 } else {
-  console.log("💯 All the locales are completely translated!");
+  logger.log("💯 All the locales are completely translated!");
 }

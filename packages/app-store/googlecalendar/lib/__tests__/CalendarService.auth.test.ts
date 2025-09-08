@@ -139,7 +139,7 @@ describe("GoogleCalendarService credential handling", () => {
 
       mockSuccessfulCalendarListFetch();
       await expectNoCredentialsInDb();
-      console.log("TESTS: First instance of CalendarService");
+      logger.log("TESTS: First instance of CalendarService");
       const calendarService1 = new CalendarService({
         ...credentialWithDelegation,
       });
@@ -159,7 +159,7 @@ describe("GoogleCalendarService credential handling", () => {
         },
       });
       expect(existingCredential).toBeDefined();
-      console.log("TESTS: Second instance of CalendarService");
+      logger.log("TESTS: Second instance of CalendarService");
       createMockJWTInstance({
         authorizeError: {
           response: {

@@ -9,7 +9,7 @@ self.addEventListener("push", async (event) => {
   });
 
   if (!allClients.length) {
-    console.log("No open tabs, skipping the push notification.");
+    logger.log("No open tabs, skipping the push notification.");
     return;
   }
 
@@ -53,7 +53,7 @@ self.addEventListener("push", async (event) => {
         console.log("notificationOptions", notificationOptions);
 
         await self.registration.showNotification(title, notificationOptions);
-        console.log("Notification shown successfully");
+        logger.log("Notification shown successfully");
       } catch (error) {
         console.error("Error showing notification:", error);
       }
@@ -97,11 +97,11 @@ self.addEventListener("notificationclick", (event) => {
 });
 
 self.addEventListener('install', (event) => {
-  console.log('Service Worker installing.');
+  logger.log('Service Worker installing.');
 });
 
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker activated.');
+  logger.log('Service Worker activated.');
 
   event.waitUntil(
     (async () => {

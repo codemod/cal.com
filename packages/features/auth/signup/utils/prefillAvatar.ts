@@ -23,7 +23,7 @@ async function downloadImageDataFromUrl(url: string) {
 
     return base64Image;
   } catch (error) {
-    console.log(error);
+    logger.log(error);
     return null;
   }
 }

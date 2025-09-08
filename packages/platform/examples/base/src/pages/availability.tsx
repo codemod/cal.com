@@ -19,16 +19,16 @@ export default function Availability(props: { calUsername: string; calEmail: str
             hiddenSwitchClassname: { thumb: "bg-red-500" },
           }}
           onUpdateSuccess={() => {
-            console.log("Updated successfully");
+            logger.log("Updated successfully");
           }}
           onUpdateError={() => {
-            console.log("update error");
+            logger.log("update error");
           }}
           onDeleteError={() => {
-            console.log("delete error");
+            logger.log("delete error");
           }}
           onDeleteSuccess={() => {
-            console.log("Deleted successfully");
+            logger.log("Deleted successfully");
           }}
         />
       </div>

@@ -26,7 +26,7 @@ export class PaymentService implements IAbstractPaymentService {
 
       const uid = uuidv4();
 
-      console.log("CREATE payment");
+      logger.log("CREATE payment");
 
       const paymentData = await prisma.payment.create({
         data: {

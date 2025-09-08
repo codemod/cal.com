@@ -452,12 +452,10 @@ function assertThatCodeIsValidVanillaJsCode(code: string) {
     rules: eslintRules,
   });
   if (lintResult.length) {
-    console.log(
-      JSON.stringify({
+    logger.log(JSON.stringify({
         lintResult,
         code,
-      })
-    );
+      }));
   }
   expect(lintResult.length).toBe(0);
 }
@@ -477,12 +475,10 @@ function assertThatCodeIsValidReactCode(code: string) {
     rules: eslintRules,
   });
   if (lintResult.length) {
-    console.log(
-      JSON.stringify({
+    logger.log(JSON.stringify({
         lintResult,
         code,
-      })
-    );
+      }));
   }
   expect(lintResult.length).toBe(0);
 }

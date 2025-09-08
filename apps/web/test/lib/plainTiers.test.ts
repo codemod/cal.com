@@ -62,7 +62,7 @@ describe("Plain Integration API", () => {
   // Skip all tests if the feature is disabled
   if (!IS_PLAIN_CHAT_ENABLED) {
     it("skips tests when Plain Chat is disabled", () => {
-      console.log("Plain Chat is disabled, skipping tests");
+      logger.log("Plain Chat is disabled, skipping tests");
     });
     return;
   }

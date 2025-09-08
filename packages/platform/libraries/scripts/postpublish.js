@@ -54,7 +54,7 @@ async function main() {
         console.error("yarn install failed");
         process.exit(1);
       }
-      console.log("Successfully reset version and updated dependencies");
+      logger.log("Successfully reset version and updated dependencies");
     });
   } catch (error) {
     console.error("Error:", error);
@@ -63,7 +63,7 @@ async function main() {
 }
 
 async function waitForNewestNpmRelease(publishedVersion) {
-  console.log(`Waiting for npm registry to update with version ${publishedVersion}...`);
+  logger.log(`Waiting for npm registry to update with version ${publishedVersion}...`);
   let npmVersion;
   let attempts = 0;
   const maxAttempts = 12;
@@ -73,23 +73,17 @@ async function waitForNewestNpmRelease(publishedVersion) {
     npmVersion = await getCurrentVersion();
 
     if (publishedVersion === npmVersion) {
-      console.log(
-        `Version match confirmed (${publishedVersion}) after ${attempts} attempts. Proceeding with updates...`
-      );
+      logger.log(`Version match confirmed (${publishedVersion}) after ${attempts} attempts. Proceeding with updates...`);
       break;
     }
 
     if (attempts >= maxAttempts) {
-      console.log(
-        `Reached maximum attempts (${maxAttempts}). Latest npm version: ${npmVersion}, local version: ${publishedVersion}`
-      );
-      console.log("Proceeding with updates anyway...");
+      logger.log(`Reached maximum attempts (${maxAttempts}). Latest npm version: ${npmVersion}, local version: ${publishedVersion}`);
+      logger.log("Proceeding with updates anyway...");
       break;
     }
 
-    console.log(
-      `Attempt ${attempts}/${maxAttempts}: npm version (${npmVersion}) doesn't match local version (${publishedVersion}) yet. Retrying in 5 seconds...`
-    );
+    logger.log(`Attempt ${attempts}/${maxAttempts}: npm version (${npmVersion}) doesn't match local version (${publishedVersion}) yet. Retrying in 5 seconds...`);
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }
 

@@ -23,7 +23,7 @@ const copyAppStoreStatic = () => {
     // Copy file to destination
     const destPath = path.join(destDir, fileName);
     fs.copyFileSync(file, destPath);
-    console.log(`Copied ${file} to ${destPath}`);
+    logger.log(`Copied ${file} to ${destPath}`);
   });
 };
 

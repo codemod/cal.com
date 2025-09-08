@@ -169,7 +169,7 @@ async function removeOtpInput(page: Page) {
 async function fillOtp({ page, secret, noRetry }: { page: Page; secret: string; noRetry?: boolean }) {
   let token = authenticator.generate(secret);
   if (!noRetry && !totpAuthenticatorCheck(token, secret)) {
-    console.log("Token expired, Renerating.");
+    logger.log("Token expired, Renerating.");
     // Maybe token was just about to expire, try again just once more
     token = authenticator.generate(secret);
   }

@@ -228,11 +228,9 @@ async function ensureSelectedCalendarIsInDb({
   };
   eventTypeId: number | null;
 }) {
-  console.log(
-    `Upsert the selectedCalendar record to the DB for user ${user.id} with details ${JSON.stringify(
+  logger.log(`Upsert the selectedCalendar record to the DB for user ${user.id} with details ${JSON.stringify(
       selectedCalendar
-    )}`
-  );
+    )}`);
 
   await SelectedCalendarRepository.createIfNotExists({
     userId: user.id,

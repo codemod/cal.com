@@ -35,7 +35,7 @@ test.describe("Preview", () => {
 
     const failedRequestUrl = await new Promise<string>((resolve) =>
       page.on("requestfailed", (request) => {
-        console.log("request failed");
+        logger.log("request failed");
         resolve(request.url());
       })
     );

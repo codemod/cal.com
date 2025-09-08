@@ -92,7 +92,7 @@ describe.skip("crmManager tests", () => {
         ],
       });
 
-      console.log(mockedCrmApp);
+      logger.log(mockedCrmApp);
     });
   });
 });

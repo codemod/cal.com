@@ -7,9 +7,7 @@ try {
   const requiredEnvVars = ["SENTRY_AUTH_TOKEN", "SENTRY_ORG", "SENTRY_PROJECT"];
   const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
   if (missingEnvVars.length > 0) {
-    console.log(
-      `Skipping release creation as required environment variables are not set: ${missingEnvVars.join(", ")}`
-    );
+    logger.log(`Skipping release creation as required environment variables are not set: ${missingEnvVars.join(", ")}`);
     process.exit(0);
   }
 

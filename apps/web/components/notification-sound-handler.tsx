@@ -22,7 +22,7 @@ export function NotificationSoundHandler() {
         const response = await fetch("/ring.mp3");
         const arrayBuffer = await response.arrayBuffer();
         audioBufferRef.current = await audioContextRef.current.decodeAudioData(arrayBuffer);
-        console.log("Audio file loaded and decoded");
+        logger.log("Audio file loaded and decoded");
       }
 
       return true;
@@ -62,7 +62,7 @@ export function NotificationSoundHandler() {
 
       source.loop = true;
       source.start(0);
-      console.log("Sound started playing");
+      logger.log("Sound started playing");
 
       setTimeout(() => {
         if (sourceRef.current === source) {
@@ -101,7 +101,7 @@ export function NotificationSoundHandler() {
 
   useEffect(() => {
     if (!("serviceWorker" in navigator)) {
-      console.log("ServiceWorker not available");
+      logger.log("ServiceWorker not available");
       return;
     }
 

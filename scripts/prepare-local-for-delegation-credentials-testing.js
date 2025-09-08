@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 async function main() {
   // Parse newEmail from args
   const newEmail = process.argv[2] || "hariom@cal.com";
-  console.log(`Using newEmail: ${newEmail}`);
+  logger.log(`Using newEmail: ${newEmail}`);
 
   // 1. Update user email
   let user = await prisma.user.findUnique({
@@ -19,7 +19,7 @@ async function main() {
     // Check if user with newEmail exists
     user = await prisma.user.findUnique({ where: { email: newEmail } });
     if (user) {
-      console.log(`User with newEmail (${newEmail}) already exists. Skipping email update step.`);
+      logger.log(`User with newEmail (${newEmail}) already exists. Skipping email update step.`);
     } else {
       console.error(
         "User with email owner1-acme@example.com not found, and user with newEmail also not found."
@@ -32,9 +32,9 @@ async function main() {
         where: { id: user.id },
         data: { email: newEmail },
       });
-      console.log(`Updated user email to ${newEmail}`);
+      logger.log(`Updated user email to ${newEmail}`);
     } else {
-      console.log("User email already set to newEmail, skipping update.");
+      logger.log("User email already set to newEmail, skipping update.");
     }
   }
 
@@ -46,7 +46,7 @@ async function main() {
     console.error("Organization (Team) with slug=acme and isOrganization=true not found.");
     process.exit(1);
   }
-  console.log(`Found organization: id=${org.id}, slug=${org.slug}`);
+  logger.log(`Found organization: id=${org.id}, slug=${org.slug}`);
 
   // 3. Ensure TeamFeatures: delegation-credential
   const delegationFeature = await prisma.teamFeatures.findUnique({
@@ -66,9 +66,9 @@ async function main() {
         assignedBy: "prepare-local-script",
       },
     });
-    console.log("Created TeamFeatures: delegation-credential");
+    logger.log("Created TeamFeatures: delegation-credential");
   } else {
-    console.log("TeamFeatures: delegation-credential already exists, skipping.");
+    logger.log("TeamFeatures: delegation-credential already exists, skipping.");
   }
 
   // 4. Ensure TeamFeatures: calendar-cache
@@ -89,9 +89,9 @@ async function main() {
         assignedBy: "prepare-local-script",
       },
     });
-    console.log("Created TeamFeatures: calendar-cache");
+    logger.log("Created TeamFeatures: calendar-cache");
   } else {
-    console.log("TeamFeatures: calendar-cache already exists, skipping.");
+    logger.log("TeamFeatures: calendar-cache already exists, skipping.");
   }
 
   // 5. Add WorkspacePlatform record
@@ -108,9 +108,9 @@ async function main() {
         defaultServiceAccountKey: {}, // Empty object, update as needed
       },
     });
-    console.log("Created WorkspacePlatform: google");
+    logger.log("Created WorkspacePlatform: google");
   } else {
-    console.log("WorkspacePlatform: google already exists, skipping.");
+    logger.log("WorkspacePlatform: google already exists, skipping.");
   }
 
   // 6. Enable Feature records for 'calendar-cache' and 'delegation-credential'
@@ -123,12 +123,12 @@ async function main() {
     }
     if (!feature.enabled) {
       await prisma.feature.update({ where: { slug }, data: { enabled: true } });
-      console.log(`Enabled Feature: ${slug}`);
+      logger.log(`Enabled Feature: ${slug}`);
     } else {
-      console.log(`Feature: ${slug} already enabled, skipping.`);
+      logger.log(`Feature: ${slug} already enabled, skipping.`);
     }
   }
-  console.log(`Now you can sign in with ${newEmail} and create a new Delegation Credential.`);
+  logger.log(`Now you can sign in with ${newEmail} and create a new Delegation Credential.`);
 }
 
 main()

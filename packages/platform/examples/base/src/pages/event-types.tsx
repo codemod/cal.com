@@ -730,7 +730,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                 refetch();
               }}
               onError={(eventType, error) => {
-                console.log(eventType);
+                logger.log(eventType);
                 console.error(error);
               }}
               onDeleteSuccess={() => {
@@ -772,7 +772,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                   }}
                   teamId={teams?.[0]?.id}
                   onCancel={() => {
-                    console.log("cancel team event type creation");
+                    logger.log("cancel team event type creation");
                   }}
                   onSuccess={() => {
                     refetchTeamEvents();

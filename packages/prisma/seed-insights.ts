@@ -75,8 +75,8 @@ const shuffle = (
   }
 
   if (booking.userId === undefined || booking.userId === null) {
-    console.log({ randomEvent, usersIdsToPick });
-    console.log("This should not happen");
+    logger.log({ randomEvent, usersIdsToPick });
+    logger.log("This should not happen");
   }
 
   booking.rating = Math.floor(Math.random() * 5) + 1; // Generates a random rating from 1 to 5
@@ -439,7 +439,7 @@ async function createPerformanceData() {
 
   if (createExtraMembers) {
     if (insightsTeam === null) {
-      console.log("This should not happen");
+      logger.log("This should not happen");
       throw new Error("Insights team id is undefined or null");
     }
 
