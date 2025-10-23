@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import type { ReactNode } from "react";
 
@@ -36,6 +38,8 @@ export type AppListCardProps = {
 } & ShouldHighlight;
 
 export const AppListCard = (props: AppListCardProps & { highlight?: boolean }) => {
+const tIntl = useTranslations("app-list-card");
+
   const { t } = useLocale();
   const {
     logo,
@@ -58,7 +62,7 @@ export const AppListCard = (props: AppListCardProps & { highlight?: boolean }) =
           <img
             className={classNames(logo.includes("-dark") && "dark:invert", "h-10 w-10")}
             src={logo}
-            alt={`${title} logo`}
+            alt={tIntl('logo.alt-text', { "title": title })}
           />
         ) : null}
         <div className="flex grow flex-col gap-y-1 truncate">
@@ -66,7 +70,7 @@ export const AppListCard = (props: AppListCardProps & { highlight?: boolean }) =
             <h3 className="text-emphasis truncate text-sm font-semibold">{title}</h3>
             <div className="flex items-center gap-x-2">
               {isDefault && <Badge variant="green">{t("default")}</Badge>}
-              {isTemplate && <Badge variant="red">Template</Badge>}
+              {isTemplate && <Badge variant="red">{tIntl('badges.template')}</Badge>}
             </div>
           </div>
           <ListItemText component="p">{description}</ListItemText>

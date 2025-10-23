@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useForm, FormProvider } from "react-hook-form";
@@ -13,6 +15,8 @@ type FormValues = {
 };
 
 export const CustomizationExample: React.FC = () => {
+const t = useTranslations("multi-input-field-demo");
+
   const methods = useForm<FormValues>();
 
   return (
@@ -21,13 +25,13 @@ export const CustomizationExample: React.FC = () => {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="flex flex-col space-y-2">
-              <h3 className="text-emphasis text-sm">Key-Value Pairs</h3>
-              <p className="text-subtle text-xs">Allows inputting keys and values</p>
+              <h3 className="text-emphasis text-sm">{t('sections.key-value-pairs.title')}</h3>
+              <p className="text-subtle text-xs">{t('sections.key-value-pairs.description')}</p>
               <MultiOptionInput<FormValues>
                 fieldArrayName="keyValuePairs"
                 keyValueMode
-                keyLabel="Environment Variable"
-                valueLabel="Value"
+                keyLabel={t('labels.environment-variable')}
+                valueLabel={t('labels.value')}
                 optionPlaceholders={["NODE_ENV", "PORT", "DATABASE_URL"]}
                 valuePlaceholders={["production", "3000", "postgres://..."]}
                 defaultNumberOfOptions={3}
@@ -36,31 +40,31 @@ export const CustomizationExample: React.FC = () => {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <h3 className="text-emphasis text-sm">Custom Placeholders</h3>
+              <h3 className="text-emphasis text-sm">{t('sections.custom-placeholders.title')}</h3>
               <MultiOptionInput<FormValues>
                 fieldArrayName="customPlaceholders"
-                optionPlaceholders={["Enter your name", "Enter your email", "Enter your phone"]}
+                optionPlaceholders={[t('sections.custom-placeholders.placeholders.enter-name'), t('sections.custom-placeholders.placeholders.enter-email'), t('sections.custom-placeholders.placeholders.enter-phone')]}
                 defaultNumberOfOptions={3}
               />
             </div>
 
             <div className="flex flex-col space-y-2">
-              <h3 className="text-emphasis text-sm">Without Move Buttons</h3>
+              <h3 className="text-emphasis text-sm">{t('sections.without-move-buttons.title')}</h3>
               <MultiOptionInput<FormValues>
                 fieldArrayName="noMoveButtons"
-                optionPlaceholders={["Static option 1", "Static option 2"]}
+                optionPlaceholders={[t('sections.without-move-buttons.placeholders.static-option-1'), t('sections.without-move-buttons.placeholders.static-option-2')]}
                 defaultNumberOfOptions={2}
                 showMoveButtons={false}
               />
             </div>
 
             <div className="flex flex-col space-y-2">
-              <h3 className="text-emphasis text-sm">Custom Add Button Label</h3>
+              <h3 className="text-emphasis text-sm">{t('sections.custom-add-button.title')}</h3>
               <MultiOptionInput<FormValues>
                 fieldArrayName="customLabel"
-                optionPlaceholders={["Social media link"]}
+                optionPlaceholders={[t('sections.custom-add-button.placeholders.social-media-link')]}
                 defaultNumberOfOptions={1}
-                addOptionLabel="Add another social media link"
+                addOptionLabel={t('buttons.add-social-media-link')}
               />
             </div>
           </div>

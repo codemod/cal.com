@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import React, { useState, useMemo } from "react";
 import { Toaster } from "react-hot-toast";
@@ -160,20 +162,22 @@ interface CopyMenuProps {
 }
 
 const CopyMenu: React.FC<CopyMenuProps> = ({ name, onCopy }) => {
+const t = useTranslations("icon-grid-demo");
+
   return (
     <div className="absolute inset-2 flex items-center justify-center bg-black/10 opacity-0 transition-opacity group-hover:opacity-100">
       <div className="bg-default space-y-1 rounded-md p-2 shadow-lg">
         <button
           onClick={() => onCopy(`<Icon name="${name}" className="h-4 w-4" />`)}
-          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">
-          Copy Component
-        </button>
+          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">{t('actions.copy-component')}</button>
       </div>
     </div>
   );
 };
 
 export const IconGrid: React.FC<IconGridProps> = ({ className }) => {
+const t = useTranslations("icon-grid-demo");
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleCopy = async (value: string) => {
@@ -344,7 +348,7 @@ export const IconGrid: React.FC<IconGridProps> = ({ className }) => {
         <div className="mb-8">
           <input
             type="text"
-            placeholder="Search icons..."
+            placeholder={t('inputs.search-placeholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border-subtle bg-default text-emphasis focus:ring-emphasis placeholder:text-subtle w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2"

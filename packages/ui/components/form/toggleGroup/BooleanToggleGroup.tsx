@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useId } from "@radix-ui/react-id";
 import { Root as ToggleGroupPrimitive, Item as ToggleGroupItemPrimitive } from "@radix-ui/react-toggle-group";
@@ -45,6 +47,8 @@ export const BooleanToggleGroup = function BooleanToggleGroup({
   disabled?: boolean;
   variant?: "default" | "small";
 }) {
+const t = useTranslations("boolean-toggle-group");
+
   // Maintain a state because it is not necessary that onValueChange the parent component would re-render. Think react-hook-form
   // Also maintain a string as boolean isn't accepted as ToggleGroupPrimitive value
   const [yesNoValue, setYesNoValue] = useState<"yes" | "no" | undefined>(yesNo(value));
@@ -87,16 +91,12 @@ export const BooleanToggleGroup = function BooleanToggleGroup({
       <ToggleGroupItemPrimitive
         className={classNames(boolean(yesNoValue) ? selectedClass : unselectedClass)}
         disabled={disabled}
-        value="yes">
-        Yes
-      </ToggleGroupItemPrimitive>
+        value="yes">{t('options.yes')}</ToggleGroupItemPrimitive>
 
       <ToggleGroupItemPrimitive
         disabled={disabled}
         className={classNames(!boolean(yesNoValue) ? selectedClass : unselectedClass)}
-        value="no">
-        No
-      </ToggleGroupItemPrimitive>
+        value="no">{t('options.no')}</ToggleGroupItemPrimitive>
     </ToggleGroupPrimitive>
   );
 };

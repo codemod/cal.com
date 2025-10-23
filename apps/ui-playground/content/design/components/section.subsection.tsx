@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -7,6 +9,8 @@ import { Input, Switch } from "@calcom/ui/components/form";
 import { Section } from "@calcom/ui/components/section";
 
 export const SubSectionExample = () => {
+const t = useTranslations("section-subsection-demo");
+
   const [isMainOpen, setIsMainOpen] = useState(true);
   const [isFirstSubsectionOpen, setIsFirstSubsectionOpen] = useState(true);
   const [isSecondSubsectionOpen, setIsSecondSubsectionOpen] = useState(true);
@@ -37,7 +41,7 @@ export const SubSectionExample = () => {
               </Section.SubSectionHeader>
               {isFirstSubsectionOpen && (
                 <Section.SubSectionContent>
-                  <p>This is the content of the first subsection.</p>
+                  <p>{t('content.first-subsection-description')}</p>
                 </Section.SubSectionContent>
               )}
             </Section.SubSection>
@@ -52,10 +56,10 @@ export const SubSectionExample = () => {
               {isSecondSubsectionOpen && (
                 <Section.SubSectionContent>
                   <div className="flex gap-3 px-3 py-1.5">
-                    <div className="text-subtle w-full text-sm font-medium">Field Name</div>
-                    <div className="text-subtle w-full text-sm font-medium">Field Type</div>
-                    <div className="text-subtle w-full text-sm font-medium">Value</div>
-                    <div className="text-subtle w-full text-sm font-medium">When to Write</div>
+                    <div className="text-subtle w-full text-sm font-medium">{t('table-headers.field-name')}</div>
+                    <div className="text-subtle w-full text-sm font-medium">{t('table-headers.field-type')}</div>
+                    <div className="text-subtle w-full text-sm font-medium">{t('table-headers.value')}</div>
+                    <div className="text-subtle w-full text-sm font-medium">{t('table-headers.when-to-write')}</div>
                   </div>
                   <Section.SubSectionNested>
                     <div className="flex gap-3">
