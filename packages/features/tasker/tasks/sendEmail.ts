@@ -11,7 +11,7 @@ const sendEmailPayloadSchema = z.object({
 export async function sendEmail(payload: string): Promise<void> {
   try {
     const parsedPayload = sendEmailPayloadSchema.parse(JSON.parse(payload));
-    console.log(parsedPayload);
+    logger.log(parsedPayload);
     const emails = await import("@calcom/emails");
     const email = emails[parsedPayload.template as keyof typeof emails];
     if (!email) throw new Error("Invalid email template");

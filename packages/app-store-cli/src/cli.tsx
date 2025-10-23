@@ -65,7 +65,7 @@ if (
 ) {
   slug = cli.flags.slug;
   if (!slug) {
-    console.log("--slug is required");
+    logger.log("--slug is required");
     cli.showHelp(0);
   }
 }

@@ -169,7 +169,7 @@ export const addGuestsHandler = async ({ ctx, input }: AddGuestsOptions) => {
   try {
     await sendAddGuestsEmails(evt, guests);
   } catch (err) {
-    console.log("Error sending AddGuestsEmails");
+    logger.log("Error sending AddGuestsEmails");
   }
 
   return { message: "Guests added" };

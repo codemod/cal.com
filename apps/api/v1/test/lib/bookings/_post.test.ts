@@ -146,7 +146,7 @@ describe.skipIf(true)("POST /api/bookings", () => {
       prismaMock.eventType.findUniqueOrThrow.mockResolvedValue(buildEventType());
 
       await handler(req, res);
-      console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+      logger.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
 
       expect(res._getStatusCode()).toBe(500);
       expect(JSON.parse(res._getData())).toEqual(
@@ -183,7 +183,7 @@ describe.skipIf(true)("POST /api/bookings", () => {
         prismaMock.booking.findMany.mockResolvedValue([]);
 
         await handler(req, res);
-        console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+        logger.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
         createdBooking = JSON.parse(res._getData());
         expect(prismaMock.booking.create).toHaveBeenCalledTimes(1);
       });
@@ -212,7 +212,7 @@ describe.skipIf(true)("POST /api/bookings", () => {
         prismaMock.booking.findMany.mockResolvedValue([]);
 
         await handler(req, res);
-        console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+        logger.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
         const rescheduledBooking = JSON.parse(res._getData()) as Booking;
         expect(prismaMock.booking.create).toHaveBeenCalledTimes(1);
         expect(rescheduledBooking.fromReschedule).toEqual(createdBooking.uid);

@@ -427,7 +427,7 @@ describe("Calendar Cache", () => {
     expect(calendarCachesBefore).toHaveLength(0);
     await calendarService.fetchAvailabilityAndSetCache(selectedCalendars);
     const calendarCachesAfter = await prismock.calendarCache.findMany();
-    console.log({ calendarCachesAfter });
+    logger.log({ calendarCachesAfter });
     expect(calendarCachesAfter).toHaveLength(1);
     const datesForWhichCachedAvailabilityIsUsed = [
       {
@@ -446,7 +446,7 @@ describe("Calendar Cache", () => {
         expect(result).toEqual(mockedBusyTimes);
       }
     } catch (error) {
-      console.log({ error });
+      logger.log({ error });
       throw "Looks like cache was not used";
     }
 

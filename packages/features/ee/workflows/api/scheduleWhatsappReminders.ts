@@ -159,7 +159,7 @@ export async function handler(req: NextRequest) {
         }
       }
     } catch (error) {
-      console.log(`Error scheduling WHATSAPP with error ${error}`);
+      logger.log(`Error scheduling WHATSAPP with error ${error}`);
     }
   }
 

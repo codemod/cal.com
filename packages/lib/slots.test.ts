@@ -394,8 +394,6 @@ describe("Tests the slots function performance", () => {
 
     expect(executionTimeInMs).toBeLessThan(3000); // less than 3 seconds for 2000 date ranges
 
-    console.log(
-      `Performance test completed in ${executionTimeInMs}ms with ${result.length} slots generated from ${dateRanges.length} date ranges`
-    );
+    logger.log(`Performance test completed in ${executionTimeInMs}ms with ${result.length} slots generated from ${dateRanges.length} date ranges`);
   });
 });

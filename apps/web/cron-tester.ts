@@ -17,7 +17,7 @@ async function fetchCron(endpoint: string) {
 }
 
 try {
-  console.log("⏳ Running cron endpoints");
+  logger.log("⏳ Running cron endpoints");
   new CronJob(
     // Each 5 seconds
     "*/5 * * * * *",

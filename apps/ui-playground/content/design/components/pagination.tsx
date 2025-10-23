@@ -52,11 +52,11 @@ export const WithCallbacksExample = () => {
   const totalItems = 100;
 
   const handleNext = () => {
-    console.log("Next page clicked");
+    logger.log("Next page clicked");
   };
 
   const handlePrevious = () => {
-    console.log("Previous page clicked");
+    logger.log("Previous page clicked");
   };
 
   return (

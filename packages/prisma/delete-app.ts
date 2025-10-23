@@ -15,10 +15,10 @@ async function main() {
         appId: appId,
       },
     });
-    console.log(`Deleted app from DB: '${appId}'`);
+    logger.log(`Deleted app from DB: '${appId}'`);
   } catch (e) {
     if (e.code === "P2025") {
-      console.log(`App '${appId}' already deleted from DB`);
+      logger.log(`App '${appId}' already deleted from DB`);
       return;
     }
     throw e;

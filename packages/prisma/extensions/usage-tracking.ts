@@ -11,7 +11,7 @@ async function incrementUsage(prismaClient: PrismaClientWithoutExtensions, event
     const licenseKeyService = await LicenseKeySingleton.getInstance(deploymentRepo);
     await licenseKeyService.incrementUsage(event);
   } catch (e) {
-    console.log(e);
+    logger.log(e);
   }
 }
 

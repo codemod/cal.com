@@ -75,7 +75,7 @@ export const acceptOrLeaveHandler = async ({ ctx, input }: AcceptOrLeaveOptions)
         });
       }
     } catch (e) {
-      console.log(e);
+      logger.log(e);
     }
   }
 };

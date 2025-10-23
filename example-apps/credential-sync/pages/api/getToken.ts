@@ -5,7 +5,7 @@ import { generateGoogleCalendarAccessToken, generateZoomAccessToken } from "../.
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const secret = req.headers[CALCOM_CREDENTIAL_SYNC_HEADER_NAME];
-  console.log("getToken hit");
+  logger.log("getToken hit");
   try {
     if (!secret) {
       return res.status(403).json({ message: "secret header not set" });

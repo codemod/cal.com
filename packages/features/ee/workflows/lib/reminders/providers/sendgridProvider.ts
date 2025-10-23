@@ -55,9 +55,7 @@ export function sendSendgridMail(
         html: mailData.html || "",
       });
     }
-    console.log(
-      "Skipped Sending Email as process.env.NEXT_PUBLIC_IS_E2E or process.env.INTEGRATION_TEST_MODE is set. Emails are available in globalThis.testEmails"
-    );
+    logger.log("Skipped Sending Email as process.env.NEXT_PUBLIC_IS_E2E or process.env.INTEGRATION_TEST_MODE is set. Emails are available in globalThis.testEmails");
 
     return new Promise((r) => r("Skipped sendEmail for Unit Tests"));
   }

@@ -69,7 +69,7 @@ const renderComponent = ({
       defaultValues: formDefaultValues,
     });
     const [assignAllTeamMembers, setAssignAllTeamMembers] = React.useState(false);
-    console.log(methods.getValues());
+    logger.log(methods.getValues());
     return (
       <FormProvider {...methods}>
         {React.cloneElement(children as React.ReactElement, {
