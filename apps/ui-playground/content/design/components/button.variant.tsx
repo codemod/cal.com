@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { Row } from "@/app/components/row";
@@ -12,9 +14,12 @@ const sizes = ["xs", "sm", "base", "lg"] as const;
 export const VariantExample: React.FC = () => (
   <RenderComponentWithSnippet>
     <div className="space-y-8">
-      {variants.map((variant) => (
+      {variants.map((variant) =>  {
+const t = useTranslations("button-variant-demo");
+
+return (
         <div key={variant} className="space-y-6">
-          <h3 className="text-default text-sm capitalize">{variant === "button" ? "Default" : variant}</h3>
+          <h3 className="text-default text-sm capitalize">{variant === "button" ? t('headings.variant-default_0') : variant}</h3>
           <div className="space-y-6">
             {colors.map((color) => (
               <div key={color} className="space-y-2">
@@ -37,7 +42,8 @@ export const VariantExample: React.FC = () => (
             ))}
           </div>
         </div>
-      ))}
+      )
+})}
     </div>
   </RenderComponentWithSnippet>
 );

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -12,16 +14,20 @@ const options = [
   { value: "coffee", label: "Coffee" },
 ];
 
-export const DisabledExample: React.FC = () => (
+export const DisabledExample: React.FC = () =>  {
+const t = useTranslations("select-disabled-examples");
+
+return (
   <RenderComponentWithSnippet>
     <div className="space-y-4 md:w-80">
-      <Select options={options} isDisabled placeholder="This select is disabled..." />
+      <Select options={options} isDisabled placeholder={t('placeholders.disabled-select')} />
       <SelectField
-        label="Disabled Field"
+        label={t('labels.disabled-field')}
         options={options}
         isDisabled
-        placeholder="This field is disabled..."
+        placeholder={t('placeholders.disabled-field')}
       />
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 // @TODO: turn this into a more generic component that has the same Props API as MUI https://mui.com/material-ui/react-card/
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
@@ -158,6 +159,8 @@ export function Card({
   coverPhoto,
   buttonClassName,
 }: BaseCardProps) {
+const t = useTranslations("card-component");
+
   const LinkComponent = learnMore && learnMore.href.startsWith("https") ? "a" : Link;
   return (
     <div
@@ -225,11 +228,11 @@ export function Card({
               strokeLinejoin="round"
             />
           </svg>
-          <img alt="play feature video" src={thumbnailUrl} />
+          <img alt={t('media.play-video-alt')} src={thumbnailUrl} />
         </a>
       )}
       {variant === "NewLaunchSidebarCard" && coverPhoto && (
-        <img alt="cover" className="mt-3 w-full" src={coverPhoto} />
+        <img alt={t('images.cover-alt')} className="mt-3 w-full" src={coverPhoto} />
       )}
 
       {/* TODO: this should be CardActions https://mui.com/material-ui/api/card-actions/ */}

@@ -1,0 +1,241 @@
+{
+  "table-examples": {
+    "headers": {
+      "column-one": "Header Column 1",
+      "column-two": "Header Column 2"
+    },
+    "body": {
+      "row-one-cell-one": "Row 1, Cell 1",
+      "row-one-cell-two": "Row 1, Cell 2",
+      "row-two-cell-one": "Row 2, Cell 1",
+      "row-two-cell-two": "Row 2, Cell 2"
+    },
+    "footer": {
+      "row-one-cell-one": "Row 3(footer), Cell 1",
+      "row-one-cell-two": "Row 3(footer), Cell 2"
+    },
+    "caption": {
+      "table-description": "Table Caption"
+    },
+    "titles": {
+      "column-one": "Title Column 1",
+      "column-two": "Title Column 2"
+    },
+    "cells": {
+      "row-one-cell-one": "Row 1, Cell 1",
+      "row-one-cell-two": "Row 1, Cell 2",
+      "row-two-cell-one": "Row 2, Cell 1",
+      "row-two-cell-two": "Row 2, Cell 2"
+    }
+  },
+  "logo-component": {
+    "brand": {
+      "alt-text": "Cal",
+      "title": "Cal",
+      "alt-text-icon": "Cal",
+      "title-icon": "Cal"
+    }
+  },
+  "boolean-toggle-group": {
+    "options": {
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "date-picker": {
+    "placeholder": {
+      "select-date": "Pick a date"
+    }
+  },
+  "card-component": {
+    "media": {
+      "play-video-alt": "play feature video"
+    },
+    "images": {
+      "cover-alt": "cover"
+    }
+  },
+  "app-list-card": {
+    "logo": {
+      "alt-text": "{title} logo"
+    },
+    "badges": {
+      "template": "Template"
+    }
+  },
+  "toast-variants": {
+    "buttons": {
+      "success": "Success",
+      "warning": "Warning",
+      "error": "Error"
+    }
+  },
+  "textarea-examples": {
+    "placeholders": {
+      "message-input": "Enter your message...",
+      "default-value-demo": "With default value..."
+    }
+  },
+  "select-multi-examples": {
+    "placeholders": {
+      "choose-multiple-flavors": "Choose multiple flavors...",
+      "choose-multiple-flavors-small": "Choose multiple flavors... (small)"
+    }
+  },
+  "select-disabled-examples": {
+    "placeholders": {
+      "disabled-select": "This select is disabled...",
+      "disabled-field": "This field is disabled..."
+    },
+    "labels": {
+      "disabled-field": "Disabled Field"
+    }
+  },
+  "section-subsection-demo": {
+    "content": {
+      "first-subsection-description": "This is the content of the first subsection."
+    },
+    "table-headers": {
+      "field-name": "Field Name",
+      "field-type": "Field Type",
+      "value": "Value",
+      "when-to-write": "When to Write"
+    }
+  },
+  "navigation-sidebar": {
+    "sections": {
+      "manage": "Manage"
+    }
+  },
+  "multi-input-field-examples": {
+    "sections": {
+      "key-value-pairs": {
+        "title": "Key-Value Pairs",
+        "description": "Allows inputting keys and values"
+      },
+      "custom-placeholders": {
+        "title": "Custom Placeholders"
+      },
+      "without-move-buttons": {
+        "title": "Without Move Buttons"
+      },
+      "custom-add-button": {
+        "title": "Custom Add Button Label"
+      }
+    },
+    "labels": {
+      "environment-variable": "Environment Variable",
+      "value": "Value"
+    },
+    "buttons": {
+      "add-social-media-link": "Add another social media link"
+    }
+  },
+  "input-states-demo": {
+    "placeholders": {
+      "state-input": "{state} input"
+    }
+  },
+  "empty-screen-raw-button": {
+    "descriptions": {
+      "create-new-link": "Create a new link to share"
+    },
+    "buttons": {
+      "create-link": "Create Link",
+      "import-links": "Import Links"
+    }
+  },
+  "empty-screen-basic-example": {
+    "messages": {
+      "create-meeting-prompt": "Create a meeting to get started"
+    },
+    "buttons": {
+      "create-meeting": "Create Meeting"
+    }
+  },
+  "dialog-large-content-example": {
+    "buttons": {
+      "open-dialog": "Open Large Content Dialog",
+      "decline": "Decline",
+      "accept-terms": "Accept Terms"
+    },
+    "content": {
+      "section-heading": "Section {i}1",
+      "lorem-paragraph-one": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.",
+      "lorem-paragraph-two": "Suspendisse in orci enim. Integer vel sapien at risus ultrices ornare nec sit amet nibh. Duis blandit lectus ac odio rhoncus non congue diam bibendum. Aliquam erat volutpat."
+    },
+    "notices": {
+      "important-heading": "Important Notice",
+      "highlighted-description": "This is a highlighted section within the content to demonstrate how different UI elements appear within a scrollable dialog."
+    }
+  },
+  "checkbox-label-position": {
+    "descriptions": {
+      "label-above-mobile-default": "Description with label above (default on mobile)",
+      "label-side-large-screens": "Description with label to the side (on larger screens)"
+    },
+    "labels": {
+      "above-position": "Label Above",
+      "side-position": "Label to the Side"
+    }
+  },
+  "button-variant-demo": {
+    "headings": {
+      "variant-default_0": "Default"
+    }
+  },
+  "button-disabled-demo": {
+    "headings": {
+      "disabled-state": "Disabled State",
+      "disabled-with-icons": "Disabled with Icons"
+    },
+    "labels": {
+      "disabled": "Disabled",
+      "with-icon": "With Icon"
+    }
+  },
+  "avatar-tooltip-demo": {
+    "avatar": {
+      "alt-text": "With tooltip"
+    },
+    "tooltip": {
+      "hover-message": "Hover me!"
+    },
+    "instructions": {
+      "hover-tooltip": "Hover to see tooltip"
+    }
+  },
+  "avatar-image-demo": {
+    "alt-text": {
+      "with-image": "With image",
+      "without-image": "Without image"
+    },
+    "labels": {
+      "with-image": "With Image",
+      "without-image": "Without Image"
+    }
+  },
+  "alert-actions-demo": {
+    "titles": {
+      "severity-alert-with-actions": "{severityCharAt0ToUpperCaseSeveritySlice1} Alert with Actions"
+    },
+    "buttons": {
+      "dismiss": "Dismiss",
+      "view": "View"
+    }
+  },
+  "icon-grid-component": {
+    "actions": {
+      "copy-component": "Copy Component"
+    },
+    "search": {
+      "placeholder": "Search icons..."
+    }
+  },
+  "homepage-hero": {
+    "heading": {
+      "open-ui-for-absolutely": "Open UI for absolutely",
+      "everyone": "everyone"
+    }
+  }
+}

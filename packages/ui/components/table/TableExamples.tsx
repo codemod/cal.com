@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Table } from "./Table";
 import { TableActions } from "./TableActions";
 import {
@@ -11,50 +12,57 @@ import {
   TableCaption,
 } from "./TableNew";
 
-export const TableNewExampleComponent = () => (
+export const TableNewExampleComponent = () =>  {
+const t = useTranslations("table-examples");
+
+return (
   <TableNew>
     <TableHeader>
       <TableRow>
-        <TableHead>Header Column 1</TableHead>
-        <TableHead>Header Column 2</TableHead>
+        <TableHead>{t('headers.column-one')}</TableHead>
+        <TableHead>{t('headers.column-two')}</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
       <TableRow>
-        <TableCell>Row 1, Cell 1</TableCell>
-        <TableCell>Row 1, Cell 2</TableCell>
+        <TableCell>{t('body.row-one-cell-one')}</TableCell>
+        <TableCell>{t('body.row-one-cell-two')}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell>Row 2, Cell 1</TableCell>
-        <TableCell>Row 2, Cell 2</TableCell>
+        <TableCell>{t('body.row-two-cell-one')}</TableCell>
+        <TableCell>{t('body.row-two-cell-two')}</TableCell>
       </TableRow>
     </TableBody>
     <TableFooter>
       <TableRow>
-        <TableCell>Row 3(footer), Cell 1</TableCell>
-        <TableCell>Row 3(footer), Cell 2</TableCell>
+        <TableCell>{t('footer.row-one-cell-one')}</TableCell>
+        <TableCell>{t('footer.row-one-cell-two')}</TableCell>
       </TableRow>
     </TableFooter>
-    <TableCaption>Table Caption</TableCaption>
+    <TableCaption>{t('caption.table-description')}</TableCaption>
   </TableNew>
-);
+)
+};
 
-export const TableExampleComponent = () => (
+export const TableExampleComponent = () =>  {
+const t = useTranslations("table-examples");
+
+return (
   <Table>
     <Table.Header>
       <Table.Row>
-        <Table.ColumnTitle>Title Column 1</Table.ColumnTitle>
-        <Table.ColumnTitle>Title Column 2</Table.ColumnTitle>
+        <Table.ColumnTitle>{t('titles.column-one')}</Table.ColumnTitle>
+        <Table.ColumnTitle>{t('titles.column-two')}</Table.ColumnTitle>
       </Table.Row>
     </Table.Header>
     <Table.Body>
       <Table.Row>
-        <Table.Cell>Row 1, Cell 1</Table.Cell>
-        <Table.Cell>Row 1, Cell 2</Table.Cell>
+        <Table.Cell>{t('cells.row-one-cell-one')}</Table.Cell>
+        <Table.Cell>{t('cells.row-one-cell-two')}</Table.Cell>
       </Table.Row>
       <Table.Row>
-        <Table.Cell>Row 2, Cell 1</Table.Cell>
-        <Table.Cell>Row 2, Cell 2</Table.Cell>
+        <Table.Cell>{t('cells.row-two-cell-one')}</Table.Cell>
+        <Table.Cell>{t('cells.row-two-cell-two')}</Table.Cell>
       </Table.Row>
       <Table.Row>
         <TableActions
@@ -80,4 +88,5 @@ export const TableExampleComponent = () => (
       </Table.Row>
     </Table.Body>
   </Table>
-);
+)
+};

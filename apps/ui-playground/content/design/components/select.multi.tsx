@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -14,6 +16,8 @@ const options = [
 ];
 
 export const MultiExample: React.FC = () => {
+const t = useTranslations("select-multi-examples");
+
   const [multiValue, setMultiValue] = useState<{ value: string; label: string }[]>([]);
 
   return (
@@ -25,7 +29,7 @@ export const MultiExample: React.FC = () => {
           onChange={(newValue) => setMultiValue(newValue as { value: string; label: string }[])}
           isMulti
           isClearable
-          placeholder="Choose multiple flavors..."
+          placeholder={t('placeholders.choose-multiple-flavors')}
         />
         <Select
           options={options}
@@ -33,7 +37,7 @@ export const MultiExample: React.FC = () => {
           onChange={(newValue) => setMultiValue(newValue as { value: string; label: string }[])}
           isMulti
           isClearable
-          placeholder="Choose multiple flavors... (small)"
+          placeholder={t('placeholders.choose-multiple-flavors-small')}
           size="sm"
         />
       </div>

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -6,6 +8,8 @@ import { useState } from "react";
 import { NavigationItem } from "@calcom/ui";
 
 export const SidebarExample: React.FC = () => {
+const t = useTranslations("navigation-sidebar");
+
   const [isDeelExpanded, setIsDeelExpanded] = useState(true);
 
   return (
@@ -54,7 +58,7 @@ export const SidebarExample: React.FC = () => {
             icon: "zap",
           }}
         />
-        <div className="text-subtle mt-4 px-2 text-sm">Manage</div>
+        <div className="text-subtle mt-4 px-2 text-sm">{t('sections.manage')}</div>
         <NavigationItem
           item={{
             name: "Members",

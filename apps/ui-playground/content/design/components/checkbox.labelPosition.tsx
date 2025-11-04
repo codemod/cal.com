@@ -1,24 +1,30 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
 import { CheckboxField } from "@calcom/ui/components/form";
 
-export const LabelPositionExample: React.FC = () => (
+export const LabelPositionExample: React.FC = () =>  {
+const t = useTranslations("checkbox-label-position");
+
+return (
   <RenderComponentWithSnippet>
     <div className="space-y-4">
       <CheckboxField
-        description="Description with label above (default on mobile)"
+        description={t('descriptions.label-above-mobile-default')}
         id="label-above"
-        label="Label Above"
+        label={t('labels.above-position')}
       />
       <div className="sm:min-w-[400px]">
         <CheckboxField
-          description="Description with label to the side (on larger screens)"
+          description={t('descriptions.label-side-large-screens')}
           id="label-side"
-          label="Label to the Side"
+          label={t('labels.side-position')}
         />
       </div>
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

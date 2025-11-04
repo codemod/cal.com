@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -15,11 +17,14 @@ export const StatesExample: React.FC = () => (
           <div key={state} className="flex flex-col space-y-2">
             <h3 className="text-emphasis text-sm capitalize">{state}</h3>
             <div className="flex flex-wrap items-center gap-4">
-              {sizes.map((size) => (
+              {sizes.map((size) =>  {
+const t = useTranslations("input-states-demo");
+
+return (
                 <div key={size} className="flex flex-col items-center gap-2">
                   <Input
                     type="text"
-                    placeholder={`${state} input`}
+                    placeholder={t('placeholders.state-input', { "state": state })}
                     disabled={state === "disabled"}
                     readOnly={state === "readonly"}
                     size={size}
@@ -27,7 +32,8 @@ export const StatesExample: React.FC = () => (
                   />
                   <span className="text-subtle text-xs">{size}</span>
                 </div>
-              ))}
+              )
+})}
             </div>
           </div>
         ))}
