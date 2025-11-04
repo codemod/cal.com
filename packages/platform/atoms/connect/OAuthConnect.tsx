@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import type { ReactNode } from "react";
 import type { FC } from "react";
@@ -122,11 +124,13 @@ export const ConnectedCalendarsTooltip = ({
 }: {
   calendarInstance: (typeof CALENDARS)[number];
 }) => {
+const t = useTranslations("oauth-connect");
+
   const { data: connectedCalendars, isLoading: isConnectedCalendarsLoading } = useConnectedCalendars({});
 
   if (isConnectedCalendarsLoading)
     return (
-      <div className="bg-subtle flex flex-col rounded-md border border-gray-300 px-4 py-2">Loading...</div>
+      <div className="bg-subtle flex flex-col rounded-md border border-gray-300 px-4 py-2">{t('tooltips.loading-calendars')}</div>
     );
 
   return (

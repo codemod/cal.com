@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useState, useEffect, useMemo } from "react";
 
@@ -33,6 +35,8 @@ export const DestinationCalendarSelector = ({
   hideAdvancedText,
   maxWidth,
 }: DestinationCalendarProps): JSX.Element | null => {
+const t = useTranslations("destination-calendar-selector");
+
   const { t } = useLocale();
   const [selectedOption, setSelectedOption] = useState<{
     value: string;
@@ -96,7 +100,7 @@ export const DestinationCalendarSelector = ({
             `${t("create_events_on")}`
           ) : (
             <span className="text-default min-w-0 overflow-hidden truncate whitespace-nowrap">
-              <Badge variant="blue">Default</Badge>{" "}
+              <Badge variant="blue">{t('labels.default')}</Badge>{" "}
               {destinationCalendar?.primaryEmail &&
                 `${destinationCalendar.name} (${destinationCalendar?.integrationTitle} - ${destinationCalendar.primaryEmail})`}
             </span>

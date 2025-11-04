@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import * as Popover from "@radix-ui/react-popover";
 
 import {
@@ -75,20 +76,24 @@ const MeetingTimeInTimezones = ({
           onClick={preventBubbling}
           side="top"
           className="popover-content slideInBottom border-5 bg-inverted text-inverted border-subtle rounded-md p-3 text-sm shadow-sm">
-          {times.map((time) => (
+          {times.map((time) =>  {
+const t = useTranslations("meeting-time-timezones");
+
+return (
             <span className="mt-2 block first:mt-0" key={time.timezone}>
               <span className="inline-flex align-baseline">
                 {time.startTime} - {time.endTime}
                 {(time.isNextDay || time.isPreviousDay) && (
                   <span className="text-medium bg-muted text-emphasis ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px]">
-                    {time.isNextDay ? "+1" : "-1"}
+                    {time.isNextDay ? t('indicators.day-offset_0') : t('indicators.day-offset_1')}
                   </span>
                 )}
               </span>
               <br />
               <span className="text-muted">{time.timezone}</span>
             </span>
-          ))}
+          )
+})}
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

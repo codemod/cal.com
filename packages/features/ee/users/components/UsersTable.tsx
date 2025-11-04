@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { keepPreviousData } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,8 @@ const { Cell, ColumnTitle, Header, Row } = Table;
 const FETCH_LIMIT = 25;
 
 function UsersTableBare() {
+const t = useTranslations("users-table");
+
   const { t } = useLocale();
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const utils = trpc.useUtils();
@@ -167,8 +170,8 @@ function UsersTableBare() {
   return (
     <div>
       <TextField
-        placeholder="username or email"
-        label="Search"
+        placeholder={t('search.placeholder')}
+        label={t('search.label')}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div
@@ -181,11 +184,11 @@ function UsersTableBare() {
         }}>
         <Table>
           <Header>
-            <ColumnTitle widthClassNames="w-auto">User</ColumnTitle>
-            <ColumnTitle>Timezone</ColumnTitle>
-            <ColumnTitle>Role</ColumnTitle>
+            <ColumnTitle widthClassNames="w-auto">{t('columns.user')}</ColumnTitle>
+            <ColumnTitle>{t('columns.timezone')}</ColumnTitle>
+            <ColumnTitle>{t('columns.role')}</ColumnTitle>
             <ColumnTitle widthClassNames="w-auto">
-              <span className="sr-only">Edit</span>
+              <span className="sr-only">{t('actions.edit')}</span>
             </ColumnTitle>
           </Header>
 
@@ -196,7 +199,7 @@ function UsersTableBare() {
                   <div className="min-h-10 flex ">
                     <Avatar
                       size="md"
-                      alt={`Avatar of ${user.username || "Nameless"}`}
+                      alt={t('avatar.alt-text', { "userUsernameNameless": user.username || "Nameless" })}
                       // @ts-expect-error - Figure it out later. Ideally we should show all the profiles here for the user.
                       imageSrc={`${WEBAPP_URL}/${user.username}/avatar.png?orgId=${user.organizationId}`}
                     />
@@ -344,6 +347,8 @@ const DeleteUserDialog = ({
   onConfirm: () => void;
   onClose: () => void;
 }) => {
+const t = useTranslations("users-table");
+
   return (
      
     <Dialog name="delete-user" open={!!user} onOpenChange={(open) => (open ? () => {} : onClose())}>
@@ -353,7 +358,7 @@ const DeleteUserDialog = ({
         cancelBtnText="Cancel"
         variety="danger"
         onConfirm={onConfirm}>
-        <p>Are you sure you want to delete this user?</p>
+        <p>{t('delete.confirmation-message')}</p>
       </ConfirmationDialogContent>
     </Dialog>
   );

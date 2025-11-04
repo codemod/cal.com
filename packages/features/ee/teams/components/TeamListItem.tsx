@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -45,6 +46,8 @@ interface Props {
 }
 
 export default function TeamListItem(props: Props) {
+const t = useTranslations("team-list-item");
+
   const searchParams = useCompatSearchParams();
   const { t } = useLocale();
   const utils = trpc.useUtils();
@@ -101,7 +104,7 @@ export default function TeamListItem(props: Props) {
       <Avatar
         size="md"
         imageSrc={getPlaceholderAvatar(team?.logoUrl || team?.parent?.logoUrl, team?.name as string)}
-        alt="Team logo"
+        alt={t('avatar.team-logo-alt')}
         className="inline-flex justify-center"
       />
       <div className="ms-3 inline-block truncate">

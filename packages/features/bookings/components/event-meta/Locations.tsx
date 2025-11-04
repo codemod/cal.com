@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { getEventLocationType, getTranslatedLocation } from "@calcom/app-store/locations";
 import type { BookerEvent } from "@calcom/features/bookings/types";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -40,7 +41,10 @@ export const EventLocations = ({ event }: { event: BookerEvent }) => {
               <>
                 <p className="mb-2">{t("select_on_next_step")}</p>
                 <ul className="pl-1">
-                  {locations.map((location, index) => (
+                  {locations.map((location, index) =>  {
+const t = useTranslations("event-locations");
+
+return (
                     <li key={`${location.type}-${index}`} className="mt-1">
                       <div className="flex flex-row items-center">
                         <img
@@ -51,12 +55,13 @@ export const EventLocations = ({ event }: { event: BookerEvent }) => {
                               ? "dark:invert-[.65]"
                               : ""
                           )}
-                          alt={`${getEventLocationType(location.type)?.label} icon`}
+                          alt={t('accessibility.location-type-icon-alt', { "getEventLocationTypeLocationTypeLabel": getEventLocationType(location.type)?.label })}
                         />
                         <span>{getLocationToDisplay(location)}</span>
                       </div>
                     </li>
-                  ))}
+                  )
+})}
                 </ul>
               </>
             }>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Button } from "@calcom/ui/components/button";
 
@@ -20,6 +21,8 @@ export const PlatformBillingCard = ({
   handleSubscribe,
   currentPlan,
 }: PlatformBillingCardProps) => {
+const t = useTranslations("platform-billing-card");
+
   const { t } = useLocale();
   return (
     <div className="border-subtle max-w-[450px] rounded-2xl border p-5 md:mx-4">
@@ -40,8 +43,10 @@ export const PlatformBillingCard = ({
         <p className="pb-5 pt-3 text-base">{description}</p>
         <h1 className="text-3xl font-semibold">
           {pricing !== undefined && (
-            <>
-              US${pricing} <span className="text-sm">{t("per_month")}</span>
+            <>{t.rich('pricing.monthly-cost-display', {
+      pricing,
+      component0: (chunks) => <span className="text-sm">{t("per_month")}</span>
+    })}
             </>
           )}
         </h1>

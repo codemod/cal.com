@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -23,10 +25,14 @@ const groupedOptions = [
   },
 ];
 
-export const GroupedExample: React.FC = () => (
+export const GroupedExample: React.FC = () =>  {
+const t = useTranslations("select-grouped-demo");
+
+return (
   <RenderComponentWithSnippet>
     <div className="space-y-4 md:w-80">
-      <Select options={groupedOptions} placeholder="Choose food..." />
+      <Select options={groupedOptions} placeholder={t('placeholders.choose-food')} />
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

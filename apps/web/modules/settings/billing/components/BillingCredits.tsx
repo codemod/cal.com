@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -89,6 +91,8 @@ const getMonthOptions = (): MonthOption[] => {
 };
 
 export default function BillingCredits() {
+const t = useTranslations("billing-credits-settings");
+
   const { t } = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -301,9 +305,7 @@ export default function BillingCredits() {
                 key="Credit System"
                 className="underline underline-offset-2"
                 target="_blank"
-                href="https://cal.com/help/billing-and-usage/messaging-credits">
-                Learn more
-              </Link>,
+                href="https://cal.com/help/billing-and-usage/messaging-credits">{t('links.learn-more')}</Link>,
             ]}
           />
         </div>

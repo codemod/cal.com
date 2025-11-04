@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import classNames from "classnames";
@@ -41,9 +43,13 @@ interface LoginValues {
   csrfToken: string;
 }
 
-const GoogleIcon = () => (
-  <img className="text-subtle mr-2 h-4 w-4" src="/google-icon-colored.svg" alt="Continue with Google Icon" />
-);
+const GoogleIcon = () =>  {
+const t = useTranslations("auth-login-view");
+
+return (
+  <img className="text-subtle mr-2 h-4 w-4" src="/google-icon-colored.svg" alt={t('icons.google-signin-alt-text')} />
+)
+};
 export type PageProps = inferSSRProps<typeof getServerSideProps>;
 export default function Login({
   csrfToken,
@@ -53,6 +59,8 @@ export default function Login({
   samlProductID,
   totpEmail,
 }: PageProps) {
+const t = useTranslations("auth-login-view");
+
   const searchParams = useCompatSearchParams();
   const { t } = useLocale();
   const router = useRouter();
@@ -249,7 +257,7 @@ export default function Login({
                   id="email"
                   label={t("email_address")}
                   defaultValue={totpEmail || (searchParams?.get("email") as string)}
-                  placeholder="john.doe@example.com"
+                  placeholder={t('placeholders.email-example')}
                   required
                   autoComplete="email"
                   {...register("email")}

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Fragment } from "react";
 
@@ -47,6 +48,8 @@ export function OverlayCalendarSettingsModal({
   onToggleConnectedCalendar,
   checkIsCalendarToggled,
 }: IOverlayCalendarSettingsModalProps) {
+const t = useTranslations("overlay-calendar-settings-modal");
+
   const { t } = useLocale();
   const isPlatform = useIsPlatform();
 
@@ -95,7 +98,7 @@ export function OverlayCalendarSettingsModal({
                                         ? `https://app.cal.com${item.integration.logo}`
                                         : item.integration.logo
                                     }
-                                    alt={`${item.integration.title} logo`}
+                                    alt={t('images.integration-logo-alt', { "itemIntegrationTitle": item.integration.title })}
                                   />
                                 )
                               }

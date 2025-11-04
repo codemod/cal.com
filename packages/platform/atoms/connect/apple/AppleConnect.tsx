@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import {
   Dialog,
@@ -40,6 +42,8 @@ export const AppleConnect: FC<Partial<Omit<OAuthConnectProps, "redir">>> = ({
   onSuccess,
   isDryRun = false,
 }) => {
+const t = useTranslations("apple-calendar-connect");
+
   const { t } = useLocale();
   const form = useForm({
     defaultValues: {
@@ -123,12 +127,11 @@ export const AppleConnect: FC<Partial<Omit<OAuthConnectProps, "redir">>> = ({
         </DialogTrigger>
         <DialogContent className="bg-default text-default">
           <DialogHeader>
-            <DialogTitle>Connect to Apple Server</DialogTitle>
-            <DialogDescription>
-              Generate an app specific password to use with Cal.com at{" "}
-              <span className="font-bold">https://appleid.apple.com/account/manage</span>. Your credentials
-              will be stored and encrypted.
-            </DialogDescription>
+            <DialogTitle>{t('dialog.title')}</DialogTitle>
+            <DialogDescription>{t.rich('dialog.description', {
+      component0: (chunks) => <span className="font-bold">{chunks}</span>
+    })}
+              </DialogDescription>
           </DialogHeader>
           <Form
             form={form}
@@ -154,14 +157,14 @@ export const AppleConnect: FC<Partial<Omit<OAuthConnectProps, "redir">>> = ({
                 required
                 type="text"
                 {...form.register("username")}
-                label="Apple ID"
-                placeholder="appleid@domain.com"
+                label={t('form.labels.apple-id')}
+                placeholder={t('form.placeholders.apple-id')}
                 data-testid="apple-calendar-email"
               />
               <PasswordField
                 required
                 {...form.register("password")}
-                label="Password"
+                label={t('form.labels.password')}
                 placeholder="•••••••••••••"
                 autoComplete="password"
                 data-testid="apple-calendar-password"
@@ -173,17 +176,13 @@ export const AppleConnect: FC<Partial<Omit<OAuthConnectProps, "redir">>> = ({
                 type="button"
                 color="secondary"
                 className="md:rounded-md"
-                onClick={() => setIsDialogOpen(false)}>
-                Cancel
-              </Button>
+                onClick={() => setIsDialogOpen(false)}>{t('buttons.cancel')}</Button>
               <Button
                 disabled={isSaving}
                 type="submit"
                 className="border-none md:rounded-md"
                 loading={form.formState.isSubmitting}
-                data-testid="apple-calendar-login-button">
-                Save
-              </Button>
+                data-testid="apple-calendar-login-button">{t('buttons.save')}</Button>
             </div>
           </Form>
         </DialogContent>

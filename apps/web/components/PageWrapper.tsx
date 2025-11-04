@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { DefaultSeo } from "next-seo";
 import { Inter } from "next/font/google";
@@ -34,6 +36,8 @@ const calFont = localFont({
 });
 
 function PageWrapper(props: AppProps) {
+const t = useTranslations("page-wrapper-styles");
+
   const { Component, pageProps, err, router } = props;
   let pageStatus = "200";
 
@@ -78,12 +82,7 @@ function PageWrapper(props: AppProps) {
         dangerouslySetInnerHTML={{ __html: `window.CalComPageStatus = '${pageStatus}'` }}
       />
 
-      <style jsx global>{`
-        :root {
-          --font-inter: ${interFont.style.fontFamily};
-          --font-cal: ${calFont.style.fontFamily};
-        }
-      `}</style>
+      <style jsx global>{t('css.font-variables', { "interFontStyleFontFamily": interFont.style.fontFamily, "calFontStyleFontFamily": calFont.style.fontFamily })}</style>
       <IconSprites />
 
       {getLayout(

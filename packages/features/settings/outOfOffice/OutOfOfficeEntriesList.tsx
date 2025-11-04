@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { keepPreviousData } from "@tanstack/react-query";
 import {
@@ -87,6 +89,8 @@ export default function OutOfOfficeEntriesList() {
 }
 
 function OutOfOfficeEntriesListContent() {
+const t = useTranslations("out-of-office-entries-list");
+
   const { t } = useLocale();
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const [deletedEntry, setDeletedEntry] = useState(0);
@@ -399,9 +403,7 @@ function OutOfOfficeEntriesListContent() {
                     <div className="dark:bg-darkgray-50 text-inverted relative z-0 flex h-[70px] w-[70px] items-center justify-center rounded-3xl border-2 border-[#e5e7eb] bg-white">
                       <Icon name="clock" size={28} className="text-black" />
                       <div className="dark:bg-darkgray-50 absolute right-4 top-5 h-[12px] w-[12px] rotate-[56deg] bg-white text-lg font-bold" />
-                      <span className="absolute right-4 top-3 font-sans text-sm font-extrabold text-black">
-                        z
-                      </span>
+                      <span className="absolute right-4 top-3 font-sans text-sm font-extrabold text-black">{t('icons.sleep-indicator')}</span>
                     </div>
                   </div>
                 </div>

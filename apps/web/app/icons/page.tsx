@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { _generateMetadataForStaticPage } from "app/_utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -25,6 +26,8 @@ const calFont = localFont({
 });
 
 export default function IconsPage() {
+const t = useTranslations("icons-showcase-page");
+
   const icons = Array.from(lucideIconList).sort() as IconName[];
 
   return (
@@ -32,10 +35,10 @@ export default function IconsPage() {
       <div className="bg-subtle flex h-screen">
         <IconSprites />
         <div className="bg-default m-auto min-w-full rounded-md p-10 text-right ltr:text-left">
-          <h1 className="text-emphasis font-cal text-2xl font-medium">Icons Showcase</h1>
-          <IconGrid title="Regular Icons" icons={icons} />
+          <h1 className="text-emphasis font-cal text-2xl font-medium">{t('page.title')}</h1>
+          <IconGrid title={t('sections.regular-icons')} icons={icons} />
           <IconGrid
-            title="Filled Icons"
+            title={t('sections.filled-icons')}
             icons={icons}
             rootClassName="bg-inverted text-inverted"
             iconClassName="fill-blue-500"

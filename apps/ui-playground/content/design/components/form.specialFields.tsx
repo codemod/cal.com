@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useForm } from "react-hook-form";
@@ -12,6 +14,8 @@ type FormValues = {
 };
 
 export const SpecialFieldsExample: React.FC = () => {
+const t = useTranslations("form-special-fields-demo");
+
   const form = useForm<FormValues>({
     defaultValues: {
       age: undefined,
@@ -27,25 +31,21 @@ export const SpecialFieldsExample: React.FC = () => {
     <RenderComponentWithSnippet>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <InputField
-          label="Age"
+          label={t('labels.age')}
           type="number"
           {...form.register("age", { valueAsNumber: true })}
           error={form.formState.errors.age?.message}
         />
         <InputField
-          label="Phone"
+          label={t('labels.phone')}
           type="tel"
           addOnLeading="+"
           {...form.register("phone")}
           error={form.formState.errors.phone?.message}
         />
         <div className="flex justify-end space-x-2">
-          <Button color="minimal" type="button" onClick={() => form.reset()}>
-            Reset
-          </Button>
-          <Button type="submit" loading={form.formState.isSubmitting}>
-            Submit
-          </Button>
+          <Button color="minimal" type="button" onClick={() => form.reset()}>{t('buttons.reset')}</Button>
+          <Button type="submit" loading={form.formState.isSubmitting}>{t('buttons.submit')}</Button>
         </div>
       </form>
     </RenderComponentWithSnippet>

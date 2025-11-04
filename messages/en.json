@@ -1,0 +1,1317 @@
+{
+  "meeting-time-timezones": {
+    "indicators": {
+      "day-offset_0": "+1",
+      "day-offset_1": "-1"
+    }
+  },
+  "form-step": {
+    "progress": {
+      "step-counter": "Step {currentStep} of {steps}"
+    }
+  },
+  "date-range-picker": {
+    "labels": {
+      "date-range-incomplete": "{formatDatesStartDateLllDdY} - End"
+    },
+    "placeholders": {
+      "select-date": "Pick a date"
+    }
+  },
+  "query-cell": {
+    "errors": {
+      "generic-failure-title": "Something went wrong"
+    }
+  },
+  "router-page": {
+    "headings": {
+      "router-atom-title": "This is the router atom"
+    }
+  },
+  "home-landing": {
+    "hero": {
+      "main-heading": "The all in one Scheduling marketplace",
+      "getting-started-description": "To get started, connect your google calendar."
+    },
+    "images": {
+      "cover-alt-text": "cover image"
+    }
+  },
+  "event-types-management": {
+    "headings": {
+      "page-title-with-id": "EventTypes{eventTypeId,select,true{: {eventTypeId}} other{}}",
+      "team-event-types": "Team event types",
+      "create-event-type": "Create Event Type",
+      "create-team-event-type": "Create Team Event Type"
+    },
+    "messages": {
+      "loading": "Loading..."
+    },
+    "buttons": {
+      "validate-form": "Validate Form",
+      "submit-form": "Submit Form"
+    }
+  },
+  "embed-page": {
+    "headings": {
+      "booker-embed-title": "This is the booker embed"
+    }
+  },
+  "bookings-page": {
+    "headings": {
+      "user-bookings": "{propsCalUsername} Bookings"
+    },
+    "states": {
+      "loading": "Loading..."
+    },
+    "labels": {
+      "host-and-attendee": "{bookingHosts0Name} and {bookingAttendees0Name}"
+    }
+  },
+  "booking-page": {
+    "headings": {
+      "public-booking-page": "{propsCalUsername} Public Booking Page"
+    },
+    "states": {
+      "loading": "Loading..."
+    },
+    "sections": {
+      "user-event-types": "User event types",
+      "team-event-types": "Team event types"
+    },
+    "messages": {
+      "booking-created": "Booking created: {bookingTitle}"
+    }
+  },
+  "booking-confirmation": {
+    "loading": {
+      "text": "Loading..."
+    },
+    "messages": {
+      "meeting-scheduled": "This meeting is scheduled",
+      "email-sent-confirmation": "We sent an email with a calendar invitation with the details to everyone.",
+      "event-cancelled": "This event is cancelled"
+    },
+    "labels": {
+      "what": "What",
+      "when": "When",
+      "who": "Who",
+      "where": "Where",
+      "additional-notes": "Additional notes"
+    },
+    "actions": {
+      "need-change-prompt": "Need to make a change?",
+      "or-separator": " or"
+    },
+    "buttons": {
+      "reschedule": "Reschedule",
+      "cancel": "Cancel"
+    }
+  },
+  "navbar-navigation": {
+    "links": {
+      "week-view": "Week View",
+      "calendar": "Calendar",
+      "availability": "Availability",
+      "book-me": "Book Me",
+      "my-bookings": "My Bookings",
+      "embed": "Embed",
+      "conferencing-apps": "Conferencing Apps"
+    }
+  },
+  "selected-calendars-settings": {
+    "scope-selector": {
+      "using-label": "Using",
+      "settings-label": "settings"
+    }
+  },
+  "selected-calendars-platform-wrapper": {
+    "messages": {
+      "no-connected-calendars": "No connected calendars found."
+    }
+  },
+  "event-payments-stripe-wrapper": {
+    "status": {
+      "checking": "Checking..."
+    },
+    "messages": {
+      "stripe-connection-required": "You need to connect Stripe to use this feature. Please click on the button below to connect."
+    },
+    "buttons": {
+      "connect-stripe": "Connect to Stripe",
+      "connect-stripe-loading": "Connect to Stripe",
+      "connect-stripe-already-connected": "Connect to Stripe"
+    }
+  },
+  "og-images": {
+    "alt-text": {
+      "background": "background",
+      "profile-picture": "Profile picture",
+      "logo": "Logo",
+      "app-icon": "App icon"
+    },
+    "meeting": {
+      "meet-prefix": "Meet"
+    }
+  },
+  "event-payment-form": {
+    "states": {
+      "loading": "Loading..."
+    },
+    "errors": {
+      "payment-not-found": "No payment found with UID - {paymentUid}"
+    },
+    "booking-details": {
+      "time-duration-timezone": "{dateFormatIs24HHMmHMma} - {paymentInfoEventTypeLength} mins <component0>({timezone})</component0>"
+    }
+  },
+  "destination-calendar-settings-platform-wrapper": {
+    "loading": {
+      "calendars": "Loading..."
+    }
+  },
+  "destination-calendar-selector": {
+    "labels": {
+      "default": "Default"
+    }
+  },
+  "organization-banner": {
+    "alt-text": {
+      "banner-image": "Organization Banner"
+    }
+  },
+  "user-edit-form": {
+    "avatar": {
+      "alt-text": "{selectedUserName} avatar"
+    },
+    "attributes": {
+      "weights-label": "Weights"
+    }
+  },
+  "apple-calendar-connect": {
+    "dialog": {
+      "title": "Connect to Apple Server",
+      "description": "Generate an app specific password to use with Cal.com at <component0>https://appleid.apple.com/account/manage</component0>. Your credentials will be stored and encrypted."
+    },
+    "form": {
+      "labels": {
+        "apple-id": "Apple ID",
+        "password": "Password"
+      },
+      "placeholders": {
+        "apple-id": "appleid@domain.com"
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save"
+    }
+  },
+  "user-table-team-list": {
+    "messages": {
+      "no-results-found": "No results found."
+    }
+  },
+  "user-dropdown": {
+    "avatar": {
+      "alt-text_0": "{userUsername} Avatar",
+      "alt-text_1": "Nameless User Avatar"
+    },
+    "user": {
+      "display-name": "{isPending,select,true{Loading...} other{{userNameNamelessUser}}}"
+    },
+    "menu-items": {
+      "platform": "Platform"
+    }
+  },
+  "platform-managed-users-table": {
+    "status": {
+      "pending": "Pending"
+    }
+  },
+  "user-table-mass-assign-attributes": {
+    "messages": {
+      "no-attributes-found": "No attributes found"
+    }
+  },
+  "user-table-dynamic-link": {
+    "buttons": {
+      "open": "Open"
+    }
+  },
+  "troubleshooter-event-type-select": {
+    "labels": {
+      "event-type": "Event Type"
+    }
+  },
+  "kbar-command-palette": {
+    "shortcuts": {
+      "close-key-combination": "+ K"
+    }
+  },
+  "booker-layout-selector": {
+    "images": {
+      "layout-preview-alt": "Layout preview"
+    },
+    "links": {
+      "appearance-settings": "Appearance"
+    },
+    "buttons": {
+      "override-settings": "Override"
+    }
+  },
+  "location-select": {
+    "alt-text": {
+      "location-icon": "cover"
+    }
+  },
+  "insights-org-teams-filter": {
+    "alt-text": {
+      "organization-logo": "{placeholder} logo",
+      "user-avatar": "{currentUserName} avatar"
+    }
+  },
+  "form-builder-field": {
+    "indicators": {
+      "required-field_0": "*",
+      "required-field_1": ""
+    }
+  },
+  "event-setup-tab": {
+    "labels": {
+      "url-field_0": "Slug"
+    }
+  },
+  "recurring-event-controller": {
+    "warnings": {
+      "experimental-feature": "Experimental: Recurring Events are currently experimental and causes some issues sometimes when checking for availability. We are working on fixing this."
+    }
+  },
+  "form-builder": {
+    "buttons": {
+      "add-option": "Add an Option"
+    },
+    "placeholders": {
+      "email-domains-require": "gmail.com, hotmail.com, ...",
+      "email-domains-exclude": "gmail.com, hotmail.com, ..."
+    },
+    "labels": {
+      "field-number": "Field {index}1"
+    }
+  },
+  "weight-description": {
+    "links": {
+      "learn-more": "Learn more"
+    }
+  },
+  "event-team-assignment-tab": {
+    "links": {
+      "learn-more": "Learn more"
+    },
+    "groups": {
+      "default-name-with-number": "Group {hostGroupsLength}1",
+      "placeholder-name-with-number": "Group {groupNumber}"
+    }
+  },
+  "multi-dropdown-select": {
+    "placeholder": {
+      "select": "Select"
+    }
+  },
+  "booking-at-cell": {
+    "labels": {
+      "status": "Status:"
+    }
+  },
+  "custom-event-type-modal": {
+    "variables": {
+      "event-type-title": "'{Event type title}'",
+      "event-duration": "'{Event duration}'",
+      "organiser": "'{Organiser}'",
+      "organiser-first-name": "'{Organiser first name}'",
+      "scheduler": "'{Scheduler}'",
+      "scheduler-first-name": "'{Scheduler first name}'",
+      "scheduler-last-name": "'{Scheduler last name}'",
+      "location": "'{Location}'"
+    },
+    "preview": {
+      "sample-time-range": "8 - 10 AM"
+    }
+  },
+  "event-webhooks-tab": {
+    "links": {
+      "webhooks-settings": "webhooks settings"
+    }
+  },
+  "workflows-page": {
+    "avatars": {
+      "user-alt-text": "{user} Avatar",
+      "profile-alt-text": "{profileSlug} Avatar"
+    }
+  },
+  "ai-event-controller": {
+    "placeholders": {
+      "cal-api-key": "Cal API Key"
+    }
+  },
+  "event-apps-tab": {
+    "links": {
+      "app-store": "App Store"
+    }
+  },
+  "workflow-step-container": {
+    "multi-select": {
+      "count-text-conditional_0": "count_team",
+      "count-text-conditional_1": "nr_routing_form",
+      "count-text-conditional_2": "nr_event_type"
+    }
+  },
+  "event-type-description": {
+    "duration": {
+      "minutes-format": "{dur}m",
+      "event-length-minutes": "{eventTypeLength}m"
+    }
+  },
+  "create-event-type-form": {
+    "labels": {
+      "url-with-prefix_0": "Slug",
+      "url-with-prefix_1": "{tUrl}: {urlPrefix}",
+      "url-field_0": "Slug"
+    }
+  },
+  "member-invitation-modal": {
+    "billing": {
+      "extra-seat-cost": "cost an extra seat ($15/m)"
+    },
+    "placeholders": {
+      "email-example": "email@example.com",
+      "bulk-email-example": "john@doe.com, alex@smith.com"
+    }
+  },
+  "users-table": {
+    "search": {
+      "placeholder": "username or email",
+      "label": "Search"
+    },
+    "columns": {
+      "user": "User",
+      "timezone": "Timezone",
+      "role": "Role"
+    },
+    "actions": {
+      "edit": "Edit"
+    },
+    "avatar": {
+      "alt-text": "Avatar of {userUsernameNameless}"
+    },
+    "delete": {
+      "confirmation-message": "Are you sure you want to delete this user?"
+    }
+  },
+  "team-event-types-list": {
+    "search": {
+      "no-results": "No results found."
+    }
+  },
+  "team-list-item": {
+    "avatar": {
+      "team-logo-alt": "Team logo"
+    }
+  },
+  "sso-connection-info": {
+    "labels": {
+      "saml-acs-url": "ACS URL",
+      "saml-entity-id": "Entity ID",
+      "oidc-callback-url": "Callback URL"
+    }
+  },
+  "create-team-form": {
+    "placeholders": {
+      "team-name-example": "Acme Inc.",
+      "team-slug-example": "acme"
+    }
+  },
+  "oidc-connection-form": {
+    "fields": {
+      "client-id": "Client id",
+      "client-secret": "Client secret",
+      "well-known-url": "Well-Known URL"
+    }
+  },
+  "delegation-credential-settings": {
+    "google-calendar-api-scope": "https://www.googleapis.com/auth/calendar",
+    "member-display-format": "{mName,select,true{{mName} ({mEmail})} other{{mEmail}}}"
+  },
+  "organization-admin-api-settings": {
+    "buttons": {
+      "create-organization": "Create Org"
+    }
+  },
+  "edit-member-sheet": {
+    "images": {
+      "company-logo-alt": "{name} logo",
+      "app-logo-alt": "{name} logo",
+      "user-avatar-alt": "{name} avatar"
+    },
+    "labels": {
+      "cal-platform": "Cal"
+    }
+  },
+  "organization-admin-edit-form": {
+    "labels": {
+      "name": "Name",
+      "slug": "Slug",
+      "auto-accept-domain": "Domain for which invitations are auto-accepted"
+    },
+    "placeholders": {
+      "name-example": "example",
+      "slug-example": "example"
+    },
+    "warnings": {
+      "slug-change-dns-impact": "Changing the slug would delete the previous organization domain and DNS and setup new domain and DNS for the organization."
+    }
+  },
+  "team-member-list": {
+    "status": {
+      "pending": "Pending"
+    }
+  },
+  "organization-attributes-form": {
+    "labels": {
+      "attribute-type": "Type"
+    }
+  },
+  "member-change-role-modal": {
+    "errors": {
+      "prefix": "Error:"
+    }
+  },
+  "other-team-list-item": {
+    "avatar": {
+      "team-logo-alt": "Team Logo"
+    }
+  },
+  "create-team-dialog": {
+    "buttons": {
+      "create": "Create"
+    }
+  },
+  "license-key-creation-form": {
+    "labels": {
+      "billing-period": "Billing Period",
+      "billing-email-customer": "Billing Email for Customer",
+      "booking-type": "Booking Type",
+      "total-entities-included": "Total entities included",
+      "fixed-price-per-entity": "Fixed price per entity",
+      "overages": "Overages"
+    },
+    "placeholders": {
+      "billing-email-example": "john@acme.com",
+      "company-name-example": "Acme"
+    },
+    "buttons": {
+      "back": "Back"
+    }
+  },
+  "organization-attributes-edit": {
+    "loading-state": "Loading"
+  },
+  "create-organization-form": {
+    "labels": {
+      "billing-period": "Billing Period",
+      "seats-optional": "Seats (optional)",
+      "price-per-seat-optional": "Price per seat (optional)"
+    },
+    "placeholders": {
+      "admin-email": "john@acme.com",
+      "organization-name": "Acme",
+      "organization-slug": "acme"
+    },
+    "headings": {
+      "upgrade-to-organizations": "Upgrade to Organizations"
+    },
+    "pricing": {
+      "per-user-monthly-with-billing": "${pricePerSeat} per user per month {billingPeriodBillingPeriodAnnually,select,true{(billed annually)} other{}}"
+    }
+  },
+  "weekly-calendar-view": {
+    "mobile-support": {
+      "not-supported-heading": "Mobile not supported yet",
+      "desktop-browser-message": "Please use a desktop browser to view this page"
+    }
+  },
+  "data-table-pagination": {
+    "status": {
+      "loaded-count-of-total": "Loaded <component0>{loadedCount}</component0> of <component1>{totalRowCount}</component1>"
+    }
+  },
+  "available-event-locations": {
+    "icons": {
+      "location-type-alt": "{eventLocationTypeLabel} icon"
+    }
+  },
+  "powered-by-branding": {
+    "logo": {
+      "alt-text": "Cal.com Logo"
+    }
+  },
+  "group-team-mapping-table": {
+    "buttons": {
+      "create-team": "Create team"
+    }
+  },
+  "overlay-calendar-settings-modal": {
+    "images": {
+      "integration-logo-alt": "{itemIntegrationTitle} logo"
+    }
+  },
+  "api-key-dialog-form": {
+    "expiration": {
+      "status-display_0": "{tExpires} {apiKeyDetailsExpiresAtToLocaleDateString}"
+    }
+  },
+  "book-event-form": {
+    "actions": {
+      "select-new-time": "Please select a new time"
+    },
+    "links": {
+      "terms": "Terms",
+      "privacy-policy": "Privacy Policy."
+    }
+  },
+  "segment-attributes-filter": {
+    "loading": {
+      "fetching-attributes": "Loading..."
+    }
+  },
+  "app-card": {
+    "images": {
+      "app-logo-alt": "{appName} Logo"
+    },
+    "badges": {
+      "template": "Template"
+    }
+  },
+  "team-invite-email": {
+    "descriptions": {
+      "app-scheduler-pitch": " {appName} is the event-juggling scheduler that enables you and your team to schedule meetings without the email tennis."
+    }
+  },
+  "organizer-attendee-cancelled-email": {
+    "messages": {
+      "attendee-no-longer-attending": "attendee_no_longer_attending"
+    }
+  },
+  "organizer-request-email": {
+    "titles": {
+      "event-awaiting-approval-conditional_0": "event_awaiting_approval_recurring",
+      "event-awaiting-approval-conditional_1": "event_awaiting_approval"
+    }
+  },
+  "attendee-updated-email": {
+    "title": {
+      "event-updated": "event_has_been_updated"
+    }
+  },
+  "daily-video-transcript-email": {
+    "transcript": {
+      "item-label": "{propsDate} Transcript {index}1"
+    }
+  },
+  "attendee-rescheduled-email": {
+    "title": {
+      "event-rescheduled": "event_has_been_rescheduled"
+    }
+  },
+  "attendee-add-guests-email": {
+    "notifications": {
+      "new-guests-added": "new_guests_added"
+    }
+  },
+  "attendee-cancelled-seat-email": {
+    "messages": {
+      "no-longer-attending": "no_longer_attending"
+    }
+  },
+  "embed-react-inline-demo": {
+    "headings": {
+      "cal-component-introduction": "There is <component0>Cal</component0> component below me"
+    }
+  },
+  "event-type-app-card-template": {
+    "demo": {
+      "event-title-display": "<component0>{isSunrise ? \"sunrise\" : \"sunset\"}</component0> I am an AppCard for Event with Title: {eventTypeTitle}"
+    },
+    "instructions": {
+      "edit-template-file": "Edit <component0>packages/app-store/{appSlug}/EventTypeAppCardInterface.tsx</component0> to play with me"
+    }
+  },
+  "umami-event-type-app-card": {
+    "placeholders": {
+      "script-url": "Enter the script source URL",
+      "site-id": "Enter your Site ID"
+    }
+  },
+  "weather-app-settings": {
+    "placeholders": {
+      "city-example": "San Francisco"
+    }
+  },
+  "zapier-template-card": {
+    "buttons": {
+      "use-zap": "Use Zap"
+    }
+  },
+  "organizer-request-reminder-email": {
+    "titles": {
+      "awaiting-approval": "event_still_awaiting_approval"
+    }
+  },
+  "insights-event-type-app-card": {
+    "form": {
+      "site-id-placeholder": "Enter your Site ID"
+    }
+  },
+  "mock-payment-app-card": {
+    "description": {
+      "add-mock-payment": "Add a mock payment to your events"
+    },
+    "labels": {
+      "price": "Price",
+      "payment-option": "Payment option"
+    },
+    "placeholders": {
+      "price": "Price"
+    }
+  },
+  "paypal-event-type-app-card": {
+    "descriptions": {
+      "add-payment-integration": "Add Paypal payment to your events"
+    }
+  },
+  "giphy-gif-selector": {
+    "image": {
+      "alt-text": "Selected Gif Image"
+    },
+    "buttons": {
+      "change": "Change",
+      "add-from-giphy": "Add from Giphy"
+    }
+  },
+  "hitpay-event-settings": {
+    "labels": {
+      "price": "Price"
+    },
+    "currency": {
+      "symbol-display_0": ""
+    }
+  },
+  "attendee-declined-email": {
+    "titles": {
+      "event-request-declined-conditional_0": "event_request_declined_recurring",
+      "event-request-declined-conditional_1": "event_request_declined"
+    }
+  },
+  "attendee-reschedule-request-email": {
+    "titles": {
+      "request-reschedule-booking": "request_reschedule_booking"
+    },
+    "actions": {
+      "book-new-time": "Book a new time"
+    }
+  },
+  "attendee-awaiting-payment-email": {
+    "titles": {
+      "payment-method-required": "meeting_awaiting_payment_method",
+      "payment-pending": "meeting_awaiting_payment"
+    }
+  },
+  "matomo-event-type-app-card": {
+    "placeholders": {
+      "matomo-url": "Enter your Matomo URL here",
+      "site-id": "Enter your Site ID"
+    }
+  },
+  "app-store-delete-form": {
+    "instructions": {
+      "confirm-deletion": "Type below the slug of the {isTemplate,select,true{Template} other{App}} that you want to delete."
+    },
+    "descriptions": {
+      "cleanup-warning": "It would cleanup the app directory and App table and Credential table."
+    }
+  },
+  "app-settings-interface": {
+    "inputs": {
+      "placeholder-text": "Some Input"
+    }
+  },
+  "posthog-event-type-app-card": {
+    "placeholders": {
+      "tracking-id": "Enter your Tracking ID",
+      "api-host-url": "Enter your Api host url"
+    }
+  },
+  "stripe-event-type-settings": {
+    "labels": {
+      "price": "Price"
+    },
+    "currency": {
+      "symbol_0": ""
+    }
+  },
+  "plausible-event-type-settings": {
+    "defaults": {
+      "script-url": "https://plausible.io/js/script.js"
+    }
+  },
+  "app-create-update-form": {
+    "errors": {
+      "slug-required": "--slug is required"
+    },
+    "completion": {
+      "process-wait-message": "Just wait for a few seconds for process to exit and then you are good to go. Your {isTemplate,select,true{Template} other{App}} code exists at",
+      "logo-tip": "Tip : Go and change the logo of your {isTemplate,select,true{template} other{app}} by replacing {getAppDirPathSlugIsTemplate}/static/icon.svg"
+    },
+    "summary": {
+      "heading": "App Summary:",
+      "slug-label": "Slug:",
+      "url-label": "{isTemplate,select,true{Template} other{App}} URL:",
+      "localhost-url": "http://localhost:3000/apps/{slug}",
+      "name-label": "Name:",
+      "description-label": "Description:",
+      "category-label": "Category:",
+      "publisher-name-label": "Publisher Name:",
+      "publisher-email-label": "Publisher Email:"
+    },
+    "next-steps": {
+      "admin-enable-instruction": "Next Step: Enable the app from http://localhost:3000/settings/admin/apps as admin user (Email: admin@example.com, Pass: ADMINadmin2022!)"
+    },
+    "warnings": {
+      "manual-rename-note": "Note: You should not rename app directory manually. Use cli only to do that as it needs to be updated in DB as well"
+    }
+  },
+  "giphy-search-dialog": {
+    "images": {
+      "gif-alt-text": "Gif from Giphy for {keyword}"
+    },
+    "messages": {
+      "not-perfect-gif": "Not the perfect GIF?"
+    },
+    "buttons": {
+      "shuffle": "Shuffle"
+    }
+  },
+  "organization-onboard-members": {
+    "loading": {
+      "skeleton-container": "Loading..."
+    },
+    "form": {
+      "email-placeholder": "colleague@company.com"
+    }
+  },
+  "paypal-payment-settings": {
+    "fields": {
+      "price-label": "Price",
+      "price-placeholder": "Price",
+      "payment-option-label": "Payment option"
+    }
+  },
+  "oauth-client-settings": {
+    "forms": {
+      "client-name-label": "Client name",
+      "redirect-uri-label": "Redirect URI"
+    }
+  },
+  "admin-sms-lock-settings": {
+    "placeholders": {
+      "username": "username",
+      "team-slug": "team slug"
+    },
+    "buttons": {
+      "lock-user": "Lock User",
+      "lock-team": "Lock Team"
+    }
+  },
+  "basecamp3-event-settings": {
+    "labels": {
+      "link-project-instruction": "Link a Basecamp project to this event:"
+    },
+    "placeholders": {
+      "select-project": "Select project"
+    },
+    "messages": {
+      "single-project-limitation": "Please note that as of now you can only link <component0>one</component0> of your projects to cal.com"
+    }
+  },
+  "alby-event-type-settings": {
+    "labels": {
+      "price": "Price",
+      "payment-option": "Payment option"
+    },
+    "placeholders": {
+      "price": "Price"
+    }
+  },
+  "insights-virtual-queues": {
+    "form-selector": {
+      "placeholder": "Select project"
+    }
+  },
+  "alby-event-type-app-card": {
+    "descriptions": {
+      "bitcoin-lightning-payments": "Add bitcoin lightning payments to your events"
+    }
+  },
+  "credential-sync-playground": {
+    "headings": {
+      "welcome-title": "Welcome to Credential Sync Playground"
+    },
+    "descriptions": {
+      "user-app-management": "You are managing credentials for cal.com <component0>userId={userId}</component0> for <component1>appSlug={appSlug}</component1>. Update query params to manage a different user or app"
+    },
+    "buttons": {
+      "give-invalid-token": "Give an invalid token to Cal.com",
+      "give-valid-token": "Give a valid token to Cal.com"
+    }
+  },
+  "auth-login-view": {
+    "icons": {
+      "google-signin-alt-text": "Continue with Google Icon"
+    },
+    "placeholders": {
+      "email-example": "john.doe@example.com"
+    }
+  },
+  "oauth-clients-list": {
+    "headings": {
+      "oauth-clients": "OAuth Clients"
+    },
+    "descriptions": {
+      "platform-connection": "Connect your platform to cal.com with OAuth",
+      "oauth-client-purpose": "OAuth clients facilitate access to Cal.com on behalf of users"
+    }
+  },
+  "setup-license-selection": {
+    "descriptions": {
+      "build-on-platform": "Build on top of Cal.com"
+    }
+  },
+  "oauth-client-form": {
+    "permissions": {
+      "read-label": "Read",
+      "write-label": "Write",
+      "heading": "Permissions",
+      "toggle-all-button_0": "Select all",
+      "toggle-all-button_1": "Discard all"
+    },
+    "fields": {
+      "client-name-label": "Client name",
+      "redirect-uris-label": "Redirect uris",
+      "booking-redirect-uri-label": "Booking redirect uri",
+      "booking-cancel-redirect-uri-label": "Booking cancel redirect uri",
+      "booking-reschedule-redirect-uri-label": "Booking reschedule redirect uri"
+    },
+    "options": {
+      "enable-emails-label": "Enable emails",
+      "enable-calendar-events-label": "Enable calendar events",
+      "enable-managed-user-default-event-types-label": "Enable managed user default event types"
+    }
+  },
+  "oauth-authorize-view": {
+    "permissions": {
+      "access-message": "<component0>✓</component0>{permissionsMessage} your"
+    },
+    "images": {
+      "logo-alt-text": "Logo"
+    }
+  },
+  "profile-settings-view": {
+    "forms": {
+      "password-field-label": "Password"
+    },
+    "sections": {
+      "connected-accounts-label": "Connected accounts"
+    }
+  },
+  "platform-billing-view": {
+    "buttons": {
+      "plans": "Plans"
+    }
+  },
+  "admin-users-table": {
+    "avatars": {
+      "user-alt-text": "Avatar of {userUsernameNameless}",
+      "team-alt-text": "Avatar of {teamName}"
+    },
+    "paths": {
+      "team-url": "/team/{teamSlug}"
+    }
+  },
+  "app-configure-step-card": {
+    "buttons": {
+      "save": "Save"
+    }
+  },
+  "platform-pricing-component": {
+    "errors": {
+      "team-required": "Platform team not present, you need to create a team first."
+    }
+  },
+  "booking-success-view": {
+    "giphy": {
+      "alt-text": "Gif from Giphy"
+    },
+    "buttons": {
+      "go-back": "Go Back"
+    },
+    "calendar-providers": {
+      "google": "Google",
+      "microsoft-outlook": "Microsoft Outlook",
+      "microsoft-office": "Microsoft Office"
+    },
+    "placeholders": {
+      "email-example": "rick.astley@cal.com"
+    },
+    "feedback": {
+      "placeholder-comment": "Next time I would like to ..."
+    }
+  },
+  "app-providers": {
+    "styles": {
+      "dark-color-scheme": "\n            .dark '{\n              color-scheme: dark;\n            }'"
+    }
+  },
+  "app-providers-theme-styles": {
+    "styles": {
+      "dark-color-scheme": "\n            .dark '{\n              color-scheme: dark;\n            }'"
+    }
+  },
+  "booking-list-item": {
+    "labels": {
+      "optional-suffix": "(Optional)"
+    },
+    "accessibility": {
+      "provider-logo-alt": "{providerLabel} logo"
+    }
+  },
+  "page-wrapper-styles": {
+    "css": {
+      "font-variables": "\n        :root '{'\n          --font-inter: {interFontStyleFontFamily};\n          --font-cal: {calFontStyleFontFamily};\n        '}'"
+    }
+  },
+  "icons-showcase-page": {
+    "page": {
+      "title": "Icons Showcase"
+    },
+    "sections": {
+      "regular-icons": "Regular Icons",
+      "filled-icons": "Filled Icons"
+    }
+  },
+  "forgot-password-form": {
+    "placeholders": {
+      "email-example": "john.doe@example.com"
+    }
+  },
+  "platform-billing-card": {
+    "pricing": {
+      "monthly-cost-display": "US${pricing} <component0>{t(\"per_month\")}</component0>"
+    }
+  },
+  "premium-username-textfield": {
+    "messages": {
+      "payment-required-for-premium": "You need to reserve your premium username for"
+    },
+    "errors": {
+      "payment-failed-username-not-reserved": "Your payment could not be completed. Your username is still not reserved"
+    }
+  },
+  "error-page": {
+    "headings": {
+      "not-your-fault": "It's not you, it's us."
+    },
+    "messages": {
+      "something-went-wrong": "Something went wrong on our end. Get in touch with our support team, and we'll get it fixed right away for you."
+    },
+    "instructions": {
+      "contact-support-info": "Please provide the following text when contacting support to better help you:"
+    },
+    "buttons": {
+      "contact-support": "Contact Support",
+      "try-again": "Try again"
+    }
+  },
+  "oauth-client-card": {
+    "labels": {
+      "client-name": "Client name: <component0>{name}</component0>",
+      "client-id": "Client Id:",
+      "client-secret": "Client Secret:",
+      "organization-id": "Organization Id:",
+      "permissions": "Permissions:",
+      "redirect-uris": "Redirect uris:",
+      "booking-redirect-uri": "Booking redirect uri:",
+      "booking-reschedule-uri": "Booking reschedule uri:",
+      "booking-cancel-uri": "Booking cancel uri:"
+    },
+    "status": {
+      "disabled": " Disabled"
+    },
+    "buttons": {
+      "webhooks": "Webhooks",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "user-profile-onboarding": {
+    "form-fields": {
+      "avatar-url-placeholder": "URL"
+    }
+  },
+  "reschedule-dialog": {
+    "labels": {
+      "optional-indicator": "(Optional)"
+    }
+  },
+  "app-page": {
+    "images": {
+      "app-screenshot-alt": "Screenshot of app {name}"
+    },
+    "badges": {
+      "template-dev-only": "Template - Available in Dev Environment only for testing"
+    }
+  },
+  "event-types-installation-step": {
+    "duration-badge-minutes": "{duration}m",
+    "empty-state-no-events": "Team has no Events"
+  },
+  "enterprise-page": {
+    "actions": {
+      "create-organization": "Create Org"
+    }
+  },
+  "not-found-page": {
+    "headings": {
+      "booking-not-found-or-page-missing_0": "Booking not found"
+    }
+  },
+  "settings-layout-app-dir-client": {
+    "badges": {
+      "invitation-abbreviated": "Inv.",
+      "new-feature": "New"
+    },
+    "images": {
+      "organization-logo-alt": "Organization Logo"
+    }
+  },
+  "toast-playground-demo": {
+    "buttons": {
+      "show-basic-toast": "Show Toast",
+      "custom-duration-toast": "Custom Duration",
+      "persistent-toast": "Persistent Toast",
+      "replay-toasts": "Replay Toasts"
+    }
+  },
+  "ui-playground-vertical-tabs": {
+    "headings": {
+      "basic-example": "Basic"
+    }
+  },
+  "select-loading-demo": {
+    "placeholders": {
+      "loading-options": "Loading options..."
+    }
+  },
+  "select-basic-demo": {
+    "placeholders": {
+      "choose-flavor": "Choose a flavor...",
+      "small-size-select": "Small size select..."
+    }
+  },
+  "ui-playground-textarea-states": {
+    "states": {
+      "default": {
+        "label": "Default",
+        "placeholder": "Default textarea..."
+      },
+      "disabled": {
+        "label": "Disabled",
+        "placeholder": "Disabled textarea..."
+      },
+      "readonly": {
+        "label": "Readonly",
+        "placeholder": "Readonly textarea..."
+      }
+    }
+  },
+  "navigation-items-playground": {
+    "sections": {
+      "basic-items": "Basic Items",
+      "with-badge": "With Badge",
+      "active-state": "Active State"
+    },
+    "badges": {
+      "new": "New"
+    }
+  },
+  "ui-playground-input-widths": {
+    "size-label": "Size: {size}",
+    "full-width-heading": "Full Width",
+    "full-width-placeholder": "Full width input",
+    "auto-width-heading": "Auto Width",
+    "auto-width-placeholder": "Auto width input"
+  },
+  "form-special-fields-demo": {
+    "labels": {
+      "age": "Age",
+      "phone": "Phone"
+    },
+    "buttons": {
+      "reset": "Reset",
+      "submit": "Submit"
+    }
+  },
+  "empty-screen-html-content-demo": {
+    "buttons": {
+      "learn-more": "Learn More"
+    },
+    "headings": {
+      "custom-with-html": "Custom Headline with <component0>HTML</component0>"
+    },
+    "descriptions": {
+      "first-paragraph": "This is a custom description with multiple paragraphs.",
+      "second-paragraph": "You can include <component0>any HTML content</component0> here."
+    }
+  },
+  "dropdown-complex-demo": {
+    "buttons": {
+      "open": "Open"
+    },
+    "labels": {
+      "my-account": "My account",
+      "team": "Team",
+      "user-email": "peer@cal.com"
+    },
+    "menu-items": {
+      "profile": "Profile",
+      "billing": "Billing",
+      "settings": "Settings",
+      "keyboard-shortcuts": "Keyboard Shortcuts",
+      "invite-users": "Invite users",
+      "new-team": "New team",
+      "github": "Github",
+      "support": "Support",
+      "api": "API",
+      "my-account": "My account",
+      "plan": "Plan",
+      "billing-with-icon": "Billing",
+      "integrations": "Integrations",
+      "module": "Module",
+      "log-out": "Log out"
+    },
+    "captions": {
+      "complex-menu": "Complex Menu",
+      "with-icons": "With Icons",
+      "simple-actions": "Simple Actions"
+    },
+    "alt-text": {
+      "avatar": "Avatar"
+    },
+    "actions": {
+      "rename": "Rename",
+      "duplicate": "Duplicate",
+      "move": "Move",
+      "delete": "Delete"
+    }
+  },
+  "dialog-form-playground": {
+    "buttons": {
+      "open-form-dialog": "Open Form Dialog",
+      "submit-feedback": "Submit Feedback"
+    },
+    "forms": {
+      "feedback-label-with-optional": "Your Feedback <component0>(Optional)</component0>"
+    },
+    "labels": {
+      "current-form-input": "Current Form Input:"
+    }
+  },
+  "ui-playground-checkbox-info-icon": {
+    "checkbox": {
+      "description": "Checkbox with additional information",
+      "label": "Information Icon"
+    },
+    "tooltip": {
+      "additional-info": "This is additional information that appears in a tooltip"
+    }
+  },
+  "empty-screen-custom-icon-demo": {
+    "messages": {
+      "add-team-members-description": "Add team members to collaborate"
+    },
+    "buttons": {
+      "add-members": "Add Members"
+    }
+  },
+  "dropdown-button-trigger-demo": {
+    "buttons": {
+      "menu": "Menu",
+      "more-actions": "More Actions"
+    },
+    "labels": {
+      "actions": "Actions",
+      "quick-actions": "Quick Actions"
+    },
+    "variants": {
+      "default": "Default",
+      "with-icon": "With Icon",
+      "icon-only": "Icon Only"
+    }
+  },
+  "ui-playground-badge-interactive": {
+    "buttons": {
+      "click-me": "Click me"
+    },
+    "labels": {
+      "clickable-description": "Clickable"
+    }
+  },
+  "avatar-sizes-demo": {
+    "alt-text": {
+      "circular-avatar": "{size} avatar",
+      "square-avatar": "{size} avatar"
+    }
+  },
+  "ui-playground-alert-custom-icons": {
+    "alert": {
+      "title-with-custom-icon": "{severityCharAt0ToUpperCaseSeveritySlice1} Alert with Custom Icon"
+    }
+  },
+  "ui-playground-badge-icons": {
+    "labels": {
+      "icon": "Icon"
+    }
+  },
+  "ui-playground-root-layout": {
+    "styles": {
+      "font-inter-css-variable": "\n          :root '{'\n            --font-inter: {interStyleFontFamilyReplaceG};\n          '}'"
+    }
+  },
+  "ui-playground-alert-custom-icon-color": {
+    "alerts": {
+      "severity-with-custom-icon-title": "{severityCharAt0ToUpperCaseSeveritySlice1} Alert with Custom Icon Color"
+    }
+  },
+  "color-type-table": {
+    "copy-actions": {
+      "hex": "Copy as HEX",
+      "rgb": "Copy as RGB",
+      "hsl": "Copy as HSL",
+      "tailwind-class": "Copy Tailwind Class"
+    }
+  },
+  "component-code-snippet-renderer": {
+    "buttons": {
+      "show-code-wip": "Code (WIP)"
+    }
+  }
+}

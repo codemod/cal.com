@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -21,10 +23,12 @@ import { Tooltip } from "@calcom/ui/components/tooltip";
 type TeamMember = RouterOutputs["viewer"]["teams"]["listMembers"]["members"][number];
 
 const AddNewTeamMembers = () => {
+const t = useTranslations("organization-onboard-members");
+
   const session = useSession();
 
   if (session.status === "loading") {
-    return <SkeletonContainer>Loading...</SkeletonContainer>;
+    return <SkeletonContainer>{t('loading.skeleton-container')}</SkeletonContainer>;
   }
   return <AddNewTeamMembersForm />;
 };
@@ -72,6 +76,8 @@ const useOrgCreation = () => {
 };
 
 export const AddNewTeamMembersForm = () => {
+const t = useTranslations("organization-onboard-members");
+
   const { t } = useLocale();
   const { useOnboardingStore, isBillingEnabled } = useOnboarding();
   const {
@@ -156,7 +162,7 @@ export const AddNewTeamMembersForm = () => {
                 label={t("email")}
                 type="email"
                 {...register("email", { required: true })}
-                placeholder="colleague@company.com"
+                placeholder={t('form.email-placeholder')}
               />
             </div>
             <Button type="submit" StartIcon="plus" color="secondary" data-testid="invite-new-member-button">

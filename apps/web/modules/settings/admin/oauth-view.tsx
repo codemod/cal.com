@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,6 +23,8 @@ type FormValues = {
 };
 
 export default function OAuthView() {
+const t = useTranslations("oauth-client-settings");
+
   const oAuthForm = useForm<FormValues>();
   const [clientSecret, setClientSecret] = useState("");
   const [clientId, setClientId] = useState("");
@@ -53,7 +57,7 @@ export default function OAuthView() {
           <div className="">
             <TextField
               {...oAuthForm.register("name")}
-              label="Client name"
+              label={t('forms.client-name-label')}
               type="text"
               id="name"
               placeholder=""
@@ -62,7 +66,7 @@ export default function OAuthView() {
             />
             <TextField
               {...oAuthForm.register("redirectUri")}
-              label="Redirect URI"
+              label={t('forms.redirect-uri-label')}
               type="text"
               id="redirectUri"
               placeholder=""

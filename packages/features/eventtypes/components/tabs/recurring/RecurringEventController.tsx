@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -45,6 +46,8 @@ export default function RecurringEventController({
   paymentEnabled,
   customClassNames,
 }: RecurringEventControllerProps) {
+const t = useTranslations("recurring-event-controller");
+
   const { t } = useLocale();
   const formMethods = useFormContext<FormValues>();
   const [recurringEventState, setRecurringEventState] = useState<RecurringEvent | null>(
@@ -78,7 +81,7 @@ export default function RecurringEventController({
             <Alert
               className={classNames("mb-4", customClassNames?.experimentalAlert)}
               severity="warning"
-              title="Experimental: Recurring Events are currently experimental and causes some issues sometimes when checking for availability. We are working on fixing this."
+              title={t('warnings.experimental-feature')}
             />
             <SettingsToggle
               labelClassName={classNames("text-sm", customClassNames?.recurringToggle?.label)}

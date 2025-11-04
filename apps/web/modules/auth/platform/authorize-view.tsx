@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useRouter } from "next/navigation";
 
@@ -13,6 +15,8 @@ import { Icon } from "@calcom/ui/components/icon";
 import { hasPermission } from "../../../../../packages/platform/utils/permissions";
 
 export default function Authorize() {
+const t = useTranslations("oauth-authorize-view");
+
   const { t } = useLocale();
   const router = useRouter();
 
@@ -48,8 +52,11 @@ export default function Authorize() {
     return (
       !!permissionsMessage && (
         <li key={value.read} className="relative pl-5 text-sm">
-          <span className="absolute left-0">&#10003;</span>
-          {permissionsMessage} your {`${value.label}s`.toLocaleLowerCase()}
+          {t.rich('permissions.access-message', {
+      permissionsMessage,
+      component0: (chunks) => <span className="absolute left-0">{chunks}</span>
+    })}
+          {`${value.label}s`.toLocaleLowerCase()}
         </li>
       )
     );
@@ -84,7 +91,7 @@ export default function Authorize() {
           <div className="relative -ml-6 h-24 w-24">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="flex h-[70px] w-[70px] items-center justify-center  rounded-full bg-white">
-                <img src="/cal-com-icon.svg" alt="Logo" className="h-16 w-16 rounded-full" />
+                <img src="/cal-com-icon.svg" alt={t('images.logo-alt-text')} className="h-16 w-16 rounded-full" />
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { BaseEmailHtml } from "../components";
 import type { OrganizerScheduledEmail } from "./OrganizerScheduledEmail";
 
@@ -25,6 +26,8 @@ export const OrganizerPaymentRefundFailedEmail = (
 };
 
 function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRefundFailedEmail>) {
+const t = useTranslations("organizer-payment-refund-failed-email");
+
   const { paymentInfo } = props.calEvent;
   const t = props.calEvent.organizer.language.translate;
 
@@ -60,8 +63,7 @@ function RefundInformation(props: React.ComponentProps<typeof OrganizerPaymentRe
                 lineHeight: "24px",
                 textAlign: "center",
                 color: "#494949",
-              }}>
-              Payment {paymentInfo.id}
+              }}>{t('payment.id-display', { "paymentInfoId": paymentInfo.id })}
             </div>
           </td>
         </tr>

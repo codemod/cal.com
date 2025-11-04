@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import Head from "next/head";
 
@@ -9,10 +11,12 @@ import PageWrapper from "@components/PageWrapper";
 import { getServerSideProps } from "../../server/lib/router/getServerSideProps";
 
 export default function Router({ form, message, errorMessage }: inferSSRProps<typeof getServerSideProps>) {
+const t = useTranslations("router-forms-page");
+
   return (
     <>
       <Head>
-        <title>{form?.name} | Cal.com Forms</title>
+        <title>{t('page-title.form-with-branding', { "formName": form?.name })}</title>
       </Head>
       <div className="mx-auto my-0 max-w-3xl md:my-24">
         <div className="w-full max-w-4xl ltr:mr-2 rtl:ml-2">

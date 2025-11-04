@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import type { MouseEvent } from "react";
@@ -37,6 +38,8 @@ interface UserDropdownProps {
 }
 
 export function UserDropdown({ small }: UserDropdownProps) {
+const t = useTranslations("user-dropdown");
+
   const { isPlatformUser } = useGetUserAttributes();
   const { t } = useLocale();
   const { data: user, isPending } = useMeQuery();
@@ -98,7 +101,7 @@ export function UserDropdown({ small }: UserDropdownProps) {
             <Avatar
               size={small ? "xs" : "xsm"}
               imageSrc={user?.avatarUrl ?? user?.avatar}
-              alt={user?.username ? `${user.username} Avatar` : "Nameless User Avatar"}
+              alt={user?.username ? t('avatar.alt-text_0', { "userUsername": user.username }) : t('avatar.alt-text_1')}
               className="overflow-hidden"
             />
             <span
@@ -112,7 +115,7 @@ export function UserDropdown({ small }: UserDropdownProps) {
             <span className="flex flex-grow items-center gap-2">
               <span className="w-24 flex-shrink-0 text-sm leading-none">
                 <span className="text-emphasis block truncate py-0.5 font-medium leading-normal">
-                  {isPending ? "Loading..." : user?.name ?? "Nameless User"}
+                  {t('user.display-name', { "userNameNamelessUser": user?.name ?? "Nameless User" })}
                 </span>
               </span>
               <Icon
@@ -194,9 +197,7 @@ export function UserDropdown({ small }: UserDropdownProps) {
 
               {!isPlatformPages && isPlatformUser && (
                 <DropdownMenuItem className="todesktop:hidden hidden lg:flex">
-                  <DropdownItem StartIcon="blocks" target="_blank" rel="noreferrer" href="/settings/platform">
-                    Platform
-                  </DropdownItem>
+                  <DropdownItem StartIcon="blocks" target="_blank" rel="noreferrer" href="/settings/platform">{t('menu-items.platform')}</DropdownItem>
                 </DropdownMenuItem>
               )}
               <DropdownMenuSeparator />

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -26,6 +27,8 @@ export default function ApiKeyDialogForm({
   defaultValues?: Omit<TApiKeys, "userId" | "createdAt" | "lastUsedAt"> & { neverExpires?: boolean };
   handleClose: () => void;
 }) {
+const t = useTranslations("api-key-dialog-form");
+
   const { t } = useLocale();
   const utils = trpc.useUtils();
 
@@ -125,9 +128,7 @@ export default function ApiKeyDialogForm({
               </Tooltip>
             </div>
             <span className="text-muted text-sm">
-              {apiKeyDetails.neverExpires
-                ? t("never_expires")
-                : `${t("expires")} ${apiKeyDetails?.expiresAt?.toLocaleDateString()}`}
+              {apiKeyDetails.neverExpires ? t("never_expires") : t('expiration.status-display_0')}
             </span>
           </div>
           <DialogFooter showDivider className="relative">

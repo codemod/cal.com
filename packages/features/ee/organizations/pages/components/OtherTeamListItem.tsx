@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -28,6 +29,8 @@ interface Props {
 }
 
 export default function OtherTeamListItem(props: Props) {
+const t = useTranslations("other-team-list-item");
+
   const { t } = useLocale();
 
   const team = props.team;
@@ -43,7 +46,7 @@ export default function OtherTeamListItem(props: Props) {
       <Avatar
         size="md"
         imageSrc={getPlaceholderAvatar(team.logoUrl, team.name)}
-        alt="Team Logo"
+        alt={t('avatar.team-logo-alt')}
         className="inline-flex justify-center"
       />
       <div className="ms-3 inline-block truncate">

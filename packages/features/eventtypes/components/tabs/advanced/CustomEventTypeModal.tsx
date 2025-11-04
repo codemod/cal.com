@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { FC } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider } from "react-hook-form";
@@ -57,6 +58,8 @@ interface CustomEventTypeModalFormProps {
 }
 
 const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
+const t = useTranslations("custom-event-type-modal");
+
   const { t } = useLocale();
   const { placeHolder, close, setValue, event, isNameFieldSplit, customClassNames } = props;
   const { register, handleSubmit, watch, getValues } = useFormContext<FormValues>();
@@ -124,7 +127,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                   "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                   customClassNames?.availableVariables?.variableItem?.variableName
                 )}>
-                {`{Event type title}`}
+                {t('variables.event-type-title')}
               </p>
               <p
                 className={classNames(
@@ -144,7 +147,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                   "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                   customClassNames?.availableVariables?.variableItem?.variableName
                 )}>
-                {`{Event duration}`}
+                {t('variables.event-duration')}
               </p>
               <p
                 className={classNames(
@@ -164,7 +167,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                   "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                   customClassNames?.availableVariables?.variableItem?.variableName
                 )}>
-                {`{Organiser}`}
+                {t('variables.organiser')}
               </p>
               <p
                 className={classNames(
@@ -184,7 +187,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                   "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                   customClassNames?.availableVariables?.variableItem?.variableName
                 )}>
-                {`{Organiser first name}`}
+                {t('variables.organiser-first-name')}
               </p>
               <p
                 className={classNames(
@@ -204,7 +207,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                   "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                   customClassNames?.availableVariables?.variableItem?.variableName
                 )}>
-                {`{Scheduler}`}
+                {t('variables.scheduler')}
               </p>
               <p
                 className={classNames(
@@ -224,7 +227,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                   "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                   customClassNames?.availableVariables?.variableItem?.variableName
                 )}>
-                {`{Scheduler first name}`}
+                {t('variables.scheduler-first-name')}
               </p>
               <p
                 className={classNames(
@@ -245,7 +248,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                     "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                     customClassNames?.availableVariables?.variableItem?.variableName
                   )}>
-                  {`{Scheduler last name}`}
+                  {t('variables.scheduler-last-name')}
                 </p>
                 <p
                   className={classNames(
@@ -266,7 +269,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                   "text-subtle ml-1 mr-5 w-40 flex-shrink-0",
                   customClassNames?.availableVariables?.variableItem?.variableName
                 )}>
-                {`{Location}`}
+                {t('variables.location')}
               </p>
               <p
                 className={classNames(
@@ -344,9 +347,7 @@ const CustomEventTypeModalForm: FC<CustomEventTypeModalFormProps> = (props) => {
                 className={classNames(
                   "text-default ml-1.5 text-[10px] font-normal",
                   customClassNames?.previewSection?.previewEventBox?.eventTime
-                )}>
-                8 - 10 AM
-              </p>
+                )}>{t('preview.sample-time-range')}</p>
             </div>
           </div>
         </div>

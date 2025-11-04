@@ -1,28 +1,35 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
 import { EmptyScreen } from "@calcom/ui/components/empty-screen";
 
-export const HtmlContentExample: React.FC = () => (
+export const HtmlContentExample: React.FC = () =>  {
+const t = useTranslations("empty-screen-html-content-demo");
+
+return (
   <RenderComponentWithSnippet>
     <EmptyScreen
       Icon="info"
       headline={
-        <span className="text-emphasis">
-          Custom Headline with <strong>HTML</strong>
+        <span className="text-emphasis">{t.rich('headings.custom-with-html', {
+      component0: (chunks) => <strong>{chunks}</strong>
+    })}
         </span>
       }
       description={
         <div className="text-subtle space-y-2">
-          <p>This is a custom description with multiple paragraphs.</p>
-          <p>
-            You can include <em>any HTML content</em> here.
-          </p>
+          <p>{t('descriptions.first-paragraph')}</p>
+          <p>{t.rich('descriptions.second-paragraph', {
+      component0: (chunks) => <em>{chunks}</em>
+    })}</p>
         </div>
       }
-      buttonText="Learn More"
+      buttonText={t('buttons.learn-more')}
       buttonOnClick={() => alert("Learn More clicked")}
     />
   </RenderComponentWithSnippet>
-);
+)
+};

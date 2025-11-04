@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Badge } from "@calcom/ui/components/badge";
 import { Button } from "@calcom/ui/components/button";
@@ -6,6 +7,8 @@ import { Switch } from "@calcom/ui/components/form";
 import { TroubleshooterListItemContainer } from "./TroubleshooterListItemContainer";
 
 function AvailabiltyItem() {
+const t = useTranslations("availability-troubleshooter");
+
   const { t } = useLocale();
   return (
     <TroubleshooterListItemContainer
@@ -13,14 +16,12 @@ function AvailabiltyItem() {
       subtitle="Mon-Fri; 9:00 AM - 5:00 PM"
       suffixSlot={
         <div>
-          <Badge variant="green" withDot size="sm">
-            Connected
-          </Badge>
+          <Badge variant="green" withDot size="sm">{t('status.connected')}</Badge>
         </div>
       }>
       <div className="flex flex-col gap-3">
         <p className="text-subtle text-sm font-medium leading-none">{t("date_overrides")}</p>
-        <Switch label="google@calendar.com" />
+        <Switch label={t('calendar.google-service')} />
       </div>
     </TroubleshooterListItemContainer>
   );

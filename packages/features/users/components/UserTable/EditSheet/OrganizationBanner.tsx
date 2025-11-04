@@ -1,6 +1,9 @@
+import { useTranslations } from "next-intl";
 import { trpc } from "@calcom/trpc/react";
 
 export function OrganizationBanner() {
+const t = useTranslations("organization-banner");
+
   const {
     data: currentOrganisation,
     isPending: isPendingOrg,
@@ -16,7 +19,7 @@ export function OrganizationBanner() {
           height: currentOrganisation && currentOrganisation?.bannerUrl ? "auto" : "110px",
         }}>
         {currentOrganisation && currentOrganisation?.bannerUrl && (
-          <img src={currentOrganisation?.bannerUrl} alt="Organization Banner" className="rounded-lg" />
+          <img src={currentOrganisation?.bannerUrl} alt={t('alt-text.banner-image')} className="rounded-lg" />
         )}
       </div>
     </>

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { signIn } from "next-auth/react";
 
@@ -9,6 +11,8 @@ import type { getServerSideProps } from "@server/lib/auth/signin/getServerSidePr
 
 export type PageProps = inferSSRProps<typeof getServerSideProps>;
 function Signin({ providers }: PageProps) {
+const t = useTranslations("auth-signin-view");
+
   if (!providers) {
     return null;
   }
@@ -18,7 +22,7 @@ function Signin({ providers }: PageProps) {
       {Object.values(providers).map((provider) => {
         return (
           <div key={provider.name}>
-            <Button onClick={() => signIn(provider.id)}>Sign in with {provider.name}</Button>
+            <Button onClick={() => signIn(provider.id)}>{t('buttons.sign-in-with-provider', { "providerName": provider.name })}</Button>
           </div>
         );
       })}

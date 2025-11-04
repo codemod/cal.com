@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 
@@ -5,6 +6,8 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "800"] });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Navbar({ username }: { username?: string }) {
+const t = useTranslations("navbar-navigation");
+
   return (
     <nav className="flex h-[75px] w-[100%] items-center justify-between bg-black px-14 py-3 text-white">
       <div className={`flex h-[100%] items-center text-lg ${poppins.className}`}>
@@ -17,29 +20,29 @@ export function Navbar({ username }: { username?: string }) {
       <div className={`${poppins.className}`}>
         <ul className="flex gap-x-7">
           <li>
-            <Link href="/calendar-view">Week View</Link>
+            <Link href="/calendar-view">{t('links.week-view')}</Link>
           </li>
           <li>
-            <Link href="/calendars">Calendar</Link>
+            <Link href="/calendars">{t('links.calendar')}</Link>
           </li>
           <li>
-            <Link href="/availability">Availability</Link>
+            <Link href="/availability">{t('links.availability')}</Link>
           </li>
           <li>
             <Link href="/event-types">EventTypes</Link>
           </li>
           <li>
-            <Link href="/booking">Book Me</Link>
+            <Link href="/booking">{t('links.book-me')}</Link>
           </li>
           <li>
-            <Link href="/bookings">My Bookings</Link>
+            <Link href="/bookings">{t('links.my-bookings')}</Link>
           </li>
           <li>
-            <Link href="/embed">Embed</Link>
+            <Link href="/embed">{t('links.embed')}</Link>
           </li>
 
           <li>
-            <Link href="/conferencing-apps">Conferencing Apps</Link>
+            <Link href="/conferencing-apps">{t('links.conferencing-apps')}</Link>
           </li>
         </ul>
       </div>

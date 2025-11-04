@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import type { UIEvent } from "react";
@@ -140,6 +142,8 @@ function CategoryTab({ selectedCategory, categories, searchText, onCategoryChang
 }
 
 export function AllApps({ apps, searchText, categories, userAdminTeams }: AllAppsPropsType) {
+const t = useTranslations("all-apps-component");
+
   const { t } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [appsContainerRef, enableAnimation] = useAutoAnimate<HTMLDivElement>();
@@ -191,7 +195,7 @@ export function AllApps({ apps, searchText, categories, userAdminTeams }: AllApp
         <EmptyScreen
           Icon="search"
           headline={t("no_results")}
-          description={searchText ? searchText?.toString() : ""}
+          description={t('empty-state.search-description', { "searchTextToString": searchText?.toString() })}
         />
       )}
     </div>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { TFunction } from "i18next";
 
 import { AppStoreLocationType } from "@calcom/app-store/locations";
@@ -14,6 +15,8 @@ export function getEnumKeyByEnumValue(myEnum: any, enumValue: number | string): 
 }
 
 const BrokenVideoIntegration = (props: { location: string; eventTypeId?: number | null; t: TFunction }) => {
+const t = useTranslations("broken-integration-email");
+
   return (
     <ServerTrans
       i18nKey="broken_video_action"
@@ -25,15 +28,11 @@ const BrokenVideoIntegration = (props: { location: string; eventTypeId?: number 
           className="cursor-pointer text-blue-500 underline"
           href={
             props.eventTypeId ? `${WEBAPP_URL}/event-types/${props.eventTypeId}` : `${WEBAPP_URL}/event-types`
-          }>
-          change your location on the event type
-        </a>,
+          }>{t('actions.change-event-type-location')}</a>,
         <a
           key="broken-video-action-link-2"
           className="cursor-pointer text-blue-500 underline"
-          href={`${WEBAPP_URL}/apps/installed`}>
-          removing and adding the app again.
-        </a>,
+          href={`${WEBAPP_URL}/apps/installed`}>{t('actions.reinstall-app')}</a>,
       ]}
     />
   );

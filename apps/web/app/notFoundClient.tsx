@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -48,6 +50,8 @@ function getPageInfo(pathname: string, host: string) {
 }
 
 export function NotFound({ host }: { host: string }) {
+const t = useTranslations("not-found-page");
+
   const { t } = useLocale();
   const pathname = usePathname() ?? "";
   const { username, pageType, url } = getPageInfo(pathname, host);
@@ -109,7 +113,7 @@ export function NotFound({ host }: { host: string }) {
         <div className="text-center">
           <p className="text-emphasis text-sm font-semibold uppercase tracking-wide">{t("error_404")}</p>
           <h1 className="font-cal text-emphasis mt-2 text-4xl font-extrabold sm:text-5xl">
-            {isBookingSuccessPage ? "Booking not found" : t("page_doesnt_exist")}
+            {isBookingSuccessPage ? t('headings.booking-not-found-or-page-missing_0') : t("page_doesnt_exist")}
           </h1>
           {isSubpage && pageType !== PageType.TEAM ? (
             <span className="mt-2 inline-block text-lg">{t("check_spelling_mistakes_or_go_back")}</span>

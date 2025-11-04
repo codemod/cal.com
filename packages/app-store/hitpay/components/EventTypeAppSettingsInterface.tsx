@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 
 import type { EventTypeAppSettingsComponent } from "@calcom/app-store/types";
@@ -18,6 +19,8 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
   disabled,
   eventType,
 }) => {
+const t = useTranslations("hitpay-event-settings");
+
   const price = getAppData("price");
   const currency = getAppData("currency") || currencyOptions[0].value;
   const [selectedCurrency, setSelectedCurrency] = useState(
@@ -74,7 +77,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
               label={t("price")}
               className="h-[38px]"
               addOnLeading={
-                <>{selectedCurrency.value ? getCurrencySymbol("en", selectedCurrency.value) : ""}</>
+                <>{selectedCurrency.value ? getCurrencySymbol("en", selectedCurrency.value) : t('currency.symbol-display_0')}</>
               }
               addOnSuffix={currency.toUpperCase()}
               addOnClassname="h-[38px]"
@@ -82,7 +85,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
               min="1"
               type="number"
               required
-              placeholder="Price"
+              placeholder={t('labels.price')}
               disabled={disabled}
               onChange={(e) => {
                 setAppData("price", convertToSmallestCurrencyUnit(Number(e.target.value), currency));

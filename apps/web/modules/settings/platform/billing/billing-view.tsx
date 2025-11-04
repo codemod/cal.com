@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { usePathname } from "next/navigation";
 
@@ -28,6 +30,8 @@ declare global {
 }
 
 export default function PlatformBillingUpgrade() {
+const t = useTranslations("platform-billing-view");
+
   const pathname = usePathname();
   const { t } = useLocale();
   const { isUserLoading, isUserBillingDataLoading, isPlatformUser, userBillingData, isPaidUser, userOrgId } =
@@ -103,9 +107,7 @@ export default function PlatformBillingUpgrade() {
             <CtaRow
               title="Change plan"
               description={t("Want to change your existing plan or check out other plans?")}>
-              <Button href="/settings/platform/plans" color="secondary">
-                Plans
-              </Button>
+              <Button href="/settings/platform/plans" color="secondary">{t('buttons.plans')}</Button>
             </CtaRow>
 
             <hr className="border-subtle" />

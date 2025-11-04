@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useAppContextWithSchema } from "@calcom/app-store/EventTypeAppContext";
 import AppCard from "@calcom/app-store/_components/AppCard";
 import useIsAppEnabled from "@calcom/app-store/_utils/useIsAppEnabled";
@@ -7,6 +8,8 @@ import { TextField } from "@calcom/ui/components/form";
 import type { appDataSchema } from "../zod";
 
 const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ app, eventType, onAppInstallSuccess }) {
+const t = useTranslations("matomo-event-type-app-card");
+
   const { getAppData, setAppData, disabled } = useAppContextWithSchema<typeof appDataSchema>();
   const matomoUrl = getAppData("MATOMO_URL");
   const siteId = getAppData("SITE_ID");
@@ -26,7 +29,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
         <TextField
           dataTestid={`${app.slug}-url`}
           name="Matomo URL"
-          placeholder="Enter your Matomo URL here"
+          placeholder={t('placeholders.matomo-url')}
           value={matomoUrl}
           disabled={disabled}
           onChange={(e) => {
@@ -37,7 +40,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
           dataTestid={`${app.slug}-site-id`}
           disabled={disabled}
           name="Site ID"
-          placeholder="Enter your Site ID"
+          placeholder={t('placeholders.site-id')}
           value={siteId}
           onChange={(e) => {
             setAppData("SITE_ID", e.target.value);

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Table } from "@tanstack/react-table";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
@@ -26,6 +27,8 @@ interface Props {
 }
 
 export function TeamListBulkAction({ table }: Props) {
+const t = useTranslations("user-table-team-list");
+
   const { data: teams } = trpc.viewer.organizations.getTeams.useQuery();
   const [selectedValues, setSelectedValues] = useState<Set<number>>(new Set());
   const [removeFromTeams, setRemoveFromTeams] = useState<Set<number>>(new Set());
@@ -94,7 +97,7 @@ export function TeamListBulkAction({ table }: Props) {
           <Command>
             <CommandInput placeholder={t("search")} />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>{t('messages.no-results-found')}</CommandEmpty>
               <CommandGroup>
                 {teams &&
                   teams.map((option) => {

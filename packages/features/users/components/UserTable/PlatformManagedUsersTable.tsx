@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { keepPreviousData } from "@tanstack/react-query";
 import { getCoreRowModel, getSortedRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
@@ -69,6 +71,8 @@ export function PlatformManagedUsersTable(props: PlatformManagedUsersTableProps)
 }
 
 function UserListTableContent({ oAuthClientId }: PlatformManagedUsersTableProps) {
+const t = useTranslations("platform-managed-users-table");
+
   const { t } = useLocale();
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -205,9 +209,7 @@ function UserListTableContent({ oAuthClientId }: PlatformManagedUsersTableProps)
                   data-testid={`email-${email.replace("@", "")}-pending`}
                   onClick={() => {
                     table.getColumn("role")?.setFilterValue(["PENDING"]);
-                  }}>
-                  Pending
-                </Badge>
+                  }}>{t('status.pending')}</Badge>
               )}
 
               {teams.map((team) => (

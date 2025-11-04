@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 // eslint-disable-next-line no-restricted-imports
 import { debounce } from "lodash";
@@ -17,6 +19,8 @@ export type PageProps = {
 };
 
 export default function ForgotPassword(props: PageProps) {
+const t = useTranslations("forgot-password-form");
+
   const csrfToken = "csrfToken" in props ? (props.csrfToken as string) : undefined;
   const { t } = useLocale();
   const [loading, setLoading] = React.useState(false);
@@ -122,7 +126,7 @@ export default function ForgotPassword(props: PageProps) {
               id="email"
               name="email"
               label={t("email_address")}
-              placeholder="john.doe@example.com"
+              placeholder={t('placeholders.email-example')}
               required
             />
             <div className="space-y-2">

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { GroupBase, Props, SingleValue } from "react-select";
 import { components } from "react-select";
 
@@ -42,6 +43,8 @@ const OptionWithIcon = ({
   value: string;
   customClassNames?: LocationSelectCustomClassNames;
 }) => {
+const t = useTranslations("location-select");
+
   const isPlatform = useIsPlatform();
 
   const getIconFromValue = (value: string) => {
@@ -74,7 +77,7 @@ const OptionWithIcon = ({
 
   return (
     <div className="flex items-center gap-3">
-      {icon && <img src={icon} alt="cover" className={classNames("h-3.5 w-3.5", invertLogoOnDark(icon))} />}
+      {icon && <img src={icon} alt={t('alt-text.location-icon')} className={classNames("h-3.5 w-3.5", invertLogoOnDark(icon))} />}
       <span className={classNames(" text-sm font-medium")}>{label}</span>
     </div>
   );

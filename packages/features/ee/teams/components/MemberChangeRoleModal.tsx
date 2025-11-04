@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { SyntheticEvent } from "react";
 import { useMemo, useState } from "react";
 
@@ -89,6 +90,8 @@ export default function MemberChangeRoleModal(props: {
   onExit: () => void;
   searchTerm?: string;
 }) {
+const t = useTranslations("member-change-role-modal");
+
   const { t } = useLocale();
 
   const options = useMemo(() => {
@@ -182,7 +185,7 @@ export default function MemberChangeRoleModal(props: {
             </div>
             {errorMessage && (
               <p className="text-sm text-red-700">
-                <span className="font-bold">Error: </span>
+                <span className="font-bold">{t('errors.prefix')}</span>
                 {errorMessage}
               </p>
             )}

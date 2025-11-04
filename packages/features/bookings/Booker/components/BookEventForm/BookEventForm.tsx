@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { TFunction } from "i18next";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -71,6 +72,8 @@ export const BookEventForm = ({
     data?: Pick<BookerEvent, "price" | "currency" | "metadata" | "bookingFields" | "locations"> | null;
   };
 }) => {
+const t = useTranslations("book-event-form");
+
   const eventType = eventQuery.data;
   const setFormValues = useBookerStoreContext((state) => state.setFormValues);
   const bookingData = useBookerStoreContext((state) => state.bookingData);
@@ -169,9 +172,7 @@ export const BookEventForm = ({
                       key="please-select-a-new-time-button"
                       type="button"
                       className="underline"
-                      onClick={onCancel}>
-                      Please select a new time
-                    </button>,
+                      onClick={onCancel}>{t('actions.select-new-time')}</button>,
                   ]}
                 />
               }
@@ -189,16 +190,12 @@ export const BookEventForm = ({
                   className="text-emphasis hover:underline"
                   key="terms"
                   href={`${WEBSITE_TERMS_URL}`}
-                  target="_blank">
-                  Terms
-                </Link>,
+                  target="_blank">{t('links.terms')}</Link>,
                 <Link
                   className="text-emphasis hover:underline"
                   key="privacy"
                   href={`${WEBSITE_PRIVACY_POLICY_URL}`}
-                  target="_blank">
-                  Privacy Policy.
-                </Link>,
+                  target="_blank">{t('links.privacy-policy')}</Link>,
               ]}
             />
           </div>

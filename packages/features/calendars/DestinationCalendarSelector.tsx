@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import type { OptionProps, SingleValueProps } from "react-select";
@@ -59,6 +60,8 @@ const DestinationCalendarSelector = ({
   calendarsQueryData,
   customClassNames,
 }: Props): JSX.Element | null => {
+const t = useTranslations("destination-calendar-selector");
+
   const { t } = useLocale();
   const connectedCalendarsList = calendarsQueryData?.connectedCalendars;
   const destinationCalendar = calendarsQueryData?.destinationCalendar;
@@ -140,7 +143,7 @@ const DestinationCalendarSelector = ({
             `${t("create_events_on")}`
           ) : (
             <span className="text-default min-w-0 overflow-hidden truncate whitespace-nowrap">
-              <Badge variant="blue">Default</Badge>{" "}
+              <Badge variant="blue">{t('labels.default')}</Badge>{" "}
               {destinationCalendar?.name &&
                 `${destinationCalendar.name} (${destinationCalendar?.integrationTitle} - ${destinationCalendar.primaryEmail})`}
             </span>

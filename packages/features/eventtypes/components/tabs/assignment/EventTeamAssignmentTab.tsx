@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { TFunction } from "i18next";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -121,7 +122,10 @@ const ChildrenEventTypesList = ({
   );
 };
 
-const FixedHostHelper = ({ t }: { t: TFunction }) => (
+const FixedHostHelper = ({ t }: { t: TFunction }) =>  {
+const t = useTranslations("event-team-assignment-tab");
+
+return (
   <ServerTrans
     t={t}
     i18nKey="fixed_host_helper"
@@ -130,12 +134,11 @@ const FixedHostHelper = ({ t }: { t: TFunction }) => (
         key="fixed_host_helper"
         className="underline underline-offset-2"
         target="_blank"
-        href="https://cal.com/docs/enterprise-features/teams/round-robin-scheduling#fixed-hosts">
-        Learn more
-      </Link>,
+        href="https://cal.com/docs/enterprise-features/teams/round-robin-scheduling#fixed-hosts">{t('links.learn-more')}</Link>,
     ]}
   />
-);
+)
+};
 
 type FixedHostsCustomClassNames = SettingsToggleClassNames & {
   addMembers?: AddMembersWithSwitchCustomClassNames;
@@ -443,6 +446,8 @@ const RoundRobinHosts = ({
   };
 
   const UnassignedHostsGroup = () => {
+const t = useTranslations("event-team-assignment-tab");
+
     const unassignedHosts = value.filter((host) => !host.isFixed && !host.groupId);
 
     if (unassignedHosts.length === 0) {
@@ -453,7 +458,7 @@ const RoundRobinHosts = ({
       <div className="border-subtle my-4 rounded-md border p-4 pb-0">
         <div className="-mb-4 flex items-center justify-between">
           <div className="flex items-center gap-1">
-            <span className="text-default text-sm font-medium">{`Group ${hostGroups.length + 1}`}</span>
+            <span className="text-default text-sm font-medium">{t('groups.default-name-with-number', { "hostGroupsLength": hostGroups.length })}</span>
           </div>
         </div>
         <AddMembersWithSwitchComponent groupId={null} />
@@ -525,6 +530,8 @@ const RoundRobinHosts = ({
 
             {/* Show all defined groups */}
             {hostGroups.map((group, index) => {
+const t = useTranslations("event-team-assignment-tab");
+
               const groupNumber = index + 1;
 
               return (
@@ -536,7 +543,7 @@ const RoundRobinHosts = ({
                         value={group.name ?? ""}
                         onChange={(e) => handleGroupNameChange(group.id, e.target.value)}
                         className="border-none bg-transparent p-0 text-sm font-medium focus:outline-none focus:ring-0"
-                        placeholder={`Group ${groupNumber}`}
+                        placeholder={t('groups.placeholder-name-with-number', { "groupNumber": groupNumber })}
                       />
                     </div>
                     <button

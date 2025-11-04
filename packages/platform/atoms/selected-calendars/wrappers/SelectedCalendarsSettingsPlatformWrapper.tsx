@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import type { ICalendarSwitchProps } from "@calcom/features/calendars/CalendarSwitch";
@@ -79,6 +80,8 @@ export const SelectedCalendarsSettingsPlatformWrapper = ({
         <QueryCell
           query={query}
           success={({ data }) => {
+const t = useTranslations("selected-calendars-platform-wrapper");
+
             const destinationCalendarId = data.destinationCalendar.externalId;
 
             if (!data.connectedCalendars.length) {
@@ -93,9 +96,7 @@ export const SelectedCalendarsSettingsPlatformWrapper = ({
                     className={cn(
                       "px-6 py-4 text-base leading-5",
                       classNamesObject?.noSelectedCalendarsMessage
-                    )}>
-                    No connected calendars found.
-                  </h1>
+                    )}>{t('messages.no-connected-calendars')}</h1>
                 </SelectedCalendarsSettings>
               );
             }

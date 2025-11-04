@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import fs from "fs";
 import { Box, Newline, Text, useApp } from "ink";
 import SelectInput from "ink-select-input";
@@ -21,6 +22,8 @@ export const AppForm = ({
   slug?: string;
   action: "create" | "edit" | "create-template" | "edit-template";
 }) => {
+const t = useTranslations("app-create-update-form");
+
   cliTemplate = Templates.find((t) => t.value === cliTemplate)?.value || "";
   const { exit } = useApp();
   const isTemplate = action === "create-template" || action === "edit-template";
@@ -162,7 +165,7 @@ export const AppForm = ({
 
   if (action === "edit" || action === "edit-template") {
     if (!slug) {
-      return <Text>--slug is required</Text>;
+      return <Text>{t('errors.slug-required')}</Text>;
     }
     if (!app) {
       return (
@@ -202,58 +205,48 @@ export const AppForm = ({
         )}
         {status === "done" && (
           <Box flexDirection="column" paddingTop={2} paddingBottom={2}>
-            <Text bold>
-              Just wait for a few seconds for process to exit and then you are good to go. Your{" "}
-              {isTemplate ? "Template" : "App"} code exists at {getAppDirPath(slug, isTemplate)}
+            <Text bold>{t('completion.process-wait-message')}
+              {getAppDirPath(slug, isTemplate)}
             </Text>
-            <Text>
-              Tip : Go and change the logo of your {isTemplate ? "template" : "app"} by replacing{" "}
-              {`${getAppDirPath(slug, isTemplate)}/static/icon.svg`}
+            <Text>{t('completion.logo-tip', { "getAppDirPathSlugIsTemplate": getAppDirPath(slug, isTemplate) })}
+              
             </Text>
             <Newline />
-            <Text bold underline color="blue">
-              App Summary:
-            </Text>
+            <Text bold underline color="blue">{t('summary.heading')}</Text>
             <Box flexDirection="column">
               <Box flexDirection="row">
-                <Text color="green">Slug: </Text>
+                <Text color="green">{t('summary.slug-label')}</Text>
                 <Text>{slug}</Text>
               </Box>
               <Box flexDirection="row">
-                <Text color="green">{isTemplate ? "Template" : "App"} URL: </Text>
-                <Text>{`http://localhost:3000/apps/${slug}`}</Text>
+                <Text color="green">{t('summary.url-label')}</Text>
+                <Text>{t('summary.localhost-url', { "slug": slug })}</Text>
               </Box>
               <Box flexDirection="row">
-                <Text color="green">Name: </Text>
+                <Text color="green">{t('summary.name-label')}</Text>
                 <Text>{name}</Text>
               </Box>
               <Box flexDirection="row">
-                <Text color="green">Description: </Text>
+                <Text color="green">{t('summary.description-label')}</Text>
                 <Text>{description}</Text>
               </Box>
               <Box flexDirection="row">
-                <Text color="green">Category: </Text>
+                <Text color="green">{t('summary.category-label')}</Text>
                 <Text>{category}</Text>
               </Box>
               <Box flexDirection="row">
-                <Text color="green">Publisher Name: </Text>
+                <Text color="green">{t('summary.publisher-name-label')}</Text>
                 <Text>{publisher}</Text>
               </Box>
               <Box flexDirection="row">
-                <Text color="green">Publisher Email: </Text>
+                <Text color="green">{t('summary.publisher-email-label')}</Text>
                 <Text>{email}</Text>
               </Box>
-              <Text bold>
-                Next Step: Enable the app from http://localhost:3000/settings/admin/apps as admin user (Email:
-                admin@example.com, Pass: ADMINadmin2022!)
-              </Text>
+              <Text bold>{t('next-steps.admin-enable-instruction')}</Text>
             </Box>
           </Box>
         )}
-        <Text italic color="gray">
-          Note: You should not rename app directory manually. Use cli only to do that as it needs to be
-          updated in DB as well
-        </Text>
+        <Text italic color="gray">{t('warnings.manual-rename-note')}</Text>
       </Box>
     );
   }

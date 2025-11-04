@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -101,10 +102,13 @@ const CreateConnectionDialog = ({
             <Controller
               control={form.control}
               name="clientId"
-              render={({ field: { value } }) => (
+              render={({ field: { value } }) =>  {
+const t = useTranslations("oidc-connection-form");
+
+return (
                 <TextField
                   name="clientId"
-                  label="Client id"
+                  label={t('fields.client-id')}
                   data-testid="sso-oidc-client-id"
                   value={value}
                   onChange={(e) => {
@@ -113,15 +117,19 @@ const CreateConnectionDialog = ({
                   type="text"
                   required
                 />
-              )}
+              )
+}}
             />
             <Controller
               control={form.control}
               name="clientSecret"
-              render={({ field: { value } }) => (
+              render={({ field: { value } }) =>  {
+const t = useTranslations("oidc-connection-form");
+
+return (
                 <TextField
                   name="clientSecret"
-                  label="Client secret"
+                  label={t('fields.client-secret')}
                   data-testid="sso-oidc-client-secret"
                   value={value}
                   onChange={(e) => {
@@ -130,15 +138,19 @@ const CreateConnectionDialog = ({
                   type="text"
                   required
                 />
-              )}
+              )
+}}
             />
             <Controller
               control={form.control}
               name="wellKnownUrl"
-              render={({ field: { value } }) => (
+              render={({ field: { value } }) =>  {
+const t = useTranslations("oidc-connection-form");
+
+return (
                 <TextField
                   name="wellKnownUrl"
-                  label="Well-Known URL"
+                  label={t('fields.well-known-url')}
                   data-testid="sso-oidc-well-known-url"
                   value={value}
                   onChange={(e) => {
@@ -147,7 +159,8 @@ const CreateConnectionDialog = ({
                   type="text"
                   required
                 />
-              )}
+              )
+}}
             />
           </div>
           <DialogFooter showDivider className="relative mt-10">

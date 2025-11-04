@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
@@ -51,6 +53,8 @@ const teamProfileFormSchema = z.object({
 });
 
 const OtherTeamProfileView = () => {
+const t = useTranslations("organization-team-profile-settings");
+
   const { t } = useLocale();
   const router = useRouter();
   const utils = trpc.useUtils();
@@ -274,9 +278,7 @@ const OtherTeamProfileView = () => {
                     type="button"
                     onClick={() => {
                       publishMutation.mutate({ teamId: team.id });
-                    }}>
-                    Publish
-                  </Button>
+                    }}>{t('buttons.publish')}</Button>
                 )}
             </Form>
           ) : (

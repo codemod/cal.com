@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Dispatch } from "react";
 import { useMemo, useState } from "react";
@@ -40,6 +41,8 @@ export function EditMemberSheet({
   currentMember: MembershipRole;
   teamId: number;
 }) {
+const t = useTranslations("edit-member-sheet");
+
   const { t } = useLocale();
   const { user } = state.editSheet;
   const selectedUser = user as User;
@@ -171,12 +174,12 @@ export function EditMemberSheet({
       externalId ? (
         <div className="ltr:mr-2 rtl:ml-2 ">
           <Tooltip content={externalId}>
-            <img className="h-5 w-5" src={logo} alt={`${name} logo`} />
+            <img className="h-5 w-5" src={logo} alt={t('images.company-logo-alt', { "name": name })} />
           </Tooltip>
         </div>
       ) : (
         <div className="ltr:mr-2 rtl:ml-2">
-          <img className="h-5 w-5" src={logo} alt={`${name} logo`} />
+          <img className="h-5 w-5" src={logo} alt={t('images.app-logo-alt', { "name": name })} />
         </div>
       )
     ) : null;
@@ -202,7 +205,7 @@ export function EditMemberSheet({
                   }}
                 />
                 <div className="bg-default ml-3 w-fit translate-y-[-50%] rounded-full p-1 ring-1 ring-[#0000000F]">
-                  <Avatar asChild size="lg" alt={`${name} avatar`} imageSrc={selectedUser.avatarUrl} />
+                  <Avatar asChild size="lg" alt={t('images.user-avatar-alt', { "name": name })} imageSrc={selectedUser.avatarUrl} />
                 </div>
                 <Skeleton as="p" waitForTranslation={false}>
                   <h2 className="text-emphasis font-sans text-2xl font-semibold">
@@ -219,7 +222,7 @@ export function EditMemberSheet({
             <SheetBody className="flex flex-col space-y-4 p-4">
               <div className="mb-4 flex flex-col space-y-4">
                 <h3 className="text-emphasis mb-1 text-base font-semibold">{t("profile")}</h3>
-                <DisplayInfo label="Cal" value={bookingLink} icon="external-link" />
+                <DisplayInfo label={t('labels.cal-platform')} value={bookingLink} icon="external-link" />
                 <DisplayInfo label={t("email")} value={selectedUser.email} icon="at-sign" />
                 {!editMode ? (
                   <DisplayInfo

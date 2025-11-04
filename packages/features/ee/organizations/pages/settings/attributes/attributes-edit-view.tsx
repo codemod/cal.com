@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useParams } from "next/navigation";
 import { useFormContext } from "react-hook-form";
@@ -23,6 +25,8 @@ const CreateAttributeSchema = z.object({
 type FormValues = z.infer<typeof CreateAttributeSchema>;
 
 function CreateAttributesPage() {
+const t = useTranslations("organization-attributes-edit");
+
   const utils = trpc.useUtils();
   const { t } = useLocale();
   // Get the attribute id from the url
@@ -68,7 +72,7 @@ function CreateAttributesPage() {
             }}
           />
         ) : (
-          <>Loading</>
+          <>{t('loading-state')}</>
         )}
       </LicenseRequired>
     </>

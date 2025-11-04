@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
 import { usePathname } from "next/navigation";
@@ -29,6 +30,8 @@ const GroupTeamMappingTable = () => {
 };
 
 const GroupTeamMappingTableContent = () => {
+const t = useTranslations("group-team-mapping-table");
+
   const { t } = useLocale();
   const [createTeamDialogOpen, setCreateTeamDialogOpen] = useState(false);
 
@@ -73,9 +76,7 @@ const GroupTeamMappingTableContent = () => {
     <>
       <DataTable table={table} tableContainerRef={tableContainerRef}>
         <DataTableToolbar.Root>
-          <DataTableToolbar.CTA onClick={() => setCreateTeamDialogOpen(true)}>
-            Create team
-          </DataTableToolbar.CTA>
+          <DataTableToolbar.CTA onClick={() => setCreateTeamDialogOpen(true)}>{t('buttons.create-team')}</DataTableToolbar.CTA>
         </DataTableToolbar.Root>
       </DataTable>
       <CreateTeamDialog open={createTeamDialogOpen} onOpenChange={setCreateTeamDialogOpen} />

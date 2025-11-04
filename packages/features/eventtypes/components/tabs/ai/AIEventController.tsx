@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
@@ -140,6 +141,8 @@ const TemplateFields = () => {
 };
 
 const AISettings = ({ eventType }: { eventType: EventTypeSetup }) => {
+const t = useTranslations("ai-event-controller");
+
   const { t } = useLocale();
 
   const formMethods = useFormContext<FormValues>();
@@ -292,7 +295,7 @@ const AISettings = ({ eventType }: { eventType: EventTypeSetup }) => {
           hint="For eg:- cal_live_0123.."
           label={t("provide_api_key")}
           name="calApiKey"
-          placeholder="Cal API Key"
+          placeholder={t('placeholders.cal-api-key')}
           value={calApiKey}
           onChange={(e) => {
             setCalApiKey(e.target.value);

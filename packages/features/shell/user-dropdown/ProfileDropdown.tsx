@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -17,6 +18,8 @@ import {
 import { Icon } from "@calcom/ui/components/icon";
 
 export function ProfileDropdown() {
+const t = useTranslations("profile-dropdown");
+
   const { update, data: sessionData } = useSession();
   const { data } = trpc.viewer.me.get.useQuery();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,7 +74,7 @@ export function ProfileDropdown() {
           }}
           className="min-w-56 hariom group overflow-hidden rounded-md">
           <DropdownMenuItem className="p-3 uppercase">
-            <span>Switch to</span>
+            <span>{t('menu.switch-to-header')}</span>
           </DropdownMenuItem>
           {options.map((option) => {
             const isSelected = currentOption.value === option.value;

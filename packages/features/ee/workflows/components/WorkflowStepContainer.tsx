@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { type TFunction } from "i18next";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
@@ -152,6 +153,8 @@ const getActivePhoneNumbers = (
 };
 
 export default function WorkflowStepContainer(props: WorkflowStepProps) {
+const t = useTranslations("workflow-step-container");
+
   const { t, i18n } = useLocale();
   const utils = trpc.useUtils();
   const params = useParams();
@@ -626,13 +629,7 @@ export default function WorkflowStepContainer(props: WorkflowStepProps) {
                       setValue={(s: Option[]) => {
                         form.setValue("activeOn", s);
                       }}
-                      countText={
-                        isOrganization
-                          ? "count_team"
-                          : isFormTrigger(form.getValues("trigger"))
-                          ? "nr_routing_form"
-                          : "nr_event_type"
-                      }
+                      countText={isOrganization ? t('multi-select.count-text-conditional_0') : isFormTrigger(form.getValues("trigger")) ? t('multi-select.count-text-conditional_1') : t('multi-select.count-text-conditional_2')}
                     />
                   );
                 }}

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { RootProvider } from "fumadocs-ui/provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -19,14 +20,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+const t = useTranslations("ui-playground-root-layout");
+
   return (
     <html lang="en">
       <head>
-        <style>{`
-          :root {
-            --font-inter: ${inter.style.fontFamily.replace(/\'/g, "")};
-          }
-        `}</style>
+        <style>{t('styles.font-inter-css-variable', { "interStyleFontFamilyReplaceG": inter.style.fontFamily.replace(/\'/g, "") })}</style>
       </head>
       <body className={`${inter.variable} antialiased`}>
         <RootProvider>{children}</RootProvider>

@@ -1,9 +1,12 @@
+import { useTranslations } from "next-intl";
 import { WEBAPP_URL } from "@calcom/lib/constants";
 
 import { CallToAction, Separator, CallToActionTable, BookingConfirmationForm } from "../components";
 import { OrganizerScheduledEmail } from "./OrganizerScheduledEmail";
 
 export const OrganizerRequestEmailV2 = (props: React.ComponentProps<typeof OrganizerScheduledEmail>) => {
+const t = useTranslations("organizer-request-email-v2");
+
   const { uid } = props.calEvent;
   const userId = props.calEvent.organizer.id;
   const token = props.calEvent.oneTimePassword;
@@ -11,11 +14,7 @@ export const OrganizerRequestEmailV2 = (props: React.ComponentProps<typeof Organ
   const actionHref = `${WEBAPP_URL}/api/verify-booking-token/?token=${token}&userId=${userId}&bookingUid=${uid}`;
   return (
     <OrganizerScheduledEmail
-      title={
-        props.title || props.calEvent.recurringEvent?.count
-          ? "event_awaiting_approval_recurring"
-          : "event_awaiting_approval"
-      }
+      title={props.title || props.calEvent.recurringEvent?.count ? t('titles.event-awaiting-approval-conditional_0') : t('titles.event-awaiting-approval-conditional_1')}
       subtitle={<>{props.calEvent.organizer.language.translate("someone_requested_an_event")}</>}
       headerType="calendarCircle"
       subject="event_awaiting_approval_subject"

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { usePathname, useRouter } from "next/navigation";
 import { z } from "zod";
@@ -18,10 +20,12 @@ type User = UserAdminRouterOutputs["get"]["user"];
 const userIdSchema = z.object({ id: z.coerce.number() });
 
 const UsersEditPage = () => {
+const t = useTranslations("users-edit-page");
+
   const params = useParamsWithFallback();
   const input = userIdSchema.safeParse(params);
 
-  if (!input.success) return <div>Invalid input</div>;
+  if (!input.success) return <div>{t('errors.invalid-input')}</div>;
 
   const [data] = trpc.viewer.users.get.useSuspenseQuery({ userId: input.data.id });
   const { user } = data;

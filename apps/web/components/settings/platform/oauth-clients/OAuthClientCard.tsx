@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -46,6 +47,8 @@ export const OAuthClientCard = ({
   areCalendarEventsEnabled,
   organizationId,
 }: OAuthClientCardProps) => {
+const t = useTranslations("oauth-client-card");
+
   const router = useRouter();
 
   const groupedPermissions = permissions.reduce<Record<string, { read: boolean; write: boolean }>>(
@@ -89,8 +92,9 @@ export const OAuthClientCard = ({
       )}>
       <div className="flex flex-col gap-2">
         <div className="flex gap-1">
-          <p className="font-semibold">
-            Client name: <span className="font-normal">{name}</span>
+          <p className="font-semibold">{t.rich('labels.client-name', {
+      component0: (chunks) => <span className="font-normal">{name}</span>
+    })}
           </p>
         </div>
         {!!logo && (
@@ -100,7 +104,7 @@ export const OAuthClientCard = ({
         )}
         <div className="flex flex-col gap-2">
           <div className="flex flex-row items-center gap-2">
-            <div className="font-semibold">Client Id:</div>
+            <div className="font-semibold">{t('labels.client-id')}</div>
             <div>{id}</div>
             <Icon
               name="clipboard"
@@ -114,7 +118,7 @@ export const OAuthClientCard = ({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="font-semibold">Client Secret:</div>
+          <div className="font-semibold">{t('labels.client-secret')}</div>
           <div className="flex items-center justify-center rounded-md">
             {[...new Array(20)].map((_, index) => (
               <Icon name="asterisk" key={`${index}asterisk`} className="h-2 w-2" />
@@ -132,7 +136,7 @@ export const OAuthClientCard = ({
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-row items-center gap-2">
-            <div className="font-semibold">Organization Id:</div>
+            <div className="font-semibold">{t('labels.organization-id')}</div>
             <div>{organizationId}</div>
             <Icon
               name="clipboard"
@@ -146,26 +150,26 @@ export const OAuthClientCard = ({
           </div>
         </div>
         <div className="border-subtle flex text-sm">
-          <span className="font-semibold">Permissions: </span>
-          {permissions ? <div className="flex">{clientPermissions}</div> : <>&nbsp;Disabled</>}
+          <span className="font-semibold">{t('labels.permissions')}</span>
+          {permissions ? <div className="flex">{clientPermissions}</div> : <>{t('status.disabled')}</>}
         </div>
         <div className="flex gap-1 text-sm">
-          <span className="font-semibold">Redirect uris: </span>
+          <span className="font-semibold">{t('labels.redirect-uris')}</span>
           {redirectUris.map((item, index) => (redirectUris.length === index + 1 ? `${item}` : `${item}, `))}
         </div>
         {bookingRedirectUri && (
           <div className="flex gap-1 text-sm">
-            <span className="font-semibold">Booking redirect uri: </span> {bookingRedirectUri}
+            <span className="font-semibold">{t('labels.booking-redirect-uri')}</span> {bookingRedirectUri}
           </div>
         )}
         {bookingRescheduleRedirectUri && (
           <div className="flex gap-1 text-sm">
-            <span className="font-semibold">Booking reschedule uri: </span> {bookingRescheduleRedirectUri}
+            <span className="font-semibold">{t('labels.booking-reschedule-uri')}</span> {bookingRescheduleRedirectUri}
           </div>
         )}
         {bookingCancelRedirectUri && (
           <div className="flex gap-1 text-sm">
-            <span className="font-semibold">Booking cancel uri: </span> {bookingCancelRedirectUri}
+            <span className="font-semibold">{t('labels.booking-cancel-uri')}</span> {bookingCancelRedirectUri}
           </div>
         )}
         <div className="flex gap-1 text-sm">
@@ -185,19 +189,13 @@ export const OAuthClientCard = ({
           color="primary"
           loading={isLoading}
           disabled={isLoading}
-          onClick={() => router.push(`/settings/platform/oauth-clients/${id}/edit/webhooks`)}>
-          Webhooks
-        </Button>
+          onClick={() => router.push(`/settings/platform/oauth-clients/${id}/edit/webhooks`)}>{t('buttons.webhooks')}</Button>
         <Button
           color="secondary"
           loading={isLoading}
           disabled={isLoading}
-          onClick={() => router.push(`/settings/platform/oauth-clients/${id}/edit`)}>
-          Edit
-        </Button>
-        <Button color="destructive" loading={isLoading} disabled={isLoading} onClick={() => onDelete(id)}>
-          Delete
-        </Button>
+          onClick={() => router.push(`/settings/platform/oauth-clients/${id}/edit`)}>{t('buttons.edit')}</Button>
+        <Button color="destructive" loading={isLoading} disabled={isLoading} onClick={() => onDelete(id)}>{t('buttons.delete')}</Button>
       </div>
     </div>
   );

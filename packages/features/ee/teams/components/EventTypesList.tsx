@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Table } from "@tanstack/react-table";
 import type { Dispatch, SetStateAction } from "react";
 import { useState, Fragment } from "react";
@@ -28,6 +29,8 @@ interface Props {
 }
 
 export function EventTypesList({ table, teamId }: Props) {
+const t = useTranslations("team-event-types-list");
+
   const { t } = useLocale();
   const utils = trpc.useUtils();
   const { data } = trpc.viewer.eventTypes.getByViewer.useQuery({
@@ -100,7 +103,7 @@ export function EventTypesList({ table, teamId }: Props) {
           <Command>
             <CommandInput placeholder={t("search")} />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty>{t('search.no-results')}</CommandEmpty>
               <CommandGroup>
                 {eventTypeGroups &&
                   eventTypeGroups.map((data) => {

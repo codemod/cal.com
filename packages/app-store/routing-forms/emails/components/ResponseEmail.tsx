@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { BaseEmailHtml, Info } from "@calcom/emails/src/components";
 import { WEBAPP_URL } from "@calcom/lib/constants";
 import type { App_RoutingForms_Form } from "@calcom/prisma/client";
@@ -13,6 +14,8 @@ export const ResponseEmail = ({
   orderedResponses: OrderedResponses;
   subject: string;
 } & Partial<React.ComponentProps<typeof BaseEmailHtml>>) => {
+const t = useTranslations("routing-forms-response-email");
+
   const formFields = form.fields as Fields;
   return (
     <BaseEmailHtml
@@ -28,7 +31,7 @@ export const ResponseEmail = ({
           }}>
           <p style={{ fontWeight: 400, lineHeight: "24px" }}>
             <a href={`${WEBAPP_URL}/routing-forms/form-edit/${form.id}`} style={{ color: "#3e3e3e" }}>
-              <>Manage this form</>
+              <>{t('links.manage-form')}</>
             </a>
           </p>
         </div>

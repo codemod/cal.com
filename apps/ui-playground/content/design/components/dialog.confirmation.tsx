@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -7,14 +9,14 @@ import { Button } from "@calcom/ui/components/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter } from "@calcom/ui/components/dialog";
 
 export const ConfirmationExample: React.FC = () => {
+const t = useTranslations("dialog-confirmation-demo");
+
   const [open, setOpen] = useState(false);
 
   return (
     <RenderComponentWithSnippet>
       <div className="space-y-2">
-        <Button color="destructive" onClick={() => setOpen(true)}>
-          Delete Item
-        </Button>
+        <Button color="destructive" onClick={() => setOpen(true)}>{t('buttons.delete-item')}</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent
             title="Confirm Deletion"
@@ -25,9 +27,7 @@ export const ConfirmationExample: React.FC = () => {
                 color="destructive"
                 onClick={() => {
                   setOpen(false);
-                }}>
-                Delete
-              </Button>
+                }}>{t('buttons.confirm-delete')}</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React, { useEffect, useMemo, useRef } from "react";
 
 import classNames from "@calcom/ui/classNames";
@@ -172,11 +173,13 @@ export function Calendar(props: CalendarComponentProps) {
 
 /** @todo Will be removed once we have mobile support */
 const MobileNotSupported = ({ children }: { children: React.ReactNode }) => {
+const t = useTranslations("weekly-calendar-view");
+
   return (
     <>
       <div className="flex h-full flex-col items-center justify-center sm:hidden">
-        <h1 className="text-2xl font-bold">Mobile not supported yet </h1>
-        <p className="text-subtle">Please use a desktop browser to view this page</p>
+        <h1 className="text-2xl font-bold">{t('mobile-support.not-supported-heading')}</h1>
+        <p className="text-subtle">{t('mobile-support.desktop-browser-message')}</p>
       </div>
       <div className="hidden h-full sm:block">{children}</div>
     </>

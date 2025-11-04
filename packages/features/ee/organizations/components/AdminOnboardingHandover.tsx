@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -11,6 +13,8 @@ import { Button } from "@calcom/ui/components/button";
 import { showToast } from "@calcom/ui/components/toast";
 
 export const AdminOnboardingHandover = () => {
+const t = useTranslations("admin-onboarding-handover");
+
   const { t } = useLocale();
   const router = useRouter();
   const session = useSession();
@@ -35,10 +39,9 @@ export const AdminOnboardingHandover = () => {
       {/* Instructions Card */}
       <div className="bg-subtle rounded-lg p-6">
         <h3 className="text-emphasis mb-2 text-lg font-medium">{t("next_steps")}</h3>
-        <p className="text-default mb-4 text-sm">
-          Send the following link to <strong>{orgOwnerEmail}</strong> so they can complete the organization
-          setup:
-        </p>
+        <p className="text-default mb-4 text-sm">{t.rich('instructions.send-link-to-owner', {
+      component0: (chunks) => <strong>{orgOwnerEmail}</strong>
+    })}</p>
 
         <div className="space-y-3">
           <div className="bg-default flex items-center gap-2 rounded-md border p-3">

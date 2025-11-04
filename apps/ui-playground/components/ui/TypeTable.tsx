@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { getColorFormats, copyToClipboard } from "@/lib/colorUtils";
 import React from "react";
@@ -29,6 +31,8 @@ interface CopyMenuProps {
 }
 
 const CopyMenu: React.FC<CopyMenuProps> = ({ color, className, onCopy }) => {
+const t = useTranslations("color-type-table");
+
   const formats = getColorFormats(color, className);
   if (!formats) return null;
 
@@ -37,24 +41,16 @@ const CopyMenu: React.FC<CopyMenuProps> = ({ color, className, onCopy }) => {
       <div className="bg-default space-y-1 rounded-md p-2 shadow-lg">
         <button
           onClick={() => onCopy(formats.hex)}
-          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">
-          Copy as HEX
-        </button>
+          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">{t('copy-actions.hex')}</button>
         <button
           onClick={() => onCopy(formats.rgb)}
-          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">
-          Copy as RGB
-        </button>
+          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">{t('copy-actions.rgb')}</button>
         <button
           onClick={() => onCopy(formats.hsl)}
-          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">
-          Copy as HSL
-        </button>
+          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">{t('copy-actions.hsl')}</button>
         <button
           onClick={() => onCopy(formats.tailwind)}
-          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">
-          Copy Tailwind Class
-        </button>
+          className="hover:bg-subtle w-full rounded px-3 py-1 text-left text-sm">{t('copy-actions.tailwind-class')}</button>
       </div>
     </div>
   );

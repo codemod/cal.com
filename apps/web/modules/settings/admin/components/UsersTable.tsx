@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
 import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -99,14 +100,17 @@ const LockStatusTable = ({
         </Header>
 
         <tbody className="divide-subtle divide-y rounded-md">
-          {users.map((user) => (
+          {users.map((user) =>  {
+const t = useTranslations("admin-users-table");
+
+return (
             <Row key={`user-${user.id}`}>
               <Cell widthClassNames="w-auto">
                 <div className="min-h-10 flex items-center">
                   {" "}
                   <Avatar
                     size="md"
-                    alt={`Avatar of ${user.username || "Nameless"}`}
+                    alt={t('avatars.user-alt-text', { "userUsernameNameless": user.username || "Nameless" })}
                     imageSrc={getUserAvatarUrl(user)}
                   />
                   <div className="text-subtle ml-4 font-medium">
@@ -123,19 +127,23 @@ const LockStatusTable = ({
                 <DropdownActions actions={getActions({ user })} />
               </Cell>
             </Row>
-          ))}
-          {teams.map((team) => (
+          )
+})}
+          {teams.map((team) =>  {
+const t = useTranslations("admin-users-table");
+
+return (
             <Row key={`team-${team.id}`}>
               <Cell widthClassNames="w-auto">
                 <div className="min-h-10 flex items-center">
                   <Avatar
                     size="md"
-                    alt={`Avatar of ${team.name}`}
+                    alt={t('avatars.team-alt-text', { "teamName": team.name })}
                     imageSrc={getPlaceholderAvatar(team.logoUrl, team.name)}
                   />
                   <div className="text-subtle ml-4 font-medium">
                     <span className="text-default">{team.name}</span>
-                    <span className="ml-3 break-all">/team/{team.slug}</span>
+                    <span className="ml-3 break-all">{t('paths.team-url', { "teamSlug": team.slug })}</span>
                   </div>
                 </div>
               </Cell>
@@ -144,7 +152,8 @@ const LockStatusTable = ({
                 <DropdownActions actions={getActions({ team })} />
               </Cell>
             </Row>
-          ))}
+          )
+})}
         </tbody>
       </Table>
     </>

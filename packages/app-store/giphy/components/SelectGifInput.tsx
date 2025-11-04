@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -11,6 +12,8 @@ interface ISelectGifInput {
   disabled?: boolean;
 }
 export default function SelectGifInput(props: ISelectGifInput) {
+const t = useTranslations("giphy-gif-selector");
+
   const { t } = useLocale();
   const [selectedGif, setSelectedGif] = useState(props.defaultValue);
   const [showDialog, setShowDialog] = useState(false);
@@ -19,7 +22,7 @@ export default function SelectGifInput(props: ISelectGifInput) {
     <div className="flex flex-col items-start space-x-2 space-y-2 rtl:space-x-reverse">
       {selectedGif && (
         <div className="min-h-[200px]">
-          <img alt="Selected Gif Image" src={selectedGif} />
+          <img alt={t('image.alt-text')} src={selectedGif} />
         </div>
       )}
       <div className="flex">
@@ -29,18 +32,14 @@ export default function SelectGifInput(props: ISelectGifInput) {
             type="button"
             StartIcon="pencil"
             onClick={() => setShowDialog(true)}
-            disabled={props.disabled}>
-            Change
-          </Button>
+            disabled={props.disabled}>{t('buttons.change')}</Button>
         ) : (
           <Button
             color="minimal"
             type="button"
             StartIcon="plus"
             onClick={() => setShowDialog(true)}
-            disabled={props.disabled}>
-            Add from Giphy
-          </Button>
+            disabled={props.disabled}>{t('buttons.add-from-giphy')}</Button>
         )}
 
         {selectedGif && (

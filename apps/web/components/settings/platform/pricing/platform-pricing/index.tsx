@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -14,6 +15,8 @@ import { PlatformBillingCard } from "@components/settings/platform/pricing/billi
 type PlatformPricingProps = { teamId?: number | null; teamPlan?: string; heading?: ReactNode };
 
 export const PlatformPricing = ({ teamId, teamPlan, heading }: PlatformPricingProps) => {
+const t = useTranslations("platform-pricing-component");
+
   const pathname = usePathname();
   const currentPage = pathname?.split("/").pop();
   const router = useRouter();
@@ -52,7 +55,7 @@ export const PlatformPricing = ({ teamId, teamPlan, heading }: PlatformPricingPr
   };
 
   if (!teamId) {
-    return <div className="m-5">Platform team not present, you need to create a team first.</div>;
+    return <div className="m-5">{t('errors.team-required')}</div>;
   }
 
   return (

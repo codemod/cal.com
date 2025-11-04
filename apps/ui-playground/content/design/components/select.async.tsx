@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useCallback, useState } from "react";
@@ -32,6 +34,8 @@ const searchCountries = (query: string) => {
 };
 
 export const AsyncExample: React.FC = () => {
+const t = useTranslations("ui-playground-select-async");
+
   const [asyncOptions, setAsyncOptions] = useState<{ value: string; label: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,7 +66,7 @@ export const AsyncExample: React.FC = () => {
             }
           }}
           isLoading={isLoading}
-          placeholder="Search for a country..."
+          placeholder={t('placeholders.search-country')}
           noOptionsMessage={({ inputValue }) =>
             inputValue ? "No countries found" : "Start typing to search..."
           }
@@ -76,7 +80,7 @@ export const AsyncExample: React.FC = () => {
             }
           }}
           isLoading={isLoading}
-          placeholder="Search for a country... (small)"
+          placeholder={t('placeholders.search-country-small')}
           noOptionsMessage={({ inputValue }) =>
             inputValue ? "No countries found" : "Start typing to search..."
           }

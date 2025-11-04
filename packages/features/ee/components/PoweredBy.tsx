@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { useIsEmbed } from "@calcom/embed-core/embed-iframe";
@@ -11,6 +12,8 @@ const PoweredByCal = ({
   logoOnly?: boolean;
   hasValidLicense?: boolean | null;
 }) => {
+const t = useTranslations("powered-by-branding");
+
   const { t } = useLocale();
   const isEmbed = useIsEmbed();
 
@@ -23,7 +26,7 @@ const PoweredByCal = ({
             <img
               className="-mt-px inline h-[10px] w-auto dark:invert"
               src={`${process.env.NEXT_PUBLIC_WEBAPP_URL}/api/logo`}
-              alt="Cal.com Logo"
+              alt={t('logo.alt-text')}
             />
           </>
         ) : (

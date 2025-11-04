@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { usePathname, useRouter } from "next/navigation";
 
@@ -11,6 +13,8 @@ import { UserForm } from "../components/UserForm";
 import { userBodySchema } from "../schemas/userBodySchema";
 
 const UsersAddView = () => {
+const t = useTranslations("users-add-page");
+
   const pathname = usePathname();
   const router = useRouter();
   const utils = trpc.useUtils();
@@ -32,7 +36,7 @@ const UsersAddView = () => {
     <div>
       <LicenseRequired>
         <UserForm
-          submitLabel="Add user"
+          submitLabel={t('buttons.add-user')}
           onSubmit={async (values) => {
             const parser = getParserWithGeneric(userBodySchema);
             const parsedValues = parser(values);

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 // We do not need to worry about importing framer-motion here as it is lazy imported in Booker.
 import * as HoverCard from "@radix-ui/react-hover-card";
 import { AnimatePresence, m } from "framer-motion";
@@ -98,6 +99,8 @@ const SlotItem = ({
   confirmButtonDisabled,
   confirmStepClassNames,
 }: SlotItemProps) => {
+const t = useTranslations("available-times");
+
   const { t } = useLocale();
 
   const { data: eventData } = event;
@@ -244,7 +247,7 @@ const SlotItem = ({
                 <HoverCard.Content side="top" align="end" sideOffset={2}>
                   <div className="text-emphasis bg-inverted w-[var(--booker-timeslots-width)] rounded-md p-3">
                     <div className="flex items-center gap-2">
-                      <p>Busy</p>
+                      <p>{t('status.busy')}</p>
                     </div>
                     <p className="text-muted">
                       {overlappingTimeStart} - {overlappingTimeEnd}

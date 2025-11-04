@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { CreateANewTeamForm } from "@calcom/features/ee/teams/components";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -11,6 +12,8 @@ interface CreateTeamDialogProps {
 }
 
 const CreateTeamDialog = (props: CreateTeamDialogProps) => {
+const t = useTranslations("create-team-dialog");
+
   const { open, onOpenChange } = props;
   const { t } = useLocale();
 
@@ -20,7 +23,7 @@ const CreateTeamDialog = (props: CreateTeamDialogProps) => {
       <DialogContent type="creation" title={t("create_new_team")} description={t("team_will_be_under_org")}>
         <CreateANewTeamForm
           inDialog
-          submitLabel="Create"
+          submitLabel={t('buttons.create')}
           onCancel={() => onOpenChange(false)}
           onSuccess={async () => {
             await utils.viewer.dsync.teamGroupMapping.get.invalidate();

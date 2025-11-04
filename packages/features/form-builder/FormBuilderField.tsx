@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { ErrorMessage } from "@hookform/error-message";
 import type { TFunction } from "i18next";
 import { Controller, useFormContext } from "react-hook-form";
@@ -155,6 +156,8 @@ const WithLabel = ({
   noLabel?: boolean;
   htmlFor: string;
 }) => {
+const t = useTranslations("form-builder-field");
+
   const { t } = useLocale();
 
   return (
@@ -171,7 +174,7 @@ const WithLabel = ({
               <Label className="!mb-0 flex items-center" htmlFor={htmlFor}>
                 {renderLabel(field)}
                 <span className="text-emphasis -mb-1 ml-1 text-sm font-medium leading-none">
-                  {!readOnly && field.required ? "*" : ""}
+                  {!readOnly && field.required ? t('indicators.required-field_0') : t('indicators.required-field_1')}
                 </span>
                 {field.type === "phone" && <InfoBadge content={t("number_in_international_format")} />}
               </Label>

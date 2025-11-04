@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useEffect, useState, useMemo } from "react";
 
 import { Select } from "@calcom/ui/components/form";
@@ -35,6 +36,8 @@ const saveSettings = async ({
 };
 
 const AppConfiguration = (props: IAppConfigurationProps) => {
+const t = useTranslations("vital-app-configuration");
+
   const [credentialId] = props.credentialIds;
 
   const options = useMemo(
@@ -92,22 +95,18 @@ const AppConfiguration = (props: IAppConfigurationProps) => {
   return (
     <div className="flex-col items-start p-3 text-sm">
       <p>
-        <strong>Connected with Vital App: {connected ? "Yes" : "No"}</strong>
+        <strong>{t('status.connection-status')}</strong>
       </p>
       <br />
       <p>
-        <strong>Sleeping reschedule automation</strong>
+        <strong>{t('headings.sleep-reschedule-automation')}</strong>
       </p>
-      <p className="mt-1">
-        You can select different parameters to trigger the reschedule based on your sleeping metrics.
-      </p>
+      <p className="mt-1">{t('descriptions.parameter-selection-help')}</p>
 
       <div className="w-100 mt-2">
         <div className="block sm:flex">
           <div className="min-w-24 mb-4 mt-5 sm:mb-0">
-            <label htmlFor="description" className="text-sm font-bold">
-              Parameter
-            </label>
+            <label htmlFor="description" className="text-sm font-bold">{t('labels.parameter')}</label>
           </div>
           <div className="w-120 mt-2.5">
             <Select
@@ -124,9 +123,7 @@ const AppConfiguration = (props: IAppConfigurationProps) => {
 
       <div className="w-full">
         <div className="min-w-24 mb-4 mt-3">
-          <label htmlFor="value" className="text-sm font-bold">
-            Trigger at below or equal than
-          </label>
+          <label htmlFor="value" className="text-sm font-bold">{t('labels.trigger-threshold')}</label>
         </div>
         <div className="mx-2 mt-0 inline-flex w-24 items-baseline">
           <input
@@ -142,7 +139,7 @@ const AppConfiguration = (props: IAppConfigurationProps) => {
             className="pr-12shadow-sm border-default mt-1 block w-full rounded-sm border py-2 pl-6 focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
           />
           <p className="ml-2">
-            <strong>hours</strong>
+            <strong>{t('units.hours')}</strong>
           </p>
         </div>
       </div>
@@ -163,9 +160,7 @@ const AppConfiguration = (props: IAppConfigurationProps) => {
             setSaveLoading(false);
           }}
           loading={saveLoading}
-          disabled={disabledSaveButton}>
-          Save configuration
-        </Button>
+          disabled={disabledSaveButton}>{t('buttons.save-configuration')}</Button>
       </div>
     </div>
   );

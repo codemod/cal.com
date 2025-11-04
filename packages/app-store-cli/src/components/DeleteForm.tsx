@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Text } from "ink";
 import TextInput from "ink-text-input";
 import React, { useEffect, useState } from "react";
@@ -8,6 +9,8 @@ import { BaseAppFork, generateAppFiles } from "../core";
 import { getApp } from "../utils/getApp";
 
 export default function DeleteForm({ slug, action }: { slug: string; action: "delete" | "delete-template" }) {
+const t = useTranslations("app-store-delete-form");
+
   const [confirmedAppSlug, setConfirmedAppSlug] = useState("");
   const [state, setState] = useState<
     | "INITIALIZED"
@@ -38,12 +41,8 @@ export default function DeleteForm({ slug, action }: { slug: string; action: "de
   if (state === "INITIALIZED") {
     return (
       <>
-        <ImportantText>
-          Type below the slug of the {isTemplate ? "Template" : "App"} that you want to delete.
-        </ImportantText>
-        <Text color="gray" italic>
-          It would cleanup the app directory and App table and Credential table.
-        </Text>
+        <ImportantText>{t('instructions.confirm-deletion')}</ImportantText>
+        <Text color="gray" italic>{t('descriptions.cleanup-warning')}</Text>
         <TextInput
           value={confirmedAppSlug}
           onSubmit={(value) => {

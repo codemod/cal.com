@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import ServerTrans from "@calcom/lib/components/ServerTrans";
 import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
 
@@ -7,6 +8,8 @@ import { V2BaseEmailHtml } from "../components";
 export const OrganizationCreationEmail = (
   props: OrganizationCreation & Partial<React.ComponentProps<typeof V2BaseEmailHtml>>
 ) => {
+const t = useTranslations("organization-creation-email");
+
   const { prevLink, newLink, orgName: teamName } = props;
   const prevLinkWithoutProtocol = props.prevLink?.replace(/https?:\/\//, "");
   const newLinkWithoutProtocol = props.newLink?.replace(/https?:\/\//, "");
@@ -34,9 +37,7 @@ export const OrganizationCreationEmail = (
           marginBottom: "32px",
           marginTop: "32px",
           lineHeightStep: "24px",
-        }}>
-        You have been added as an owner of the organization.
-      </p>
+        }}>{t('messages.owner-added-notification')}</p>
       <p
         data-testid="organization-link-info"
         style={{
@@ -47,8 +48,9 @@ export const OrganizationCreationEmail = (
           lineHeightStep: "24px",
         }}>
         {isNewUser ? (
-          <>
-            Enjoy your new organization link: <a href={`${newLink}`}>{newLinkWithoutProtocol}</a>
+          <>{t.rich('messages.new-organization-link-info', {
+      component0: (chunks) => <a href={`${newLink}`}>{newLinkWithoutProtocol}</a>
+    })}
           </>
         ) : (
           <ServerTrans

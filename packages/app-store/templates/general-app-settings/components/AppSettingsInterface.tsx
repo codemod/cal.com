@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -5,13 +6,15 @@ import { TextField } from "@calcom/ui/components/form";
 import { Button } from "@calcom/ui/components/button";
 
 export default function AppSettings() {
+const t = useTranslations("app-settings-interface");
+
   const { t } = useLocale();
   const [input, setInput] = useState("");
 
   return (
     <div className="space-y-4 px-4 pb-4 pt-4 text-sm">
       <TextField
-        placeholder="Some Input"
+        placeholder={t('inputs.placeholder-text')}
         value={input}
         name="Enter Input"
         onChange={async (e) => {

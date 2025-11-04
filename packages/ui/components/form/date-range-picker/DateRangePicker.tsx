@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import * as Popover from "@radix-ui/react-popover";
 import { format } from "date-fns";
@@ -33,6 +35,8 @@ export function DatePickerWithRange({
   strictlyBottom,
   allowPastDates = false,
 }: React.HTMLAttributes<HTMLDivElement> & DatePickerWithRangeProps) {
+const t = useTranslations("date-range-picker");
+
   function handleDayClick(date: Date) {
     if (allowPastDates) {
       // for Out of Office (past dates allowed)
@@ -101,10 +105,10 @@ export function DatePickerWithRange({
                   {format(dates.startDate, "LLL dd, y")} - {format(dates.endDate, "LLL dd, y")}
                 </>
               ) : (
-                <>{format(dates.startDate, "LLL dd, y")} - End</>
+                <>{t('labels.date-range-incomplete', { "formatDatesStartDateLllDdY": format(dates.startDate, "LLL dd, y") })}</>
               )
             ) : (
-              <span>Pick a date</span>
+              <span>{t('placeholders.select-date')}</span>
             )}
           </Button>
         </Popover.Trigger>

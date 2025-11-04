@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { IframeHTMLAttributes } from "react";
@@ -81,6 +82,8 @@ export const AppPage = ({
   concurrentMeetings,
   paid,
 }: AppPageProps) => {
+const t = useTranslations("app-page");
+
   const { t, i18n } = useLocale();
   const router = useRouter();
   const searchParams = useCompatSearchParams();
@@ -308,7 +311,10 @@ export const AppPage = ({
         <div className="align-center bg-subtle -ml-4 -mr-4 mb-4 flex min-h-[450px] w-auto basis-3/5 snap-x snap-mandatory flex-row overflow-auto whitespace-nowrap p-4  md:-ml-8 md:-mr-8 md:mb-8 md:p-8 lg:mx-0 lg:mb-0 lg:max-w-2xl lg:flex-col lg:justify-center lg:rounded-md">
           {descriptionItems ? (
             descriptionItems.map((descriptionItem, index) =>
-              typeof descriptionItem === "object" ? (
+               {
+const t = useTranslations("app-page");
+
+return typeof descriptionItem === "object" ? (
                 <div
                   key={`iframe-${index}`}
                   className="mr-4 max-h-full min-h-[315px] min-w-[90%] max-w-full snap-center overflow-hidden rounded-md last:mb-0 lg:mb-4 lg:mr-0 [&_iframe]:h-full [&_iframe]:min-h-[315px] [&_iframe]:w-full">
@@ -318,10 +324,11 @@ export const AppPage = ({
                 <img
                   key={descriptionItem}
                   src={descriptionItem}
-                  alt={`Screenshot of app ${name}`}
+                  alt={t('images.app-screenshot-alt', { "name": name })}
                   className="mr-4 h-auto max-h-80 max-w-[90%] snap-center rounded-md object-contain last:mb-0 md:max-h-min lg:mb-4 lg:mr-0  lg:max-w-full"
                 />
               )
+}
             )
           ) : (
             <SkeletonText />
@@ -368,9 +375,7 @@ export const AppPage = ({
               </a>
             </h2>
             {isTemplate && (
-              <Badge variant="red" className="mt-4">
-                Template - Available in Dev Environment only for testing
-              </Badge>
+              <Badge variant="red" className="mt-4">{t('badges.template-dev-only')}</Badge>
             )}
           </header>
         </div>

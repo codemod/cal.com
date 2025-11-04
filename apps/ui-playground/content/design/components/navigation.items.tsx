@@ -1,15 +1,20 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
 import { Badge } from "@calcom/ui/components/badge";
 import { NavigationItem } from "@calcom/ui/components/navigation";
 
-export const ItemsExample: React.FC = () => (
+export const ItemsExample: React.FC = () =>  {
+const t = useTranslations("navigation-items-playground");
+
+return (
   <RenderComponentWithSnippet>
     <div className="space-y-4 md:w-64">
       <div className="space-y-1">
-        <h3 className="text-emphasis mb-2 text-sm font-medium">Basic Items</h3>
+        <h3 className="text-emphasis mb-2 text-sm font-medium">{t('sections.basic-items')}</h3>
         <NavigationItem
           item={{
             name: "Event Types",
@@ -27,7 +32,7 @@ export const ItemsExample: React.FC = () => (
       </div>
 
       <div className="space-y-1">
-        <h3 className="text-emphasis mb-2 text-sm font-medium">With Badge</h3>
+        <h3 className="text-emphasis mb-2 text-sm font-medium">{t('sections.with-badge')}</h3>
         <NavigationItem
           item={{
             name: "Bookings",
@@ -41,13 +46,13 @@ export const ItemsExample: React.FC = () => (
             name: "Teams",
             href: "#teams",
             icon: "users",
-            badge: <Badge variant="gray">New</Badge>,
+            badge: <Badge variant="gray">{t('badges.new')}</Badge>,
           }}
         />
       </div>
 
       <div className="space-y-1">
-        <h3 className="text-emphasis mb-2 text-sm font-medium">Active State</h3>
+        <h3 className="text-emphasis mb-2 text-sm font-medium">{t('sections.active-state')}</h3>
         <NavigationItem
           item={{
             name: "Event Types",
@@ -89,4 +94,5 @@ export const ItemsExample: React.FC = () => (
       </div>
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React, { Suspense } from "react";
 
 import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
@@ -31,6 +32,8 @@ export const PaymentForm = ({
   onEventTypePaymentInfoSuccess?: () => void;
   onEventTypePaymentInfoFailure?: () => void;
 }) => {
+const t = useTranslations("event-payment-form");
+
   const { t } = useLocale();
   const { data: paymentInfo, isLoading } = useAtomsEventTypePaymentInfo({
     uid: paymentUid,
@@ -44,9 +47,9 @@ export const PaymentForm = ({
   const timezone = localStorage.getItem("timeOption.preferredTimeZone") || CURRENT_TIMEZONE;
   const date = dayjs.utc(paymentInfo?.booking.startTime).tz(timezone);
 
-  if (isLoading) return <h1 className="p-4 pt-4 text-xl">Loading...</h1>;
+  if (isLoading) return <h1 className="p-4 pt-4 text-xl">{t('states.loading')}</h1>;
 
-  if (!paymentInfo) return <h1 className="p-4 text-xl">No payment found with UID - {paymentUid}</h1>;
+  if (!paymentInfo) return <h1 className="p-4 text-xl">{t('errors.payment-not-found', { "paymentUid": paymentUid })}</h1>;
 
   const paymentAppData = getPaymentAppData(paymentInfo?.eventType);
 
@@ -85,8 +88,13 @@ export const PaymentForm = ({
                           <div className="col-span-2 mb-6">
                             {date.format("dddd, DD MMMM YYYY")}
                             <br />
-                            {date.format(is24h ? "H:mm" : "h:mma")} - {paymentInfo.eventType.length} mins{" "}
-                            <span className="text-subtle">({timezone})</span>
+                            {t.rich('booking-details.time-duration-timezone', {
+      dateFormatIs24HHMmHMma,
+      paymentInfoEventTypeLength,
+      timezone,
+      component0: (chunks) => <span className="text-subtle">{chunks}</span>
+    })}
+                            
                           </div>
                           {paymentInfo.booking.location && (
                             <>

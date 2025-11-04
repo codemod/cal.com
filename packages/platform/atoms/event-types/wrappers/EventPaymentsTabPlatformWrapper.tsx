@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { EventTypeAppCard } from "@calcom/app-store/_components/EventTypeAppCardInterface";
 import type {
   EventTypeApp,
@@ -13,11 +14,13 @@ import { useCheck } from "../../hooks/stripe/useCheck";
 import { useAtomsEventTypeById } from "../hooks/useAtomEventTypeAppIntegration";
 
 const EventPaymentsTabPlatformWrapper = ({ eventType }: { eventType: EventTypeSetupProps["eventType"] }) => {
+const t = useTranslations("event-payments-stripe-wrapper");
+
   const { allowConnect, checked } = useCheck({ teamId: eventType.teamId });
 
   const isStripeConnected = !checked || !allowConnect;
 
-  if (!checked) return <div>Checking...</div>;
+  if (!checked) return <div>{t('status.checking')}</div>;
 
   return (
     <div>
@@ -25,13 +28,13 @@ const EventPaymentsTabPlatformWrapper = ({ eventType }: { eventType: EventTypeSe
         <EmptyScreen
           Icon="grid-3x3"
           headline="Stripe not connected"
-          description="You need to connect Stripe to use this feature. Please click on the button below to connect."
+          description={t('messages.stripe-connection-required')}
           buttonRaw={
             <StripeConnect
               teamId={eventType.teamId}
-              label="Connect to Stripe"
-              loadingLabel="Connect to Stripe"
-              alreadyConnectedLabel="Connect to Stripe"
+              label={t('buttons.connect-stripe')}
+              loadingLabel={t('buttons.connect-stripe-loading')}
+              alreadyConnectedLabel={t('buttons.connect-stripe-already-connected')}
               isClickable={true}
               color="secondary"
               redir={window.location.href}

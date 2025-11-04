@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSession } from "next-auth/react";
@@ -15,6 +17,8 @@ import { Select } from "@calcom/ui/components/form";
 import { Icon } from "@calcom/ui/components/icon";
 
 export default function Authorize() {
+const t = useTranslations("oauth-authorize-view");
+
   const { t } = useLocale();
   const { status } = useSession();
 
@@ -96,7 +100,7 @@ export default function Authorize() {
           <div className="relative -ml-6 h-24 w-24">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="bg-default flex h-[70px] w-[70px] items-center  justify-center rounded-full">
-                <img src="/cal-com-icon.svg" alt="Logo" className="h-16 w-16 rounded-full" />
+                <img src="/cal-com-icon.svg" alt={t('branding.logo-alt-text')} className="h-16 w-16 rounded-full" />
               </div>
             </div>
           </div>

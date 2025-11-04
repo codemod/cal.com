@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 
@@ -22,6 +23,8 @@ const MODE_URL = "url" as const;
 type Mode = typeof MODE_SEARCH | typeof MODE_URL;
 
 export const SearchDialog = (props: ISearchDialog) => {
+const t = useTranslations("giphy-search-dialog");
+
   const { t } = useLocale();
   const [gifImage, setGifImage] = useState<string>("");
   const [nextOffset, setNextOffset] = useState<number>(0);
@@ -173,7 +176,7 @@ export const SearchDialog = (props: ISearchDialog) => {
                   </svg>
                 </div>
               ) : (
-                <img className="h-[200px] pb-3 pt-3" src={gifImage} alt={`Gif from Giphy for ${keyword}`} />
+                <img className="h-[200px] pb-3 pt-3" src={gifImage} alt={t('images.gif-alt-text', { "keyword": keyword })} />
               )}
             </div>
           </div>
@@ -181,15 +184,13 @@ export const SearchDialog = (props: ISearchDialog) => {
         {errorMessage && <Alert severity="error" title={errorMessage} className="my-4" />}
         {gifImage && selectedMode === MODE_SEARCH && (
           <div className="mt-4 flex items-center justify-between space-x-2 rtl:space-x-reverse">
-            <div className="text-subtle text-sm font-light">Not the perfect GIF?</div>
+            <div className="text-subtle text-sm font-light">{t('messages.not-perfect-gif')}</div>
             <Button
               size="sm"
               color="secondary"
               type="button"
               loading={isPending}
-              onClick={() => searchGiphy(keyword, nextOffset)}>
-              Shuffle
-            </Button>
+              onClick={() => searchGiphy(keyword, nextOffset)}>{t('buttons.shuffle')}</Button>
           </div>
         )}
         <DialogFooter noSticky>

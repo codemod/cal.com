@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useState, useEffect } from "react";
 
@@ -27,6 +28,8 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
   disabled,
   eventType,
 }) => {
+const t = useTranslations("stripe-event-type-settings");
+
   const price = getAppData("price");
   const currency = getAppData("currency") || currencyOptions[0].value;
   const [selectedCurrency, setSelectedCurrency] = useState(
@@ -95,7 +98,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
               label={t("price")}
               className="h-[38px]"
               addOnLeading={
-                <>{selectedCurrency.value ? getCurrencySymbol("en", selectedCurrency.value) : ""}</>
+                <>{selectedCurrency.value ? getCurrencySymbol("en", selectedCurrency.value) : t('currency.symbol_0')}</>
               }
               addOnSuffix={currency.toUpperCase()}
               addOnClassname="h-[38px]"
@@ -103,7 +106,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
               min="0.5"
               type="number"
               required
-              placeholder="Price"
+              placeholder={t('labels.price')}
               disabled={disabled}
               onChange={(e) => {
                 setAppData("price", convertToSmallestCurrencyUnit(Number(e.target.value), currency));

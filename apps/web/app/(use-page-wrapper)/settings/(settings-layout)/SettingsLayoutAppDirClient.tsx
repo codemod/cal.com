@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import { useSession } from "next-auth/react";
@@ -379,6 +381,8 @@ const TeamListCollapsible = ({ teamFeatures }: { teamFeatures?: Record<number, T
       {teams &&
         teamMenuState &&
         teams.map((team, index: number) => {
+const t = useTranslations("settings-layout-app-dir-client");
+
           if (!teamMenuState[index]) {
             return null;
           }
@@ -439,9 +443,7 @@ const TeamListCollapsible = ({ teamFeatures }: { teamFeatures?: Record<number, T
                     )}
                     <p className="w-1/2 truncate leading-normal">{team.name}</p>
                     {!team.accepted && (
-                      <Badge className="ms-3" variant="orange">
-                        Inv.
-                      </Badge>
+                      <Badge className="ms-3" variant="orange">{t('badges.invitation-abbreviated')}</Badge>
                     )}
                   </button>
                 </CollapsibleTrigger>
@@ -586,6 +588,8 @@ const SettingsSidebarContainer = ({
       <>
         <BackButtonInSidebar name={t("back")} />
         {tabsWithPermissions.map((tab) => {
+const t = useTranslations("settings-layout-app-dir-client");
+
           return (
             <React.Fragment key={tab.href}>
               {!["teams", "other_teams"].includes(tab.name) && (
@@ -602,7 +606,7 @@ const SettingsSidebarContainer = ({
                         <img
                           className="h-4 w-4 rounded-full ltr:mr-3 rtl:ml-3"
                           src={tab?.avatar}
-                          alt="Organization Logo"
+                          alt={t('images.organization-logo-alt')}
                         />
                       )}
                       <Skeleton
@@ -615,7 +619,10 @@ const SettingsSidebarContainer = ({
                     </div>
                   </div>
                   <div className="my-3 space-y-px">
-                    {tab.children?.map((child, index) => (
+                    {tab.children?.map((child, index) =>  {
+const t = useTranslations("settings-layout-app-dir-client");
+
+return (
                       <div key={child.href} className="flex items-start gap-2">
                         <VerticalTabItem
                           name={t(child.name)}
@@ -628,12 +635,11 @@ const SettingsSidebarContainer = ({
                           disableChevron
                         />
                         {child.isBadged && (
-                          <Badge variant="blue" className="mt-0.5 text-xs">
-                            New
-                          </Badge>
+                          <Badge variant="blue" className="mt-0.5 text-xs">{t('badges.new-feature')}</Badge>
                         )}
                       </div>
-                    ))}
+                    )
+})}
                   </div>
                 </React.Fragment>
               )}

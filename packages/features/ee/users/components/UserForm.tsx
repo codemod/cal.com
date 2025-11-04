@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 // eslint-disable-next-line no-restricted-imports
 import { noop } from "lodash";
 import { Controller, useForm } from "react-hook-form";
@@ -48,6 +49,8 @@ export const UserForm = ({
   onSubmit: (data: FormValues) => void;
   submitLabel?: string;
 }) => {
+const t = useTranslations("user-admin-form");
+
   const { t } = useLocale();
 
   const timeFormatOptions = [
@@ -187,10 +190,10 @@ export const UserForm = ({
           </div>
         )}
       />
-      <TextField label="Name" placeholder="example" required {...form.register("name")} />
-      <TextField label="Username" placeholder="example" required {...form.register("username")} />
-      <EmailField label="Email" placeholder="user@example.com" required {...form.register("email")} />
-      <TextField label="About" {...form.register("bio")} />
+      <TextField label={t('fields.name.label')} placeholder={t('fields.name.placeholder')} required {...form.register("name")} />
+      <TextField label={t('fields.username.label')} placeholder={t('fields.username.placeholder')} required {...form.register("username")} />
+      <EmailField label={t('fields.email.label')} placeholder={t('fields.email.placeholder')} required {...form.register("email")} />
+      <TextField label={t('fields.bio.label')} {...form.register("bio")} />
       <Controller
         name="locale"
         render={({ field: { value, onChange } }) => (

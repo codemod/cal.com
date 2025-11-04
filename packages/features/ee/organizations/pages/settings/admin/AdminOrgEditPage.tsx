@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -26,6 +28,8 @@ export const OrgForm = ({
     id: Team["id"];
   };
 }) => {
+const t = useTranslations("organization-admin-edit-form");
+
   const { t } = useLocale();
   const router = useRouter();
   const utils = trpc.useUtils();
@@ -62,14 +66,11 @@ export const OrgForm = ({
 
   return (
     <Form form={form} className="space-y-4" handleSubmit={onSubmit}>
-      <TextField label="Name" placeholder="example" required {...form.register("name")} />
-      <TextField label="Slug" placeholder="example" required {...form.register("slug")} />
-      <p className="text-default mt-2 text-sm">
-        Changing the slug would delete the previous organization domain and DNS and setup new domain and DNS
-        for the organization.
-      </p>
+      <TextField label={t('labels.name')} placeholder={t('placeholders.name-example')} required {...form.register("name")} />
+      <TextField label={t('labels.slug')} placeholder={t('placeholders.slug-example')} required {...form.register("slug")} />
+      <p className="text-default mt-2 text-sm">{t('warnings.slug-change-dns-impact')}</p>
       <TextField
-        label="Domain for which invitations are auto-accepted"
+        label={t('labels.auto-accept-domain')}
         placeholder="abc.com"
         required
         {...form.register("organizationSettings.orgAutoAcceptEmail")}

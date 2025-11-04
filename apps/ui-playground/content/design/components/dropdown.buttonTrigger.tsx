@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -24,17 +26,20 @@ const menuItems = [
   kbd?: string;
 }[];
 
-export const ButtonTriggerExample: React.FC = () => (
+export const ButtonTriggerExample: React.FC = () =>  {
+const t = useTranslations("dropdown-button-trigger-demo");
+
+return (
   <RenderComponentWithSnippet>
     <div className="flex flex-wrap items-center gap-8">
       {/* Default Button */}
       <div className="flex flex-col items-center gap-2">
         <Dropdown>
           <DropdownMenuTrigger asChild>
-            <Button>Menu</Button>
+            <Button>{t('buttons.menu')}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('labels.actions')}</DropdownMenuLabel>
             {menuItems.map((item) => (
               <DropdownItem color={item.destructive ? "destructive" : "secondary"} key={item.label}>
                 {item.label}
@@ -42,17 +47,17 @@ export const ButtonTriggerExample: React.FC = () => (
             ))}
           </DropdownMenuContent>
         </Dropdown>
-        <span className="text-subtle text-xs">Default</span>
+        <span className="text-subtle text-xs">{t('variants.default')}</span>
       </div>
 
       {/* Button with Icon */}
       <div className="flex flex-col items-center gap-2">
         <Dropdown>
           <DropdownMenuTrigger asChild>
-            <Button>More Actions</Button>
+            <Button>{t('buttons.more-actions')}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Quick Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('labels.quick-actions')}</DropdownMenuLabel>
             {menuItems.map((item) => (
               <DropdownItem key={item.label} color={item.destructive ? "destructive" : undefined}>
                 {item.label}
@@ -60,7 +65,7 @@ export const ButtonTriggerExample: React.FC = () => (
             ))}
           </DropdownMenuContent>
         </Dropdown>
-        <span className="text-subtle text-xs">With Icon</span>
+        <span className="text-subtle text-xs">{t('variants.with-icon')}</span>
       </div>
 
       {/* Icon Button */}
@@ -77,8 +82,9 @@ export const ButtonTriggerExample: React.FC = () => (
             ))}
           </DropdownMenuContent>
         </Dropdown>
-        <span className="text-subtle text-xs">Icon Only</span>
+        <span className="text-subtle text-xs">{t('variants.icon-only')}</span>
       </div>
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

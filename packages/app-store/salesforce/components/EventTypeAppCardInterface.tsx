@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -21,6 +22,8 @@ import type { appDataSchema } from "../zod";
 import WriteToObjectSettings, { BookingActionEnum } from "./components/WriteToObjectSettings";
 
 const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ app, eventType, onAppInstallSuccess }) {
+const t = useTranslations("salesforce-event-type-app-card");
+
   const pathname = usePathname();
 
   const { getAppData, setAppData, disabled } = useAppContextWithSchema<typeof appDataSchema>();
@@ -472,9 +475,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({ 
             <Section.SubSectionContent classNames={{ container: "p-3" }}>
               <Label
                 htmlFor="send-no-show-attendee-data-field-name"
-                className="text-subtle text-sm font-medium">
-                Field name to check (must be checkbox data type)
-              </Label>
+                className="text-subtle text-sm font-medium">{t('labels.field-name-checkbox-description')}</Label>
               <InputField
                 id="send-no-show-attendee-data-field-name"
                 size="sm"

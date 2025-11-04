@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 
@@ -17,6 +18,8 @@ interface IRescheduleDialog {
 }
 
 export const RescheduleDialog = (props: IRescheduleDialog) => {
+const t = useTranslations("reschedule-dialog");
+
   const { t } = useLocale();
   const utils = trpc.useUtils();
   const { isOpenDialog, setIsOpenDialog, bookingUId: bookingId } = props;
@@ -46,7 +49,7 @@ export const RescheduleDialog = (props: IRescheduleDialog) => {
             <p className="text-subtle text-sm">{t("reschedule_modal_description")}</p>
             <p className="text-emphasis mb-2 mt-6 text-sm font-bold">
               {t("reason_for_reschedule_request")}
-              <span className="text-subtle font-normal"> (Optional)</span>
+              <span className="text-subtle font-normal">{t('labels.optional-indicator')}</span>
             </p>
             <TextArea
               data-testid="reschedule_reason"

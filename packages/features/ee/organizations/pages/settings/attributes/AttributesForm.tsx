@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import type { UseFormReturn, FieldArrayWithId } from "react-hook-form";
@@ -283,6 +284,8 @@ const GroupOptions = ({
 };
 
 export function AttributeForm({ initialValues, onSubmit, header }: AttributeFormProps) {
+const t = useTranslations("organization-attributes-form");
+
   const { t } = useLocale();
   const [deleteOptionDialog, setDeleteOptionDialog] = useState<{
     id: number | undefined;
@@ -407,7 +410,7 @@ export function AttributeForm({ initialValues, onSubmit, header }: AttributeForm
         name="type"
         render={({ field: { value, onChange } }) => (
           <SelectField
-            label="Type"
+            label={t('labels.attribute-type')}
             options={AttributeTypeOptions}
             onChange={(option) => {
               if (!option) return;

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -22,6 +23,8 @@ export default function SAMLConnection({
   teamId: number | null;
   connection: SSOConnection | null;
 }) {
+const t = useTranslations("saml-connection");
+
   const { t } = useLocale();
   const [openModal, setOpenModal] = useState(false);
 
@@ -36,9 +39,7 @@ export default function SAMLConnection({
         </div>
         {!connection && (
           <div className="flex-shrink-0 pt-3 sm:ml-auto sm:pl-3 sm:pt-0">
-            <Button color="secondary" onClick={() => setOpenModal(true)}>
-              Configure
-            </Button>
+            <Button color="secondary" onClick={() => setOpenModal(true)}>{t('buttons.configure')}</Button>
           </div>
         )}
       </div>

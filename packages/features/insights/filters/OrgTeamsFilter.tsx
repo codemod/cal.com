@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
@@ -19,6 +20,8 @@ import { useInsightsOrgTeams } from "../hooks/useInsightsOrgTeams";
 export type OrgTeamsType = "org" | "team" | "yours";
 
 export const OrgTeamsFilter = () => {
+const t = useTranslations("insights-org-teams-filter");
+
   const { orgTeamsType, selectedTeamId, setOrgTeamsType, setSelectedTeamId } = useInsightsOrgTeams();
   const { t } = useLocale();
   const session = useSession();
@@ -75,7 +78,7 @@ export const OrgTeamsFilter = () => {
   const PrefixComponent =
     orgTeamsType !== undefined && (imageUrl || placeholder) ? (
       <Avatar
-        alt={`${placeholder} logo`}
+        alt={t('alt-text.organization-logo', { "placeholder": placeholder })}
         imageSrc={getPlaceholderAvatar(imageUrl, placeholder)}
         size="xs"
         className="mr-2"
@@ -118,7 +121,7 @@ export const OrgTeamsFilter = () => {
           testId="org-teams-filter-item"
           icon={
             <Avatar
-              alt={`${currentUserName} avatar`}
+              alt={t('alt-text.user-avatar', { "currentUserName": currentUserName })}
               imageSrc={getPlaceholderAvatar(session.data?.user.avatarUrl, currentUserName)}
               size="xsm"
             />

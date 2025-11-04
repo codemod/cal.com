@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { _generateMetadata, getTranslate } from "app/_utils";
 
 import UsersListingView from "@calcom/features/ee/users/pages/users-listing-view";
@@ -14,6 +15,8 @@ export const generateMetadata = async () =>
   );
 
 const Page = async () => {
+const t = await getTranslations("admin-users-page");
+
   const t = await getTranslate();
   return (
     <SettingsHeader
@@ -23,7 +26,7 @@ const Page = async () => {
         <div className="mt-4 space-x-5 sm:ml-16 sm:mt-0 sm:flex-none">
           {/* TODO: Add import users functionality */}
           {/* <Button disabled>Import users</Button> */}
-          <Button href="/settings/admin/users/add">Add user</Button>
+          <Button href="/settings/admin/users/add">{t('buttons.add-user')}</Button>
         </div>
       }>
       <UsersListingView />

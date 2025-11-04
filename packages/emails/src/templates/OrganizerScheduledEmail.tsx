@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { SchedulingType } from "@calcom/prisma/enums";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 
@@ -13,6 +14,8 @@ export const OrganizerScheduledEmail = (
     reassigned?: { name: string | null; email: string; reason?: string; byUser?: string };
   } & Partial<React.ComponentProps<typeof BaseScheduledEmail>>
 ) => {
+const t = useTranslations("organizer-scheduled-email");
+
   let subject;
   let title;
 
@@ -54,9 +57,7 @@ export const OrganizerScheduledEmail = (
           props.subtitle
         ) : (
           <>
-            {props.attendeeCancelled
-              ? t("attendee_no_longer_attending_subtitle", { name: props.attendee.name })
-              : ""}
+            {props.attendeeCancelled ? t("attendee_no_longer_attending_subtitle", { name: props.attendee.name }) : t('subtitles.attendee-no-longer-attending_0')}
           </>
         )
       }

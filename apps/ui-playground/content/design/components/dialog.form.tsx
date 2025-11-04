@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -8,24 +10,24 @@ import { Dialog, DialogClose, DialogContent, DialogFooter } from "@calcom/ui/com
 import { TextAreaField } from "@calcom/ui/components/form";
 
 export const FormExample: React.FC = () => {
+const t = useTranslations("dialog-form-playground");
+
   const [open, setOpen] = useState(false);
   const [formInput, setFormInput] = useState("");
 
   return (
     <RenderComponentWithSnippet>
       <div className="space-y-2">
-        <Button color="secondary" onClick={() => setOpen(true)}>
-          Open Form Dialog
-        </Button>
+        <Button color="secondary" onClick={() => setOpen(true)}>{t('buttons.open-form-dialog')}</Button>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent title="Feedback Form" description="Please provide your feedback below">
             <div>
               <TextAreaField
                 name="feedback"
                 label={
-                  <>
-                    Your Feedback
-                    <span className="text-subtle font-normal"> (Optional)</span>
+                  <>{t.rich('forms.feedback-label-with-optional', {
+      component0: (chunks) => <span className="text-subtle font-normal">{chunks}</span>
+    })}
                   </>
                 }
                 value={formInput}
@@ -38,14 +40,12 @@ export const FormExample: React.FC = () => {
                 onClick={() => {
                   setOpen(false);
                   setFormInput("");
-                }}>
-                Submit Feedback
-              </Button>
+                }}>{t('buttons.submit-feedback')}</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
         <div className="mt-6">
-          <h4 className="text-emphasis text-sm font-medium">Current Form Input:</h4>
+          <h4 className="text-emphasis text-sm font-medium">{t('labels.current-form-input')}</h4>
           <pre className="text-default bg-subtle mt-2 rounded-md p-4 text-sm">
             {formInput || "No input yet"}
           </pre>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { CallToAction, CallToActionTable } from "../components";
 import { AttendeeScheduledEmail } from "./AttendeeScheduledEmail";
 
@@ -14,9 +15,11 @@ function ManageLink(props: React.ComponentProps<typeof AttendeeScheduledEmail>) 
 }
 
 export const AttendeeAwaitingPaymentEmail = (props: React.ComponentProps<typeof AttendeeScheduledEmail>) => {
+const t = useTranslations("attendee-awaiting-payment-email");
+
   return props.calEvent.paymentInfo?.paymentOption === "HOLD" ? (
     <AttendeeScheduledEmail
-      title="meeting_awaiting_payment_method"
+      title={t('titles.payment-method-required')}
       headerType="calendarCircle"
       subject="awaiting_payment_subject"
       callToAction={<ManageLink {...props} />}
@@ -24,7 +27,7 @@ export const AttendeeAwaitingPaymentEmail = (props: React.ComponentProps<typeof 
     />
   ) : (
     <AttendeeScheduledEmail
-      title="meeting_awaiting_payment"
+      title={t('titles.payment-pending')}
       headerType="calendarCircle"
       subject="awaiting_payment_subject"
       callToAction={<ManageLink {...props} />}

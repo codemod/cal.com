@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import React from "react";
 
@@ -237,6 +238,8 @@ const SelectedCalendarsSettingsHeading = (props: {
   scope: SelectedCalendarSettingsScope;
   shouldDisableConnectionModification?: boolean;
 }) => {
+const t = useTranslations("selected-calendars-settings");
+
   const { t } = useLocale();
   const optionsToSwitchScope = [
     { label: "User", value: SelectedCalendarSettingsScope.User },
@@ -263,7 +266,7 @@ const SelectedCalendarsSettingsHeading = (props: {
       </div>
       {props.showScopeSelector && (
         <div className="mt-2 flex flex-row items-center space-x-2">
-          <span className="text-default text-sm">Using</span>
+          <span className="text-default text-sm">{t('scope-selector.using-label')}</span>
           <Select
             onChange={(option) => {
               if (!option) return;
@@ -272,7 +275,7 @@ const SelectedCalendarsSettingsHeading = (props: {
             value={switchScopeSelectValue}
             options={optionsToSwitchScope}
           />
-          <span className="text-default text-sm">settings</span>
+          <span className="text-default text-sm">{t('scope-selector.settings-label')}</span>
         </div>
       )}
     </div>

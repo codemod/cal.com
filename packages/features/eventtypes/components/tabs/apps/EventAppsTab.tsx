@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useFormContext } from "react-hook-form";
 
@@ -27,6 +28,8 @@ export const EventAppsTab = ({
   eventTypeApps?: EventTypeApps;
   isPendingApps: boolean;
 }) => {
+const t = useTranslations("event-apps-tab");
+
   const { t } = useLocale();
 
   const utils = trpc.useUtils();
@@ -180,9 +183,7 @@ export const EventAppsTab = ({
                   t={t}
                   i18nKey="available_apps_desc"
                   components={[
-                    <Link key="available_apps_desc" className="cursor-pointer underline" href="/apps">
-                      App Store
-                    </Link>,
+                    <Link key="available_apps_desc" className="cursor-pointer underline" href="/apps">{t('links.app-store')}</Link>,
                   ]}
                 />
               </Section.Description>

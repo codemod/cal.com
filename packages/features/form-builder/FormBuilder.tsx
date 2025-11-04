@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useEffect, useState } from "react";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
@@ -441,6 +442,8 @@ function Options({
   showPrice?: boolean;
   paymentCurrency: string;
 }) {
+const t = useTranslations("form-builder");
+
   const { t } = useLocale();
 
   const [animationRef] = useAutoAnimate<HTMLUListElement>();
@@ -535,9 +538,7 @@ function Options({
               newOptions.push({ label: "", value: "", price: 0 });
               onChange(newOptions);
             }}
-            StartIcon="plus">
-            Add an Option
-          </Button>
+            StartIcon="plus">{t('buttons.add-option')}</Button>
         )}
       </div>
     </div>
@@ -580,6 +581,8 @@ function FieldEditDialog({
   showPriceField?: boolean;
   paymentCurrency: string;
 }) {
+const t = useTranslations("form-builder");
+
   const { t } = useLocale();
   const isPlatform = useIsPlatform();
   const fieldForm = useForm<RhfFormField>({
@@ -721,7 +724,7 @@ function FieldEditDialog({
                           }
                         }}
                         label={t("require_emails_that_contain")}
-                        placeholder="gmail.com, hotmail.com, ..."
+                        placeholder={t('placeholders.email-domains-require')}
                       />
                     )}
 
@@ -742,7 +745,7 @@ function FieldEditDialog({
                           }
                         }}
                         label={t("exclude_emails_that_contain")}
-                        placeholder="gmail.com, hotmail.com, ..."
+                        placeholder={t('placeholders.email-domains-exclude')}
                       />
                     )}
 
@@ -917,6 +920,8 @@ function VariantFields({
   fieldForm: UseFormReturn<RhfFormField>;
   variantsConfig: RhfFormField["variantsConfig"];
 }) {
+const t = useTranslations("form-builder");
+
   const { t } = useLocale();
   if (!variantsConfig) {
     throw new Error("VariantFields component needs variantsConfig");
@@ -996,7 +1001,7 @@ function VariantFields({
             <li className={classNames(!isSimpleVariant ? "p-4" : "")} key={f.name}>
               {!isSimpleVariant && (
                 <Label className="flex justify-between">
-                  <span>{`Field ${index + 1}`}</span>
+                  <span>{t('labels.field-number', { "index": index })}</span>
                   <span className="text-muted">{f.name}</span>
                 </Label>
               )}

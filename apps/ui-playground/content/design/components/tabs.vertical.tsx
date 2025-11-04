@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -51,13 +53,15 @@ const verticalTabItems = [
 ] as VerticalTabItemProps[];
 
 export const VerticalExample: React.FC = () => {
+const t = useTranslations("ui-playground-vertical-tabs");
+
   const [activeTab, setActiveTab] = useState("Overview");
 
   return (
     <RenderComponentWithSnippet>
       <div className="max-w-xs space-y-6">
         <div>
-          <h3 className="text-emphasis mb-2 text-sm font-medium">Basic</h3>
+          <h3 className="text-emphasis mb-2 text-sm font-medium">{t('headings.basic-example')}</h3>
           <VerticalTabs
             tabs={verticalTabItems.map((item) => ({
               ...item,

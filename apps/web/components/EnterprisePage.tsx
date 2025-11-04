@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import Shell from "@calcom/features/shell/Shell";
 import { UpgradeTip } from "@calcom/features/tips";
@@ -8,6 +10,8 @@ import { ButtonGroup } from "@calcom/ui/components/buttonGroup";
 import { Icon } from "@calcom/ui/components/icon";
 
 export default function EnterprisePage() {
+const t = useTranslations("enterprise-page");
+
   const { t } = useLocale();
 
   const features = [
@@ -63,7 +67,7 @@ export default function EnterprisePage() {
               </ButtonGroup>
             </div>
           }>
-          <>Create Org</>
+          <>{t('actions.create-organization')}</>
         </UpgradeTip>
       </Shell>
     </div>

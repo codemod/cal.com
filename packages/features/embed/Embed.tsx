@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
@@ -472,6 +473,8 @@ const EmailEmbedPreview = ({
   selectedDuration: number | undefined;
   userSettingsTimezone?: string;
 }) => {
+const t = useTranslations("embed-dialog");
+
   const { t } = useLocale();
   const { timeFormat, timezoneFromBookerStore, timezoneFromTimePreferences } = useBookerTime();
   const timezone = chooseTimezone({
@@ -517,7 +520,7 @@ const EmailEmbedPreview = ({
               lineHeight: "17px",
               color: "#333333",
             }}>
-            {t("duration")}: <b style={{ color: "black" }}>{selectedDuration} mins</b>
+            {t("duration")}: <b style={{ color: "black" }}>{t('duration.minutes-format', { "selectedDuration": selectedDuration })}</b>
           </div>
           <div>
             <b style={{ color: "black" }}>
@@ -690,6 +693,8 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
   namespace: string;
   noQueryParamMode?: boolean;
 }) => {
+const t = useTranslations("embed-dialog");
+
   const { t } = useLocale();
   const searchParams = useCompatSearchParams();
   const pathname = usePathname();
@@ -955,7 +960,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                     {embedType === "inline" && embedParams.embedTabName !== EmbedTabName.ATOM_REACT && (
                       <div>
                         {/*TODO: Add Auto/Fixed toggle from Figma */}
-                        <div className="text-default mb-[9px] text-sm">Window sizing</div>
+                        <div className="text-default mb-[9px] text-sm">{t('inline.window-sizing')}</div>
                         <div className="justify-left mb-6 flex items-center !font-normal ">
                           <div className="mr-[9px]">
                             <TextField
@@ -976,7 +981,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                                   };
                                 });
                               }}
-                              addOnLeading={<>W</>}
+                              addOnLeading={<>{t('dimensions.width-label')}</>}
                             />
                           </div>
 
@@ -998,7 +1003,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                                 };
                               });
                             }}
-                            addOnLeading={<>H</>}
+                            addOnLeading={<>{t('dimensions.height-label')}</>}
                           />
                         </div>
                       </div>
@@ -1008,7 +1013,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                         "items-center justify-between",
                         embedType === "floating-popup" ? "text-emphasis" : "hidden"
                       )}>
-                      <div className="mb-2 text-sm">Button text</div>
+                      <div className="mb-2 text-sm">{t('floating-popup.button-text')}</div>
                       {/* Default Values should come from preview iframe */}
                       <TextField
                         labelProps={{ className: "hidden" }}
@@ -1048,14 +1053,14 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                           });
                         }}
                       />
-                      <div className="text-default my-2 text-sm">Display calendar icon</div>
+                      <div className="text-default my-2 text-sm">{t('floating-popup.display-calendar-icon')}</div>
                     </div>
                     <div
                       className={classNames(
                         "mt-4 items-center justify-between",
                         embedType === "floating-popup" ? "text-emphasis" : "hidden"
                       )}>
-                      <div className="mb-2">Position of button</div>
+                      <div className="mb-2">{t('floating-popup.button-position')}</div>
                       <Select
                         onChange={(position) => {
                           setPreviewState((previewState) => {
@@ -1074,7 +1079,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                     </div>
                     <div className="mt-3 flex flex-col xl:flex-row xl:justify-between">
                       <div className={classNames("mt-4", embedType === "floating-popup" ? "" : "hidden")}>
-                        <div className="whitespace-nowrap">Button color</div>
+                        <div className="whitespace-nowrap">{t('floating-popup.button-color')}</div>
                         <div className="mt-2 w-40 xl:mt-0 xl:w-full">
                           <ColorPicker
                             className="w-[130px]"
@@ -1096,7 +1101,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                         </div>
                       </div>
                       <div className={classNames("mt-4", embedType === "floating-popup" ? "" : "hidden")}>
-                        <div className="whitespace-nowrap">Text color</div>
+                        <div className="whitespace-nowrap">{t('floating-popup.text-color')}</div>
                         <div className="mb-6 mt-2 w-40 xl:mt-0 xl:w-full">
                           <ColorPicker
                             className="w-[130px]"

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { GroupBase, Props, ValueContainerProps } from "react-select";
 import { components } from "react-select";
 
@@ -35,6 +36,8 @@ const LimitedChipsContainer = <Option, IsMulti extends boolean, Group extends Gr
 };
 
 export const MultiDropdownSelect = ({ options = [], value = [], ...props }: Props) => {
+const t = useTranslations("multi-dropdown-select");
+
   // const { t } = useLocale();
 
   return (
@@ -92,7 +95,7 @@ export const MultiDropdownSelect = ({ options = [], value = [], ...props }: Prop
       }}
       className="cal-multiselect"
       classNamePrefix="cal-multiselect"
-      placeholder="Select"
+      placeholder={t('placeholder.select')}
       defaultValue={value}
       options={options}
       hideSelectedOptions={false}

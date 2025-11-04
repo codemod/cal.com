@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { DialogProps as ControlledDialogProps } from "@calcom/features/components/controlled-dialog";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { Button } from "@calcom/ui/components/button";
@@ -8,6 +9,8 @@ export function AccountDialog(
     handleSubmit: () => void;
   }
 ) {
+const t = useTranslations("office365-account-dialog");
+
   return (
     <Dialog name="Account check" open={props.open} onOpenChange={props.onOpenChange}>
       <DialogContent
@@ -22,13 +25,9 @@ export function AccountDialog(
               tabIndex={-1}
               onClick={() => {
                 props.onOpenChange?.(false);
-              }}>
-              Cancel
-            </DialogClose>
+              }}>{t('buttons.cancel')}</DialogClose>
 
-            <Button type="button" onClick={props.handleSubmit}>
-              Continue
-            </Button>
+            <Button type="button" onClick={props.handleSubmit}>{t('buttons.continue')}</Button>
           </>
         </DialogFooter>
       </DialogContent>

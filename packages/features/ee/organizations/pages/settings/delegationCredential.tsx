@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useState } from "react";
 import { useForm, Controller, useFormContext } from "react-hook-form";
@@ -100,6 +102,8 @@ function DelegationListItemActions({
 }
 
 function DelegationListItem({ delegation, toggleDelegation, onEdit, onDelete }: DelegationItemProps) {
+const t = useTranslations("delegation-credential-settings");
+
   const { t } = useLocale();
   return (
     <li className="border-subtle bg-default divide-subtle flex flex-col divide-y border">
@@ -109,7 +113,7 @@ function DelegationListItem({ delegation, toggleDelegation, onEdit, onDelete }: 
             <span>{delegation.serviceAccountClientId}</span>
             <InfoBadge content={t("add_client_id_in_google_workspace_with_below_scope")} />
           </div>
-          <span className="text-muted mt-2">https://www.googleapis.com/auth/calendar</span>
+          <span className="text-muted mt-2">{t('google-calendar-api-scope')}</span>
           <div className="mt-2 flex items-center space-x-2">
             <Badge variant="default">{delegation.workspacePlatform.name}</Badge>
             <Badge variant="gray">{delegation.domain}</Badge>
@@ -463,6 +467,8 @@ function MembersThatWillBeAffectedOnDisablingDelegationCredential({
 }: {
   delegationCredentialId: string;
 }) {
+const t = useTranslations("delegation-credential-settings");
+
   const { t } = useLocale();
   const { data: affectedMembers, isLoading: isLoadingAffectedMembers } =
     trpc.viewer.delegationCredential.getAffectedMembersForDisable.useQuery({ id: delegationCredentialId });
@@ -477,7 +483,7 @@ function MembersThatWillBeAffectedOnDisablingDelegationCredential({
           <ul className="list-disc space-y-1 p-1 pl-5 sm:w-80">
             {affectedMembers.slice(0, 5).map((m) => (
               <li className="text-muted text-sm" key={m.email}>
-                {m.name ? `${m.name} (${m.email})` : m.email}
+                {t('member-display-format', { "mName": m.name, "mEmail": m.email })}
               </li>
             ))}
           </ul>

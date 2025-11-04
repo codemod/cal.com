@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 /**
  * @fileoverview This file is an example file and tells how to use the element-click popup embed in a React application. This is also used by playwright e2e
  */
@@ -9,6 +10,8 @@ import { getCalApi } from "./src/index";
 
 const calNamespace = "element-click";
 function App() {
+const t = useTranslations("embed-react-element-click-demo");
+
   useEffect(() => {
     (async function () {
       const cal = await getCalApi({
@@ -22,9 +25,7 @@ function App() {
     <button
       data-cal-namespace={calNamespace}
       data-cal-link="pro"
-      data-cal-config='{"layout":"month_view", "theme":"dark"}'>
-      Click me
-    </button>
+      data-cal-config='{"layout":"month_view", "theme":"dark"}'>{t('buttons.trigger-booking')}</button>
   );
 }
 

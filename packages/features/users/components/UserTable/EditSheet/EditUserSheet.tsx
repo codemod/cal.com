@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Dispatch } from "react";
 import { shallow } from "zustand/shallow";
 
@@ -27,6 +28,8 @@ export function EditUserSheet({
   state: UserTableState;
   dispatch: Dispatch<UserTableAction>;
 }) {
+const t = useTranslations("user-edit-sheet");
+
   const { t } = useLocale();
   const { user: selectedUser } = state.editSheet;
   const orgBranding = useOrgBranding();
@@ -73,7 +76,7 @@ export function EditUserSheet({
                   <div className="border-sublte bg-default w-full rounded-xl border p-4">
                     <OrganizationBanner />
                     <div className="bg-default ml-3 w-fit translate-y-[-50%] rounded-full p-1 ring-1 ring-[#0000000F]">
-                      <Avatar asChild size="lg" alt={`${loadedUser?.name} avatar`} imageSrc={avatarURL} />
+                      <Avatar asChild size="lg" alt={t('avatar.alt-text', { "loadedUserName": loadedUser?.name })} imageSrc={avatarURL} />
                     </div>
                     <h2 className="text-emphasis font-sans text-2xl font-semibold">
                       {loadedUser?.name || "Nameless User"}
@@ -87,7 +90,7 @@ export function EditUserSheet({
                   <div className="mb-4 flex flex-col space-y-4">
                     <h3 className="text-emphasis mb-1 text-base font-semibold">{t("profile")}</h3>
                     <DisplayInfo
-                      label="Cal"
+                      label={t('profile.cal-label')}
                       value={removeProtocol(
                         `${orgBranding?.fullDomain ?? WEBAPP_URL}/${loadedUser?.username}`
                       )}

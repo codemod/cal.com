@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Navbar } from "@/components/Navbar";
 import { Inter } from "next/font/google";
 // eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
@@ -10,6 +11,8 @@ import { Icon } from "@calcom/ui/components/icon";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Bookings(props: { calUsername: string; calEmail: string }) {
+const t = useTranslations("booking-confirmation");
+
   const router = useRouter();
 
   const { isLoading, data: booking, refetch } = useBooking((router.query.bookingUid as string) ?? "");
@@ -32,7 +35,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
       <main
         className={`flex min-h-screen flex-col ${inter.className} main text-default flex min-h-full w-full flex-col items-center overflow-visible`}>
         <Navbar username={props.calUsername} />
-        {isLoading && <p>Loading...</p>}
+        {isLoading && <p>{t('loading.text')}</p>}
         {!isLoading && booking && (
           <div
             data-testid="booking-success-page"
@@ -44,22 +47,20 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                   name="circle-check-big"
                   className="my-5 flex h-[40px] w-[40px] rounded-full bg-green-500"
                 />
-                <h1 className="text-xl font-bold" data-testid="booking-success-message">
-                  This meeting is scheduled
-                </h1>
-                <p>We sent an email with a calendar invitation with the details to everyone.</p>
+                <h1 className="text-xl font-bold" data-testid="booking-success-message">{t('messages.meeting-scheduled')}</h1>
+                <p>{t('messages.email-sent-confirmation')}</p>
               </div>
             ) : (
               <div className="mx-2 my-4 flex flex-col items-center justify-center text-center">
                 <Icon name="x" className="my-5 flex h-[40px] w-[40px] rounded-full bg-red-400" />
-                <h4 className="text-2xl font-bold">This event is cancelled</h4>
+                <h4 className="text-2xl font-bold">{t('messages.event-cancelled')}</h4>
               </div>
             )}
             <hr className="mx-2 bg-black text-black" />
             <div className="mx-2 my-7 flex flex-col gap-y-3">
               <div className="flex gap-[70px]">
                 <div>
-                  <h4>What</h4>
+                  <h4>{t('labels.what')}</h4>
                 </div>
                 <div>
                   <p>{booking.title}</p>
@@ -67,7 +68,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
               </div>
               <div className="flex gap-[70px]">
                 <div>
-                  <h4>When</h4>
+                  <h4>{t('labels.when')}</h4>
                 </div>
                 <div>
                   <div>
@@ -89,7 +90,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                 </div>
               </div>
               <div className="flex gap-[70px]">
-                <div>Who</div>
+                <div>{t('labels.who')}</div>
                 <div>
                   <div>
                     <div>
@@ -114,7 +115,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
               {!!booking.location && (
                 <div className="flex gap-[70px]">
                   <div>
-                    <h4>Where</h4>
+                    <h4>{t('labels.where')}</h4>
                   </div>
                   <div>
                     <p>{booking.location}</p>
@@ -124,7 +125,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
               {"bookingFieldsResponses" in booking && !!booking.bookingFieldsResponses?.notes && (
                 <div className="flex gap-[70px]">
                   <div className="w-[40px]">
-                    <h4>Additional notes</h4>
+                    <h4>{t('labels.additional-notes')}</h4>
                   </div>
                   <div>
                     <p>{`${booking.bookingFieldsResponses.notes}`}</p>
@@ -137,18 +138,14 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
               <>
                 <hr className="mx-3" />
                 <div className="mx-2 my-3 text-center">
-                  <p data-testid="booking-redirect-or-cancel-links">
-                    Need to make a change?{" "}
+                  <p data-testid="booking-redirect-or-cancel-links">{t('actions.need-change-prompt')}
                     <button
                       className="underline"
                       onClick={() => {
                         router.push(
                           `/booking?rescheduleUid=${booking?.uid}&eventTypeSlug=${booking?.eventType.slug}&rescheduledBy=${props.calEmail}`
                         );
-                      }}>
-                      Reschedule
-                    </button>{" "}
-                    or{" "}
+                      }}>{t('buttons.reschedule')}</button>{t('actions.or-separator')}
                     <button
                       className="underline"
                       onClick={() => {
@@ -158,9 +155,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                           cancellationReason: "User request",
                           allRemainingBookings: true,
                         });
-                      }}>
-                      Cancel
-                    </button>
+                      }}>{t('buttons.cancel')}</button>
                   </p>
                 </div>
               </>

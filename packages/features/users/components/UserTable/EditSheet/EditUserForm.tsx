@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
 import type { Dispatch } from "react";
@@ -77,6 +78,8 @@ export function EditForm({
   domainUrl: string;
   dispatch: Dispatch<UserTableAction>;
 }) {
+const t = useTranslations("user-edit-form");
+
   const setEditMode = useEditMode((state) => state.setEditMode);
   const [mutationLoading, setMutationLoading] = useState(false);
   const { t } = useLocale();
@@ -197,7 +200,7 @@ export function EditForm({
               name="avatar"
               render={({ field: { value } }) => (
                 <div className="flex items-center">
-                  <Avatar alt={`${selectedUser?.name} avatar`} imageSrc={value} size="mdLg" />
+                  <Avatar alt={t('avatar.alt-text', { "selectedUserName": selectedUser?.name })} imageSrc={value} size="mdLg" />
                   <div className="ml-4">
                     <ImageUploader
                       target="avatar"
@@ -279,6 +282,8 @@ type DefaultValueType = {
 };
 
 function AttributesList(props: { selectedUserId: number }) {
+const t = useTranslations("user-edit-form");
+
   const { data: usersAttributes, isPending: usersAttributesPending } =
     trpc.viewer.attributes.getByUserId.useQuery({
       userId: props.selectedUserId,
@@ -420,7 +425,7 @@ function AttributesList(props: { selectedUserId: number }) {
                       />
                       {attr.isWeightsEnabled && fieldValue?.options && (
                         <div className="mt-3 space-y-2">
-                          <Label>Weights</Label>
+                          <Label>{t('attributes.weights-label')}</Label>
                           <div className="">
                             {fieldValue.options.map((option, idx) => {
                               return (

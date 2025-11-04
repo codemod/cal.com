@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -14,6 +16,8 @@ const options = [
 ];
 
 export const BasicExample: React.FC = () => {
+const t = useTranslations("select-basic-demo");
+
   const [singleValue, setSingleValue] = useState<{ value: string; label: string } | null>(null);
 
   return (
@@ -24,7 +28,7 @@ export const BasicExample: React.FC = () => {
           value={singleValue}
           onChange={(newValue) => setSingleValue(newValue)}
           isClearable
-          placeholder="Choose a flavor..."
+          placeholder={t('placeholders.choose-flavor')}
           size="md"
         />
         <Select
@@ -32,7 +36,7 @@ export const BasicExample: React.FC = () => {
           value={singleValue}
           onChange={(newValue) => setSingleValue(newValue)}
           isClearable
-          placeholder="Small size select..."
+          placeholder={t('placeholders.small-size-select')}
           size="sm"
         />
       </div>

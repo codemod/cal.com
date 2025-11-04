@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React from "react";
 
 import { CAL_URL, LOGO, WEBAPP_URL } from "./constants";
@@ -159,19 +160,23 @@ export const constructGenericImage = async ({ title, description }: GenericImage
   return encodeURIComponent(`/api/social/og/image?${params.toString()}`);
 };
 
-const Wrapper = ({ children, variant = "light", rotateBackground }: WrapperProps) => (
+const Wrapper = ({ children, variant = "light", rotateBackground }: WrapperProps) =>  {
+const t = useTranslations("og-images");
+
+return (
   <div tw="flex w-full h-full">
     <img
       tw="flex absolute left-0 top-0 w-full h-[110%]"
       style={rotateBackground ? { transform: "rotate(180deg)" } : undefined}
       src={`${WEBAPP_URL}/social-bg-${variant}-lines.jpg`}
-      alt="background"
+      alt={t('alt-text.background')}
       width="1200"
       height="600"
     />
     <div tw="flex flex-col w-full h-full px-[80px] py-[70px] items-start justify-center">{children}</div>
   </div>
-);
+)
+};
 
 /**
  * ⚠️ IMPORTANT: When modifying this component's structure, styling, or visual output,
@@ -179,6 +184,8 @@ const Wrapper = ({ children, variant = "light", rotateBackground }: WrapperProps
  * to ensure proper cache invalidation.
  */
 export const Meeting = ({ title, users = [], profile }: MeetingImageProps) => {
+const t = useTranslations("og-images");
+
   const config = OG_ASSETS.meeting;
 
   // We filter attendees here based on whether they have an image and filter duplicates.
@@ -205,23 +212,27 @@ export const Meeting = ({ title, users = [], profile }: MeetingImageProps) => {
     <Wrapper variant={config.variant}>
       <div tw="h-full flex flex-col justify-start">
         <div tw="flex items-center justify-center" style={{ fontFamily: "cal", fontWeight: 300 }}>
-          <img src={`${WEBAPP_URL}/${config.logo}`} width={config.logoWidth} alt="Logo" />
+          <img src={`${WEBAPP_URL}/${config.logo}`} width={config.logoWidth} alt={t('alt-text.logo')} />
           {avatars.length > 0 && (
             <div style={{ color: "#111827" }} tw="font-bold text-[92px] mx-8 bottom-2">
               /
             </div>
           )}
           <div tw="flex flex-row">
-            {avatars.slice(0, 3).map((avatar) => (
+            {avatars.slice(0, 3).map((avatar) =>  {
+const t = useTranslations("og-images");
+
+return (
               <img
                 tw="rounded-full mr-[-36px] border-[6px] border-[#CDCED2]"
                 key={avatar}
                 src={avatar}
-                alt="Profile picture"
+                alt={t('alt-text.profile-picture')}
                 width={config.avatarSize}
                 height={config.avatarSize}
               />
-            ))}
+            )
+})}
             {avatars.length > 3 && (
               <div
                 tw={`flex items-center justify-center w-[${config.avatarSize}px] h-[${config.avatarSize}px] rounded-full bg-black text-inverted text-[54px] font-bold`}>
@@ -233,8 +244,7 @@ export const Meeting = ({ title, users = [], profile }: MeetingImageProps) => {
         <div style={{ color: "#111827" }} tw="relative flex text-[54px] w-full flex-col mt-auto">
           <div
             tw="flex w-[1040px] overflow-hidden"
-            style={{ whiteSpace: "nowrap", fontFamily: "cal", textOverflow: "ellipsis" }}>
-            Meet {joinMultipleNames(names)}
+            style={{ whiteSpace: "nowrap", fontFamily: "cal", textOverflow: "ellipsis" }}>{t('meeting.meet-prefix')}{joinMultipleNames(names)}
           </div>
           <div
             tw="flex mt-3 w-[1040px] overflow-hidden"
@@ -285,6 +295,8 @@ const VisualBlur = ({ logoUrl }: { logoUrl: string }) => {
  * to ensure proper cache invalidation.
  */
 export const App = ({ name, description, logoUrl }: AppImageProps) => {
+const t = useTranslations("og-images");
+
   const config = OG_ASSETS.app;
 
   return (
@@ -292,7 +304,7 @@ export const App = ({ name, description, logoUrl }: AppImageProps) => {
       <img
         src={`${WEBAPP_URL}/${config.logo}`}
         width={config.logoWidth}
-        alt="Logo"
+        alt={t('alt-text.logo')}
         tw="absolute right-[48px] top-[48px]"
       />
 
@@ -302,7 +314,7 @@ export const App = ({ name, description, logoUrl }: AppImageProps) => {
         <div tw="flex">
           <img
             src={`${WEBAPP_URL}${logoUrl}`}
-            alt="App icon"
+            alt={t('alt-text.app-icon')}
             width={config.iconSize}
             height={config.iconSize}
           />
@@ -326,13 +338,15 @@ export const App = ({ name, description, logoUrl }: AppImageProps) => {
  * to ensure proper cache invalidation.
  */
 export const Generic = ({ title, description }: GenericImageProps) => {
+const t = useTranslations("og-images");
+
   const config = OG_ASSETS.generic;
 
   return (
     <Wrapper variant={config.variant}>
       <div tw="h-full flex flex-col justify-start">
         <div tw="flex items-center justify-center" style={{ fontFamily: "cal", fontWeight: 300 }}>
-          <img src={`${WEBAPP_URL}/${config.logo}`} width={config.logoWidth} alt="Logo" />
+          <img src={`${WEBAPP_URL}/${config.logo}`} width={config.logoWidth} alt={t('alt-text.logo')} />
         </div>
 
         <div style={{ color: "#111827" }} tw="relative flex text-[54px] w-full flex-col mt-auto">

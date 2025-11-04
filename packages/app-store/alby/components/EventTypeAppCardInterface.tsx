@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState, useMemo } from "react";
 
@@ -17,6 +18,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
   eventTypeFormMetadata,
   onAppInstallSuccess,
 }) {
+const t = useTranslations("alby-event-type-app-card");
+
   const searchParams = useSearchParams();
   const { t } = useLocale();
   /** TODO "pathname" no longer contains square-bracket expressions. Rewrite the code relying on them if required. **/
@@ -40,7 +43,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
       switchOnClick={(enabled) => {
         setRequirePayment(enabled);
       }}
-      description={<>Add bitcoin lightning payments to your events</>}
+      description={<>{t('descriptions.bitcoin-lightning-payments')}</>}
       disableSwitch={shouldDisableSwitch}
       switchTooltip={shouldDisableSwitch ? t("other_payment_app_enabled") : undefined}>
       <EventTypeAppSettingsInterface

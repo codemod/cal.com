@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Dispatch, SetStateAction } from "react";
 import type { FC } from "react";
@@ -190,6 +191,8 @@ const EventTypeGroup = ({
 };
 
 const ConfigureStepCardContent: FC<ConfigureStepCardProps> = (props) => {
+const t = useTranslations("app-configure-step-card");
+
   const { loading, formPortalRef, handleSetUpLater } = props;
   const { t } = useLocale();
   const { control, watch } = useFormContext<TEventTypesForm>();
@@ -249,9 +252,7 @@ const ConfigureStepCardContent: FC<ConfigureStepCardProps> = (props) => {
           />
         </div>
       ))}
-      <button form="outer-event-type-form" type="submit" className="hidden" ref={mainForSubmitRef}>
-        Save
-      </button>
+      <button form="outer-event-type-form" type="submit" className="hidden" ref={mainForSubmitRef}>{t('buttons.save')}</button>
       <Button
         className="text-md mt-6 w-full justify-center"
         type="button"

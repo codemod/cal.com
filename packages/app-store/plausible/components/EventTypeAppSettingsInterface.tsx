@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { EventTypeAppSettingsComponent } from "@calcom/app-store/types";
 import { TextField } from "@calcom/ui/components/form";
 
@@ -7,6 +8,8 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
   disabled,
   slug,
 }) => {
+const t = useTranslations("plausible-event-type-settings");
+
   const plausibleUrl = getAppData("PLAUSIBLE_URL");
   const trackingId = getAppData("trackingId");
 
@@ -16,7 +19,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
         dataTestid={`${slug}-url`}
         name="Plausible URL"
         defaultValue="https://plausible.io/js/script.js"
-        placeholder="https://plausible.io/js/script.js"
+        placeholder={t('defaults.script-url')}
         value={plausibleUrl}
         disabled={disabled}
         onChange={(e) => {

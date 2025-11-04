@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { User as UserAuth } from "next-auth";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
@@ -51,6 +52,8 @@ export function SideBarContainer({ bannersHeight, isPlatformUser = false }: Side
 }
 
 export function SideBar({ bannersHeight, user }: SideBarProps) {
+const t = useTranslations("sidebar-shell");
+
   const session = useSession();
   const { t, isLocaleReady } = useLocale();
   const pathname = usePathname();
@@ -85,7 +88,7 @@ export function SideBar({ bannersHeight, user }: SideBarProps) {
                 <Link href="/settings/organizations/profile" className="w-full px-1.5">
                   <div className="flex items-center gap-2 font-medium">
                     <Avatar
-                      alt={`${user.org.name} logo`}
+                      alt={t('images.organization-logo-alt', { "userOrgName": user.org.name })}
                       imageSrc={getPlaceholderAvatar(user.org.logoUrl, user.org.name)}
                       size="xsm"
                     />

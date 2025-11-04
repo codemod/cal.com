@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -103,7 +105,10 @@ export const CreateANewTeamForm = (props: CreateANewTeamFormProps) => {
             rules={{
               required: t("must_enter_team_name"),
             }}
-            render={({ field: { value } }) => (
+            render={({ field: { value } }) =>  {
+const t = useTranslations("create-team-form");
+
+return (
               <>
                 <TextField
                   disabled={
@@ -111,7 +116,7 @@ export const CreateANewTeamForm = (props: CreateANewTeamFormProps) => {
                     !isLocaleReady || createTeamMutation.isPending
                   }
                   className="mt-2"
-                  placeholder="Acme Inc."
+                  placeholder={t('placeholders.team-name-example')}
                   name="name"
                   label={t("team_name")}
                   defaultValue={value}
@@ -125,7 +130,8 @@ export const CreateANewTeamForm = (props: CreateANewTeamFormProps) => {
                   data-testid="team-name"
                 />
               </>
-            )}
+            )
+}}
           />
         </div>
 
@@ -134,10 +140,13 @@ export const CreateANewTeamForm = (props: CreateANewTeamFormProps) => {
             name="slug"
             control={newTeamFormMethods.control}
             rules={{ required: t("team_url_required") }}
-            render={({ field: { value } }) => (
+            render={({ field: { value } }) =>  {
+const t = useTranslations("create-team-form");
+
+return (
               <TextField
                 name="slug"
-                placeholder="acme"
+                placeholder={t('placeholders.team-slug-example')}
                 label={t("team_url")}
                 addOnLeading={`${
                   orgBranding
@@ -153,7 +162,8 @@ export const CreateANewTeamForm = (props: CreateANewTeamFormProps) => {
                   newTeamFormMethods.clearErrors("slug");
                 }}
               />
-            )}
+            )
+}}
           />
         </div>
 

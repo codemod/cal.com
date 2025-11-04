@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { dir } from "i18next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
@@ -95,6 +96,8 @@ const getInitialProps = async () => {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+const t = await getTranslations("root-layout");
+
   const h = await headers();
   const nonce = h.get("x-csp-nonce") ?? "";
 
@@ -113,12 +116,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       suppressHydrationWarning
       data-nextjs-router="app">
       <head nonce={nonce}>
-        <style>{`
-          :root {
-            --font-inter: ${interFont.style.fontFamily.replace(/\'/g, "")};
-            --font-cal: ${calFont.style.fontFamily.replace(/\'/g, "")};
-          }
-        `}</style>
+        <style>{t('styles.font-variables', { "interFontStyleFontFamilyReplaceG": interFont.style.fontFamily.replace(/\'/g, ""), "calFontStyleFontFamilyReplaceG": calFont.style.fontFamily.replace(/\'/g, "") })}</style>
       </head>
       <body
         className="dark:bg-default bg-subtle antialiased"

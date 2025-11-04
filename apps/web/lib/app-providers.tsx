@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { dir } from "i18next";
 import type { Session } from "next-auth";
@@ -139,6 +140,8 @@ type CalcomThemeProps = PropsWithChildren<
     Pick<AppProps["Component"], "isBookingPage" | "isThemeSupported">
 >;
 const CalcomThemeProvider = (props: CalcomThemeProps) => {
+const t = useTranslations("app-providers");
+
   // Use namespace of embed to ensure same namespaced embed are displayed with same theme. This allows different embeds on the same website to be themed differently
   // One such example is our Embeds Demo and Testing page at http://localhost:3100
   // Having `getEmbedNamespace` defined on window before react initializes the app, ensures that embedNamespace is available on the first mount and can be used as part of storageKey
@@ -153,11 +156,7 @@ const CalcomThemeProvider = (props: CalcomThemeProps) => {
       {/* color-scheme makes background:transparent not work in iframe which is required by embed. */}
       {typeof window !== "undefined" && !isEmbedMode && (
         <style jsx global>
-          {`
-            .dark {
-              color-scheme: dark;
-            }
-          `}
+          {t('styles.dark-color-scheme')}
         </style>
       )}
       {props.children}

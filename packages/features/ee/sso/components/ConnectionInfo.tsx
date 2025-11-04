@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { SSOConnection } from "@calcom/ee/sso/lib/saml";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { APP_NAME } from "@calcom/lib/constants";
@@ -76,6 +77,8 @@ export default function ConnectionInfo({
 
 // Connection info for SAML
 const SAMLInfo = ({ acsUrl, entityId }: { acsUrl: string | null; entityId: string | null }) => {
+const t = useTranslations("sso-connection-info");
+
   const { t } = useLocale();
 
   if (!acsUrl || !entityId) {
@@ -86,7 +89,7 @@ const SAMLInfo = ({ acsUrl, entityId }: { acsUrl: string | null; entityId: strin
     <div className="space-y-6">
       <div className="flex flex-col">
         <div className="flex">
-          <Label>ACS URL</Label>
+          <Label>{t('labels.saml-acs-url')}</Label>
         </div>
         <div className="flex">
           <code className="bg-subtle text-default flex w-full items-center truncate rounded rounded-r-none pl-2 font-mono">
@@ -108,7 +111,7 @@ const SAMLInfo = ({ acsUrl, entityId }: { acsUrl: string | null; entityId: strin
       </div>
       <div className="flex flex-col">
         <div className="flex">
-          <Label>Entity ID</Label>
+          <Label>{t('labels.saml-entity-id')}</Label>
         </div>
         <div className="flex">
           <code className="bg-subtle text-default flex w-full items-center truncate rounded rounded-r-none pl-2 font-mono">
@@ -134,6 +137,8 @@ const SAMLInfo = ({ acsUrl, entityId }: { acsUrl: string | null; entityId: strin
 
 // Connection info for OIDC
 const OIDCInfo = ({ callbackUrl }: { callbackUrl: string | null }) => {
+const t = useTranslations("sso-connection-info");
+
   const { t } = useLocale();
 
   if (!callbackUrl) {
@@ -144,7 +149,7 @@ const OIDCInfo = ({ callbackUrl }: { callbackUrl: string | null }) => {
     <div>
       <div className="flex flex-col">
         <div className="flex">
-          <Label>Callback URL</Label>
+          <Label>{t('labels.oidc-callback-url')}</Label>
         </div>
         <div className="flex">
           <code className="bg-subtle text-default flex w-full items-center truncate rounded rounded-r-none pl-2 font-mono">

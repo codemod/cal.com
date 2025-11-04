@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useAppContextWithSchema } from "@calcom/app-store/EventTypeAppContext";
 import AppCard from "@calcom/app-store/_components/AppCard";
 import useIsAppEnabled from "@calcom/app-store/_utils/useIsAppEnabled";
@@ -11,6 +12,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
   eventType,
   onAppInstallSuccess,
 }) {
+const t = useTranslations("umami-event-type-app-card");
+
   const { getAppData, setAppData, disabled } = useAppContextWithSchema<typeof appDataSchema>();
   const siteId = getAppData("SITE_ID");
   const scriptURL = getAppData("SCRIPT_URL");
@@ -31,7 +34,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
           name="Script URL"
           value={scriptURL}
           defaultValue="https://us.umami.is/script.js"
-          placeholder="Enter the script source URL"
+          placeholder={t('placeholders.script-url')}
           onChange={(e) => {
             setAppData("SCRIPT_URL", e.target.value);
           }}
@@ -40,7 +43,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
           disabled={disabled}
           name="Site ID"
           value={siteId}
-          placeholder="Enter your Site ID"
+          placeholder={t('placeholders.site-id')}
           onChange={(e) => {
             setAppData("SITE_ID", e.target.value);
           }}

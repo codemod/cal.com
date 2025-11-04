@@ -1,4 +1,7 @@
+import { useTranslations } from "next-intl";
 export const BookingConfirmationForm = (props: { action: string; children: React.ReactNode }) => {
+const t = useTranslations("booking-confirmation-form");
+
   return (
     <form action={props.action} method="POST" target="_blank">
       {props.children}
@@ -34,13 +37,14 @@ export const BookingConfirmationForm = (props: { action: string; children: React
             textAlign: "left",
             whiteSpace: "pre-wrap",
             display: "block",
-          }}>
-          Reason for rejection &nbsp;
-          <small>(Optional)</small>
+          }}>{t.rich('labels.rejection-reason-with-optional', {
+      component0: (chunks) => <small>{chunks}</small>
+    })}
+          
         </label>
         <textarea
           name="reason"
-          placeholder="Why are you rejecting?"
+          placeholder={t('placeholders.rejection-reason')}
           style={{
             appearance: "none",
             backgroundColor: "rgb(255, 255, 255)",

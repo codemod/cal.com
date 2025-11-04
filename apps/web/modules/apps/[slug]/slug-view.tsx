@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import Link from "next/link";
 
@@ -13,6 +15,8 @@ import useRouterQuery from "@lib/hooks/useRouterQuery";
 import App from "@components/apps/App";
 
 function SingleAppPage(props: AppDataProps) {
+const t = useTranslations("app-slug-view");
+
   const { error, setQuery: setError } = useRouterQuery("error");
   const { t } = useLocale();
   if (error === "account_already_linked") {
@@ -24,11 +28,10 @@ function SingleAppPage(props: AppDataProps) {
     if (!IS_PRODUCTION) {
       // TODO: Improve disabled App UI. This is just a placeholder.
       return (
-        <div className="p-2">
-          This App seems to be disabled. If you are an admin, you can enable this app from{" "}
-          <Link href="/settings/admin/apps" className="cursor-pointer text-blue-500 underline">
-            here
-          </Link>
+        <div className="p-2">{t.rich('messages.app-disabled-admin-notice', {
+      component0: (chunks) => <Link href="/settings/admin/apps" className="cursor-pointer text-blue-500 underline">{chunks}</Link>
+    })}
+          
         </div>
       );
     }

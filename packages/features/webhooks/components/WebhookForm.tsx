@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -436,11 +438,14 @@ const WebhookForm = (props: {
         <Controller
           name="secret"
           control={formMethods.control}
-          render={({ field: { value } }) => (
+          render={({ field: { value } }) =>  {
+const t = useTranslations("webhook-form");
+
+return (
             <div className="mt-6">
               {!!hasSecretKey && !changeSecret && (
                 <>
-                  <Label className="font-sm text-emphasis font-medium">Secret</Label>
+                  <Label className="font-sm text-emphasis font-medium">{t('labels.secret')}</Label>
                   <div className="bg-default space-y-0 rounded-md border-0 border-neutral-200 sm:mx-0 md:border">
                     <div className="text-emphasis rounded-sm border-b p-2 text-sm">
                       {t("forgotten_secret_description")}
@@ -493,13 +498,17 @@ const WebhookForm = (props: {
                 />
               )}
             </div>
-          )}
+          )
+}}
         />
 
         <Controller
           name="payloadTemplate"
           control={formMethods.control}
-          render={({ field: { value } }) => (
+          render={({ field: { value } }) =>  {
+const t = useTranslations("webhook-form");
+
+return (
             <>
               <Label className="font-sm text-emphasis mt-6">
                 <>{t("payload_template")}</>
@@ -528,7 +537,7 @@ const WebhookForm = (props: {
                     name="customPayloadTemplate"
                     rows={8}
                     value={value || ""}
-                    placeholder={`{\n\n}`}
+                    placeholder={t('placeholders.json-template')}
                     onChange={(e) =>
                       formMethods.setValue("payloadTemplate", e?.target.value, { shouldDirty: true })
                     }
@@ -571,7 +580,8 @@ const WebhookForm = (props: {
                 </div>
               )}
             </>
-          )}
+          )
+}}
         />
       </div>
       <SectionBottomActions align="end">

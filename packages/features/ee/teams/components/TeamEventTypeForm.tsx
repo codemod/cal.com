@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import type { UseFormReturn } from "react-hook-form";
 
@@ -37,6 +38,8 @@ export const TeamEventTypeForm = ({
   isManagedEventType,
   SubmitButton,
 }: props) => {
+const t = useTranslations("team-event-type-form");
+
   const isPlatform = useIsPlatform();
 
   const { t } = useLocale();
@@ -68,7 +71,7 @@ export const TeamEventTypeForm = ({
         {urlPrefix && urlPrefix.length >= 21 ? (
           <div>
             <TextField
-              label={isPlatform ? "Slug" : `${t("url")}: ${urlPrefix}`}
+              label={isPlatform ? t('labels.url-with-prefix_0') : t('labels.url-with-prefix_1', { "tUrl": t("url"), "urlPrefix": urlPrefix })}
               required
               addOnLeading={
                 !isPlatform ? (
@@ -92,7 +95,7 @@ export const TeamEventTypeForm = ({
         ) : (
           <div>
             <TextField
-              label={isPlatform ? "Slug" : t("url")}
+              label={isPlatform ? t('labels.url-field_0') : t("url")}
               required
               addOnLeading={
                 !isPlatform ? (

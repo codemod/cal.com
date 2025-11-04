@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import type { UseFormGetValues, UseFormSetValue, Control, FormState } from "react-hook-form";
@@ -67,6 +68,8 @@ export const EventSetupTab = (
     localeOptions?: { value: string; label: string }[];
   }
 ) => {
+const t = useTranslations("event-setup-tab");
+
   const { t } = useLocale();
   const isPlatform = useIsPlatform();
   const formMethods = useFormContext<FormValues>();
@@ -157,7 +160,7 @@ export const EventSetupTab = (
           </div>
           <TextField
             required
-            label={isPlatform ? "Slug" : t("URL")}
+            label={isPlatform ? t('labels.url-field_0') : t("URL")}
             {...(isManagedEventType || isChildrenManagedEventType ? urlLockedProps : {})}
             defaultValue={eventType.slug}
             data-testid="event-slug"

@@ -1,7 +1,10 @@
+import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Index() {
+const t = useTranslations("credential-sync-playground");
+
   const [data, setData] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,13 +47,17 @@ export default function Index() {
 
   return (
     <div>
-      <h1>Welcome to Credential Sync Playground</h1>
-      <p>
-        You are managing credentials for cal.com <strong>userId={userId}</strong> for{" "}
-        <strong>appSlug={appSlug}</strong>. Update query params to manage a different user or app{" "}
+      <h1>{t('headings.welcome-title')}</h1>
+      <p>{t.rich('descriptions.user-app-management', {
+      userId,
+      appSlug,
+      component0: (chunks) => <strong>{chunks}</strong>,
+      component1: (chunks) => <strong>{chunks}</strong>
+    })}
+        
       </p>
-      <button onClick={() => updateToken({ invalid: true })}>Give an invalid token to Cal.com</button>
-      <button onClick={() => updateToken()}>Give a valid token to Cal.com</button>
+      <button onClick={() => updateToken({ invalid: true })}>{t('buttons.give-invalid-token')}</button>
+      <button onClick={() => updateToken()}>{t('buttons.give-valid-token')}</button>
       <div>{data}</div>
     </div>
   );

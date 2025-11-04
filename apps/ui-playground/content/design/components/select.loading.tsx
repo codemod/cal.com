@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -12,10 +14,14 @@ const options = [
   { value: "coffee", label: "Coffee" },
 ];
 
-export const LoadingExample: React.FC = () => (
+export const LoadingExample: React.FC = () =>  {
+const t = useTranslations("select-loading-demo");
+
+return (
   <RenderComponentWithSnippet>
     <div className="space-y-4 md:w-80">
-      <Select options={options} isLoading placeholder="Loading options..." />
+      <Select options={options} isLoading placeholder={t('placeholders.loading-options')} />
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

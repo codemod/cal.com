@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { keepPreviousData } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -79,6 +81,8 @@ export function AvailabilitySliderTable(props: { isOrg: boolean }) {
 }
 
 function AvailabilitySliderTableContent(props: { isOrg: boolean }) {
+const t = useTranslations("timezone-buddy-availability-slider");
+
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const [browsingDate, setBrowsingDate] = useState(dayjs());
   const [editSheetOpen, setEditSheetOpen] = useState(false);
@@ -155,7 +159,7 @@ function AvailabilitySliderTableContent(props: { isOrg: boolean }) {
           return (
             <div className="flex flex-col text-center">
               <span className="text-default text-sm font-medium">{time}</span>
-              <span className="text-subtle text-xs leading-none">GMT {offsetFormatted}</span>
+              <span className="text-subtle text-xs leading-none">{t('timezone.gmt-offset-display', { "offsetFormatted": offsetFormatted })}</span>
             </div>
           );
         },

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -124,6 +126,8 @@ const Filter = (props: {
     }>
   >;
 }) => {
+const t = useTranslations("workflows-page");
+
   const session = useSession();
   const userId = session.data?.user.id || 0;
   const user = session.data?.user.name || "";
@@ -142,7 +146,7 @@ const Filter = (props: {
           <Avatar
             imageSrc={userAvatar || ""}
             size="sm"
-            alt={`${user} Avatar`}
+            alt={t('avatars.user-alt-text', { "user": user })}
             className="self-center"
             asChild
           />
@@ -171,14 +175,17 @@ const Filter = (props: {
             }}
           />
         </div>
-        {teams.map((profile) => (
+        {teams.map((profile) =>  {
+const t = useTranslations("workflows-page");
+
+return (
           <div
             className="item-center focus-within:bg-subtle hover:bg-muted flex px-4 py-[6px] transition hover:cursor-pointer"
             key={`${profile.teamId || 0}`}>
             <Avatar
               imageSrc={profile.image || ""}
               size="sm"
-              alt={`${profile.slug} Avatar`}
+              alt={t('avatars.profile-alt-text', { "profileSlug": profile.slug })}
               className="self-center"
               asChild
             />
@@ -222,7 +229,8 @@ const Filter = (props: {
               className="text-emphasis focus:ring-emphasis dark:text-muted border-default inline-flex h-4 w-4 place-self-center justify-self-end rounded transition "
             />
           </div>
-        ))}
+        )
+})}
       </AnimatedPopover>
     </div>
   );

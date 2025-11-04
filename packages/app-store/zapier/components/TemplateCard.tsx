@@ -1,8 +1,11 @@
+import { useTranslations } from "next-intl";
 import { Button } from "@calcom/ui/components/button";
 
 import type { Template } from "./types";
 
 export default function TemplateCard({ template }: { template: Template }) {
+const t = useTranslations("zapier-template-card");
+
   return (
     <div className="min-h-16 bg-default border-subtle sticky flex flex-col justify-between gap-4 rounded-md border p-5">
       <div className="flex items-start justify-start">
@@ -20,16 +23,12 @@ export default function TemplateCard({ template }: { template: Template }) {
       </div>
       <div className="hidden w-full sm:block">
         <div className="float-right">
-          <Button color="secondary" className=" w-[90px]" target="_blank" href={template.link}>
-            Use Zap
-          </Button>
+          <Button color="secondary" className=" w-[90px]" target="_blank" href={template.link}>{t('buttons.use-zap')}</Button>
         </div>
       </div>
       <div className="mt-2 block w-full sm:hidden">
         <div className="float-right">
-          <Button color="secondary" className="w-[90px]" target="_blank" href={template.link}>
-            Use Zap
-          </Button>
+          <Button color="secondary" className="w-[90px]" target="_blank" href={template.link}>{t('buttons.use-zap')}</Button>
         </div>
       </div>
     </div>

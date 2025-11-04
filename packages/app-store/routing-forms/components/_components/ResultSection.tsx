@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -73,6 +75,8 @@ export const ResultsView = ({
   membersMatchResult = null,
   isPending = false,
 }: ResultsViewProps) => {
+const t = useTranslations("routing-form-results");
+
   const { t } = useLocale();
 
   if (!chosenRoute) return null;
@@ -218,14 +222,12 @@ export const ResultsView = ({
                     <div className="border-subtle bg-default z-10 rounded-lg border p-1 ">
                       <Icon name="activity" className="h-4 w-4" />
                     </div>
-                    <span className="text-emphasis text-sm font-medium leading-none">
-                      Attribute logic matched
-                    </span>
+                    <span className="text-emphasis text-sm font-medium leading-none">{t('matching.attribute-logic-matched-label')}</span>
                   </div>
                   <Badge
                     data-testid="attribute-logic-matched"
                     variant={membersMatchResult.checkedFallback ? "error" : "success"}>
-                    {membersMatchResult.checkedFallback ? "No" : "Yes"}
+                    {membersMatchResult.checkedFallback ? t('matching.attribute-logic-matched-value_0') : t('matching.attribute-logic-matched-value_1')}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
@@ -233,12 +235,12 @@ export const ResultsView = ({
                     <div className="border-subtle bg-default z-10 rotate-180 rounded-lg border p-1">
                       <Icon name="split" className="h-4 w-4" />
                     </div>
-                    <span className="text-emphasis text-sm font-medium leading-none">Attribute fallback</span>
+                    <span className="text-emphasis text-sm font-medium leading-none">{t('matching.attribute-fallback-label')}</span>
                   </div>
                   <Badge
                     data-testid="attribute-logic-fallback-matched"
                     variant={membersMatchResult.checkedFallback ? "success" : "gray"}>
-                    {membersMatchResult.checkedFallback ? "Yes" : "Not needed"}
+                    {membersMatchResult.checkedFallback ? t('matching.attribute-fallback-value_0') : t('matching.attribute-fallback-value_1')}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
@@ -246,7 +248,7 @@ export const ResultsView = ({
                     <div className="border-subtle bg-default z-10 rounded-lg border p-1">
                       <Icon name="user" className="h-4 w-4" />
                     </div>
-                    <span className="text-emphasis text-sm font-medium leading-none">Contact owner</span>
+                    <span className="text-emphasis text-sm font-medium leading-none">{t('matching.contact-owner-label')}</span>
                   </div>
                   <Badge variant={membersMatchResult.contactOwnerEmail ? "success" : "gray"}>
                     {membersMatchResult.contactOwnerEmail || "Not found"}
@@ -273,9 +275,7 @@ export const ResultsView = ({
                             key="routing_insights"
                             className="underline underline-offset-2"
                             target="_blank"
-                            href="/insights/router-position">
-                            Routing Insights
-                          </Link>,
+                            href="/insights/router-position">{t('insights.routing-insights-link-text')}</Link>,
                         ]}
                       />
                     </span>

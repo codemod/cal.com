@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -22,6 +23,8 @@ import { showToast } from "@calcom/ui/components/toast";
 import { revalidateEventTypeEditPage } from "@calcom/web/app/(use-page-wrapper)/event-types/[type]/actions";
 
 export const EventWebhooksTab = ({ eventType }: Pick<EventTypeSetupProps, "eventType">) => {
+const t = useTranslations("event-webhooks-tab");
+
   const { t } = useLocale();
 
   const utils = trpc.useUtils();
@@ -188,9 +191,7 @@ export const EventWebhooksTab = ({ eventType }: Pick<EventTypeSetupProps, "event
                             <Link
                               key="edit_or_manage_webhooks"
                               className="cursor-pointer font-semibold underline"
-                              href="/settings/developer/webhooks">
-                              webhooks settings
-                            </Link>,
+                              href="/settings/developer/webhooks">{t('links.webhooks-settings')}</Link>,
                           ]}
                         />
                       </p>

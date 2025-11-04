@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -9,6 +10,8 @@ import { useTroubleshooterStore } from "../store";
 import { TroubleshooterListItemHeader } from "./TroubleshooterListItemContainer";
 
 export function EventScheduleItem() {
+const t = useTranslations("troubleshooter-event-schedule");
+
   const { t } = useLocale();
   const selectedEventType = useTroubleshooterStore((state) => state.event);
 
@@ -23,7 +26,7 @@ export function EventScheduleItem() {
 
   return (
     <div>
-      <Label>Availability Schedule</Label>
+      <Label>{t('labels.availability-schedule')}</Label>
       <TroubleshooterListItemHeader
         className="group rounded-md border-b"
         prefixSlot={<div className="w-4 rounded-[4px] bg-black" />}

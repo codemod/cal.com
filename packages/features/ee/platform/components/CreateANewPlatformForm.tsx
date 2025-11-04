@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import type { SessionContextValue } from "next-auth/react";
 import { useSession, signIn } from "next-auth/react";
@@ -112,11 +114,14 @@ const CreateANewPlatformFormChild = ({ session }: { session: Ensure<SessionConte
             rules={{
               required: t("must_enter_organization_admin_email"),
             }}
-            render={({ field: { value } }) => (
+            render={({ field: { value } }) =>  {
+const t = useTranslations("create-platform-form");
+
+return (
               <div className="flex">
                 <TextField
                   containerClassName="w-full"
-                  placeholder="john@acme.com"
+                  placeholder={t('placeholders.admin-email')}
                   name="orgOwnerEmail"
                   disabled={!isAdmin}
                   label={t("platform_admin_email")}
@@ -133,7 +138,8 @@ const CreateANewPlatformFormChild = ({ session }: { session: Ensure<SessionConte
                   autoComplete="off"
                 />
               </div>
-            )}
+            )
+}}
           />
         </div>
 
@@ -145,11 +151,14 @@ const CreateANewPlatformFormChild = ({ session }: { session: Ensure<SessionConte
             rules={{
               required: t("must_enter_organization_name"),
             }}
-            render={({ field: { value } }) => (
+            render={({ field: { value } }) =>  {
+const t = useTranslations("create-platform-form");
+
+return (
               <>
                 <TextField
                   className="mt-2"
-                  placeholder="Acme"
+                  placeholder={t('placeholders.platform-name')}
                   name="name"
                   label={t("platform_name")}
                   defaultValue={value}
@@ -162,7 +171,8 @@ const CreateANewPlatformFormChild = ({ session }: { session: Ensure<SessionConte
                   autoComplete="off"
                 />
               </>
-            )}
+            )
+}}
           />
         </div>
 

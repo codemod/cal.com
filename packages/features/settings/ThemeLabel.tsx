@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 interface ThemeLabelProps {
   variant: "light" | "dark" | "system";
   value: "light" | "dark" | "system";
@@ -8,6 +9,8 @@ interface ThemeLabelProps {
 }
 
 export default function ThemeLabel(props: ThemeLabelProps) {
+const t = useTranslations("theme-selector");
+
   const { variant, label, value, defaultChecked, register, fieldName = "theme" } = props;
 
   return (
@@ -28,7 +31,7 @@ export default function ThemeLabel(props: ThemeLabelProps) {
           aria-hidden="true"
           className="cover w-full rounded-lg"
           src={`/theme-${variant}.svg`}
-          alt={`theme ${variant}`}
+          alt={t('alt-text.theme-preview', { "variant": variant })}
         />
       </div>
       <p className="peer-checked:text-emphasis text-default mt-2 text-sm font-medium">{label}</p>

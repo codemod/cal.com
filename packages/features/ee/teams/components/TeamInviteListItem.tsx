@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import type { MembershipRole } from "@calcom/prisma/enums";
@@ -34,6 +35,8 @@ interface Props {
 }
 
 export default function TeamInviteListItem(props: Props) {
+const t = useTranslations("team-invite-list-item");
+
   const { t } = useLocale();
   const utils = trpc.useUtils();
   const team = props.team;
@@ -68,7 +71,7 @@ export default function TeamInviteListItem(props: Props) {
       <Avatar
         size="mdLg"
         imageSrc={getPlaceholderAvatar(team.logoUrl, team.name)}
-        alt="Team Logo"
+        alt={t('avatar.team-logo-alt')}
         className=""
       />
       <div className="ms-3 inline-block">

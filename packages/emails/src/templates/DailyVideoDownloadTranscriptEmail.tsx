@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { TFunction } from "i18next";
 
 import { WEBAPP_URL, COMPANY_NAME } from "@calcom/lib/constants";
@@ -59,6 +60,8 @@ export const DailyVideoDownloadTranscriptEmail = (
       </p>
 
       {props.transcriptDownloadLinks.map((_, index) => {
+const t = useTranslations("daily-video-transcript-email");
+
         return (
           <div
             key={`transcript-${index}`}
@@ -85,7 +88,7 @@ export const DailyVideoDownloadTranscriptEmail = (
                 marginTop: "0px",
                 color: "black",
               }}>
-              {props.date} Transcript {index + 1}
+              {t('transcript.item-label', { "propsDate": props.date, "index": index })}
             </p>
           </div>
         );

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Table } from "@tanstack/react-table";
 import { createContext, useContext, useState, useMemo, type PropsWithChildren } from "react";
 import type { Dispatch, SetStateAction } from "react";
@@ -165,6 +166,8 @@ function SelectedAttributeToAssign() {
 }
 
 function Content({ showMultiSelectWarning }: { showMultiSelectWarning: boolean }) {
+const t = useTranslations("user-table-mass-assign-attributes");
+
   const { t } = useLocale();
   const {
     selectedAttribute,
@@ -179,7 +182,7 @@ function Content({ showMultiSelectWarning }: { showMultiSelectWarning: boolean }
       <>
         <CommandInput placeholder={t("search")} />
         <CommandList>
-          <CommandEmpty>No attributes found</CommandEmpty>
+          <CommandEmpty>{t('messages.no-attributes-found')}</CommandEmpty>
           <CommandGroup>
             {attributes &&
               attributes.map((option) => {

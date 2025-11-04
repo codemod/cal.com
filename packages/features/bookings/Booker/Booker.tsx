@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { AnimatePresence, LazyMotion, m } from "framer-motion";
 import { useEffect, useMemo, useRef } from "react";
 import StickyBox from "react-sticky-box";
@@ -84,6 +85,8 @@ const BookerComponent = ({
   roundRobinHideOrgAndTeam,
   showNoAvailabilityDialog,
 }: BookerProps & WrappedBookerProps) => {
+const t = useTranslations("booker-component");
+
   const searchParams = useCompatSearchParams();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
   const [bookerState, setBookerState] = useBookerStoreContext(
@@ -411,7 +414,7 @@ const BookerComponent = ({
                   <img
                     loading="eager"
                     className="-mb-9 h-16 object-cover object-top ltr:rounded-tl-md rtl:rounded-tr-md sm:h-auto"
-                    alt="org banner"
+                    alt={t('images.alt-text.organization-banner')}
                     src={orgBannerUrl}
                   />
                 )}

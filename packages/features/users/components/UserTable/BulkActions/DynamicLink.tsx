@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Table } from "@tanstack/react-table";
 import { useQueryState, parseAsBoolean } from "nuqs";
 
@@ -12,6 +13,8 @@ export function DynamicLink<T extends { username: string | null }>({
   table: Table<T>;
   domain: string;
 }) {
+const t = useTranslations("user-table-dynamic-link");
+
   const { t } = useLocale();
   const [dynamicLinkVisible, _] = useQueryState("dynamicLink", parseAsBoolean);
   const { copyToClipboard, isCopied } = useCopy();
@@ -50,9 +53,7 @@ export function DynamicLink<T extends { username: string | null }>({
               size="sm"
               href={dynamicLinkOfSelectedUsers}
               target="_blank"
-              rel="noopener noreferrer">
-              Open
-            </Button>
+              rel="noopener noreferrer">{t('buttons.open')}</Button>
           </div>
         </div>
       ) : null}

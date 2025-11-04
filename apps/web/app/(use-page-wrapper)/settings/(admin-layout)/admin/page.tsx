@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { _generateMetadata } from "app/_utils";
 
 export const generateMetadata = async () =>
@@ -9,5 +10,9 @@ export const generateMetadata = async () =>
     "/settings/admin"
   );
 
-const Page = () => <h1>Admin index</h1>;
+const Page = () =>  {
+const t = useTranslations("admin-dashboard-page");
+
+return <h1>{t('headings.page-title')}</h1>
+};
 export default Page;

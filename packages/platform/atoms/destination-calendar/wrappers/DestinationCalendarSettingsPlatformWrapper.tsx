@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useUpdateDestinationCalendars } from "../../hooks/calendars/useUpdateDestinationCalendars";
 import { useConnectedCalendars } from "../../hooks/useConnectedCalendars";
 import { AtomsWrapper } from "../../src/components/atoms-wrapper";
@@ -15,6 +16,8 @@ export const DestinationCalendarSettingsPlatformWrapper = ({
   classNamesObject?: DestinationCalendarClassNames;
   isDryRun?: boolean;
 }) => {
+const t = useTranslations("destination-calendar-settings-platform-wrapper");
+
   const calendars = useConnectedCalendars({});
   const { mutate: updateDestinationCalendars, isPending: isUpdatingCalendar } =
     useUpdateDestinationCalendars();
@@ -24,7 +27,7 @@ export const DestinationCalendarSettingsPlatformWrapper = ({
       <AtomsWrapper>
         <>
           {statusLoader}
-          {!statusLoader && <h1 className="m-5 text-xl font-semibold">Loading...</h1>}
+          {!statusLoader && <h1 className="m-5 text-xl font-semibold">{t('loading.calendars')}</h1>}
         </>
       </AtomsWrapper>
     );

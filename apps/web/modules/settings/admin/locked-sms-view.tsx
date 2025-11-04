@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useState } from "react";
 
@@ -10,6 +12,8 @@ import { showToast } from "@calcom/ui/components/toast";
 import UsersTable from "./components/UsersTable";
 
 export default function LockedSMSView() {
+const t = useTranslations("admin-sms-lock-settings");
+
   const [username, setUsername] = useState("");
   const [teamSlug, setTeamSlug] = useState("");
 
@@ -42,7 +46,7 @@ export default function LockedSMSView() {
         <div className="flex">
           <TextField
             name="Lock User"
-            placeholder="username"
+            placeholder={t('placeholders.username')}
             defaultValue=""
             onChange={(event) => setUsername(event.target.value)}
             value={username}
@@ -53,14 +57,12 @@ export default function LockedSMSView() {
             onClick={() => {
               mutation.mutate({ username, lock: true });
               utils.viewer.admin.getSMSLockStateTeamsUsers.invalidate();
-            }}>
-            Lock User
-          </Button>
+            }}>{t('buttons.lock-user')}</Button>
         </div>
         <div className="flex">
           <TextField
             name="Lock Team"
-            placeholder="team slug"
+            placeholder={t('placeholders.team-slug')}
             defaultValue=""
             onChange={(event) => {
               setTeamSlug(event.target.value);
@@ -73,9 +75,7 @@ export default function LockedSMSView() {
             onClick={() => {
               mutation.mutate({ teamSlug, lock: true });
               utils.viewer.admin.getSMSLockStateTeamsUsers.invalidate();
-            }}>
-            Lock Team
-          </Button>
+            }}>{t('buttons.lock-team')}</Button>
         </div>
       </div>
       <UsersTable setSMSLockState={setSMSLockState} />

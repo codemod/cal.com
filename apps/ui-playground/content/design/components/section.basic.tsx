@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -7,6 +9,8 @@ import { Switch } from "@calcom/ui/components/form";
 import { Section } from "@calcom/ui/components/section";
 
 export const BasicExample = () => {
+const t = useTranslations("section-basic-demo");
+
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -19,7 +23,7 @@ export const BasicExample = () => {
         </Section.Header>
         {isOpen && (
           <Section.Content>
-            <p>This is the main content of the section.</p>
+            <p>{t('content.main-text')}</p>
           </Section.Content>
         )}
       </Section>

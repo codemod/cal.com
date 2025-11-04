@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { keepPreviousData } from "@tanstack/react-query";
 import {
@@ -177,6 +179,8 @@ export default function MemberList(props: Props) {
 }
 
 function MemberListContent(props: Props) {
+const t = useTranslations("team-member-list");
+
   const { facetedTeamValues } = props;
   const [dynamicLinkVisible, setDynamicLinkVisible] = useQueryState("dynamicLink", parseAsBoolean);
   const { t, i18n } = useLocale();
@@ -389,9 +393,7 @@ function MemberListContent(props: Props) {
                   className="text-xs"
                   onClick={() => {
                     table.getColumn("role")?.setFilterValue(["PENDING"]);
-                  }}>
-                  Pending
-                </Badge>
+                  }}>{t('status.pending')}</Badge>
               )}
               <Badge
                 data-testid="member-role"

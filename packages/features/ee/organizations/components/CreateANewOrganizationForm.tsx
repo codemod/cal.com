@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import type { SessionContextValue } from "next-auth/react";
 import { useSession } from "next-auth/react";
@@ -45,6 +47,8 @@ export const CreateANewOrganizationForm = () => {
 };
 
 const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionContextValue, "data"> }) => {
+const t = useTranslations("create-organization-form");
+
   const { t } = useLocale();
   const router = useRouter();
   const [serverErrorMessage, setServerErrorMessage] = useState<string | null>(null);
@@ -159,9 +163,12 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
               <Controller
                 name="billingPeriod"
                 control={newOrganizationFormMethods.control}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("create-organization-form");
+
+return (
                   <>
-                    <Label htmlFor="billingPeriod">Billing Period</Label>
+                    <Label htmlFor="billingPeriod">{t('labels.billing-period')}</Label>
                     <ToggleGroup
                       isFullWidth
                       id="billingPeriod"
@@ -183,7 +190,8 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                       ]}
                     />
                   </>
-                )}
+                )
+}}
               />
             </div>
           )}
@@ -193,11 +201,14 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
             rules={{
               required: t("must_enter_organization_admin_email"),
             }}
-            render={({ field: { value } }) => (
+            render={({ field: { value } }) =>  {
+const t = useTranslations("create-organization-form");
+
+return (
               <div className="flex">
                 <TextField
                   containerClassName="w-full"
-                  placeholder="john@acme.com"
+                  placeholder={t('placeholders.admin-email')}
                   name="orgOwnerEmail"
                   disabled={!isAdmin}
                   label={t("admin_email")}
@@ -215,7 +226,8 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                   autoComplete="off"
                 />
               </div>
-            )}
+            )
+}}
           />
         </div>
         <div>
@@ -226,11 +238,14 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
             rules={{
               required: t("must_enter_organization_name"),
             }}
-            render={({ field: { value } }) => (
+            render={({ field: { value } }) =>  {
+const t = useTranslations("create-organization-form");
+
+return (
               <>
                 <TextField
                   className="mt-2"
-                  placeholder="Acme"
+                  placeholder={t('placeholders.organization-name')}
                   name="name"
                   label={t("organization_name")}
                   defaultValue={value}
@@ -243,7 +258,8 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                   autoComplete="off"
                 />
               </>
-            )}
+            )
+}}
           />
         </div>
 
@@ -254,11 +270,14 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
             rules={{
               required: "Must enter organization slug",
             }}
-            render={({ field: { value } }) => (
+            render={({ field: { value } }) =>  {
+const t = useTranslations("create-organization-form");
+
+return (
               <TextField
                 name="slug"
                 label={t("organization_url")}
-                placeholder="acme"
+                placeholder={t('placeholders.organization-slug')}
                 addOnSuffix={`.${subdomainSuffix()}`}
                 defaultValue={value}
                 onChange={(e) => {
@@ -268,7 +287,8 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                   newOrganizationFormMethods.clearErrors("slug");
                 }}
               />
-            )}
+            )
+}}
           />
         </div>
 
@@ -279,14 +299,17 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                 <Controller
                   name="seats"
                   control={newOrganizationFormMethods.control}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("create-organization-form");
+
+return (
                     <div className="flex">
                       <TextField
                         containerClassName="w-full"
                         placeholder="30"
                         name="seats"
                         type="number"
-                        label="Seats (optional)"
+                        label={t('labels.seats-optional')}
                         min={isAdmin ? 1 : MINIMUM_NUMBER_OF_ORG_SEATS}
                         defaultValue={value || MINIMUM_NUMBER_OF_ORG_SEATS}
                         onChange={(e) => {
@@ -295,14 +318,18 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                         autoComplete="off"
                       />
                     </div>
-                  )}
+                  )
+}}
                 />
               </div>
               <div className="w-full">
                 <Controller
                   name="pricePerSeat"
                   control={newOrganizationFormMethods.control}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("create-organization-form");
+
+return (
                     <div className="flex">
                       <TextField
                         containerClassName="w-full"
@@ -310,7 +337,7 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                         name="pricePerSeat"
                         type="number"
                         addOnSuffix="$"
-                        label="Price per seat (optional)"
+                        label={t('labels.price-per-seat-optional')}
                         defaultValue={value ?? ""}
                         onChange={(e) => {
                           onChange(+e.target.value);
@@ -318,7 +345,8 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                         autoComplete="off"
                       />
                     </div>
-                  )}
+                  )
+}}
                 />
               </div>
             </section>
@@ -329,9 +357,7 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
         {isBillingEnabled && !isAdmin && (
           <>
             <div className="bg-subtle space-y-5  rounded-lg p-5">
-              <h3 className="font-cal text-default text-lg font-semibold leading-4">
-                Upgrade to Organizations
-              </h3>
+              <h3 className="font-cal text-default text-lg font-semibold leading-4">{t('headings.upgrade-to-organizations')}</h3>
               <RadioArea.Group className={classNames("mt-1 flex flex-col gap-4")} value="ORGANIZATION">
                 <RadioArea.Item
                   className={classNames("bg-default w-full text-sm opacity-70")}
@@ -343,9 +369,7 @@ const CreateANewOrganizationFormChild = ({ session }: { session: Ensure<SessionC
                 <RadioArea.Item className={classNames("bg-default w-full text-sm")} value="ORGANIZATION">
                   <strong className="mb-1 block">{t("organization")}</strong>
                   {pricePerSeat && seats ? (
-                    <p>{`$${pricePerSeat} per user per month ${
-                      billingPeriod === BillingPeriod.ANNUALLY ? "(billed annually)" : ""
-                    }`}</p>
+                    <p>{t('pricing.per-user-monthly-with-billing', { "pricePerSeat": pricePerSeat })}</p>
                   ) : (
                     <p>{t("organization_price_per_user_month")}</p>
                   )}

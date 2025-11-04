@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { revalidateSettingsProfile } from "app/cache/path/settings/my-account";
@@ -70,6 +72,8 @@ type Props = {
 };
 
 const ProfileView = ({ user }: Props) => {
+const t = useTranslations("profile-settings-view");
+
   const { t } = useLocale();
   const utils = trpc.useUtils();
   const { update } = useSession();
@@ -329,7 +333,7 @@ const ProfileView = ({ user }: Props) => {
                   id="password"
                   autoComplete="current-password"
                   required
-                  label="Password"
+                  label={t('forms.password-field-label')}
                   ref={passwordRef}
                 />
               )}
@@ -384,7 +388,7 @@ const ProfileView = ({ user }: Props) => {
               id="password"
               autoComplete="current-password"
               required
-              label="Password"
+              label={t('forms.password-field-label')}
               ref={passwordRef}
             />
 
@@ -498,6 +502,8 @@ const ProfileForm = ({
   userOrganization: RouterOutputs["viewer"]["me"]["get"]["organization"];
   isCALIdentityProvider: boolean;
 }) => {
+const t = useTranslations("profile-settings-view");
+
   const { t } = useLocale();
   const [firstRender, setFirstRender] = useState(true);
 
@@ -723,7 +729,7 @@ const ProfileForm = ({
         so essentially there's no point in allowing them to disconnect, since when they log in they will get logged into the same account */}
         {!isCALIdentityProvider && user.email !== user.identityProviderEmail && (
           <div className="mt-6">
-            <Label>Connected accounts</Label>
+            <Label>{t('sections.connected-accounts-label')}</Label>
             <div className="flex items-center">
               <span className="text-default text-sm capitalize">{user.identityProvider.toLowerCase()}</span>
               {user.identityProviderEmail && (

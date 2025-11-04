@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import Link from "next/link";
 import { useCallback, useState } from "react";
@@ -121,6 +122,8 @@ const BookerLayoutFields = ({
   user,
   isUserLoading,
 }: BookerLayoutFieldsProps) => {
+const t = useTranslations("booker-layout-selector");
+
   const { t } = useLocale();
   const [isOverridingSettings, setIsOverridingSettings] = useState(false);
 
@@ -183,13 +186,16 @@ const BookerLayoutFields = ({
           disableFields && "pointer-events-none opacity-40",
           disableFields && isUserLoading && "animate-pulse"
         )}>
-        {bookerLayoutOptions.map((layout) => (
+        {bookerLayoutOptions.map((layout) =>  {
+const t = useTranslations("booker-layout-selector");
+
+return (
           <div className="w-full" key={layout}>
             <label>
               <img
                 className="mb-3 w-full max-w-none cursor-pointer"
                 src={`/bookerlayout_${layout}${isDark ? "_dark" : ""}.svg`}
-                alt="Layout preview"
+                alt={t('images.layout-preview-alt')}
               />
               <CheckboxField
                 value={layout}
@@ -200,7 +206,8 @@ const BookerLayoutFields = ({
               />
             </label>
           </div>
-        ))}
+        )
+})}
       </div>
       <div
         hidden={Object.values(toggleValues).filter((value) => value === true).length <= 1}
@@ -237,16 +244,12 @@ const BookerLayoutFields = ({
                 key="appearance-link"
                 target="_blank"
                 href="/settings/my-account/appearance"
-                className="underline">
-                Appearance
-              </Link>,
+                className="underline">{t('links.appearance-settings')}</Link>,
               <Button
                 key="override-button"
                 onClick={onOverrideSettings}
                 color="minimal"
-                className="h-fit p-0 font-normal underline hover:bg-transparent focus-visible:bg-transparent">
-                Override
-              </Button>,
+                className="h-fit p-0 font-normal underline hover:bg-transparent focus-visible:bg-transparent">{t('buttons.override-settings')}</Button>,
             ]}
           />
         </p>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
 
@@ -19,6 +20,8 @@ export default function TeamInviteFromOrg({
   selectedEmails,
   orgMembers,
 }: TeamInviteFromOrgProps) {
+const t = useTranslations("team-invite-from-org");
+
   const [searchQuery, setSearchQuery] = useState("");
   const filteredMembers = orgMembers?.filter((member) => {
     if (!searchQuery) {
@@ -31,7 +34,7 @@ export default function TeamInviteFromOrg({
   return (
     <div className="bg-muted border-subtle flex flex-col rounded-md border p-4">
       <div className="-my-1">
-        <TextField placeholder="Search..." onChange={(e) => setSearchQuery(e.target.value)} />
+        <TextField placeholder={t('search.placeholder')} onChange={(e) => setSearchQuery(e.target.value)} />
       </div>
       <hr className="border-subtle -mx-4 mt-2" />
       <div className="scrollbar min-h-48 flex max-h-48 flex-col space-y-0.5 overflow-y-scroll pt-2">
@@ -65,6 +68,8 @@ function UserToInviteItem({
   isSelected: boolean;
   onChange: () => void;
 }) {
+const t = useTranslations("team-invite-from-org");
+
   return (
     <div
       key={member.userId}
@@ -74,7 +79,7 @@ function UserToInviteItem({
         isSelected ? "bg-emphasis" : "hover:bg-subtle "
       )}>
       <div className="flex items-center space-x-2 rtl:space-x-reverse">
-        <Avatar size="sm" alt="Users avatar" asChild imageSrc={member.user.avatarUrl} />
+        <Avatar size="sm" alt={t('avatar.alt-text')} asChild imageSrc={member.user.avatarUrl} />
         <label
           htmlFor={`${member.user.id}`}
           className="text-emphasis cursor-pointer text-sm font-medium leading-none">

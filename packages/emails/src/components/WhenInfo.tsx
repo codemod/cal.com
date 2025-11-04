@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { TFunction } from "i18next";
 import { RRule } from "rrule";
 
@@ -38,6 +39,8 @@ export function WhenInfo(props: {
   locale: string;
   timeFormat: TimeFormat;
 }) {
+const t = useTranslations("when-info-component");
+
   const { timeZone, t, calEvent: { recurringEvent } = {}, locale, timeFormat } = props;
 
   function getRecipientStart(format: string) {
@@ -62,7 +65,7 @@ export function WhenInfo(props: {
         }
         description={
           <span data-testid="when">
-            {recurringEvent?.count ? `${t("starting")} ` : ""}
+            {recurringEvent?.count ? t('recurring.starting-prefix_0', { "tStarting": t("starting") }) : t('recurring.starting-prefix_1')}
             {getRecipientStart(`dddd, LL | ${timeFormat}`)} - {getRecipientEnd(timeFormat)}{" "}
             <span style={{ color: "#4B5563" }}>({timeZone})</span>
           </span>

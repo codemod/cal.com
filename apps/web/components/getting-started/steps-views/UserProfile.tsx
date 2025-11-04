@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -28,6 +30,8 @@ interface UserProfileProps {
 }
 
 const UserProfile = ({ user }: UserProfileProps) => {
+const t = useTranslations("user-profile-onboarding");
+
   const { t } = useLocale();
   const avatarRef = useRef<HTMLInputElement>(null);
   const { setValue, handleSubmit, getValues } = useForm<FormData>({
@@ -123,7 +127,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
           type="hidden"
           name="avatar"
           id="avatar"
-          placeholder="URL"
+          placeholder={t('form-fields.avatar-url-placeholder')}
           className="border-default focus:ring-empthasis mt-1 block w-full rounded-sm border px-3 py-2 text-sm focus:border-gray-800 focus:outline-none"
           defaultValue={imageSrc}
         />

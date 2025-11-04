@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useAppContextWithSchema } from "@calcom/app-store/EventTypeAppContext";
 import AppCard from "@calcom/app-store/_components/AppCard";
 import useIsAppEnabled from "@calcom/app-store/_utils/useIsAppEnabled";
@@ -11,6 +12,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
   eventType,
   onAppInstallSuccess,
 }) {
+const t = useTranslations("posthog-event-type-app-card");
+
   const { getAppData, setAppData, disabled } = useAppContextWithSchema<typeof appDataSchema>();
   const trackingId = getAppData("TRACKING_ID");
   const apiHost = getAppData("API_HOST");
@@ -32,7 +35,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
           disabled={disabled}
           name="Tracking ID"
           value={trackingId}
-          placeholder="Enter your Tracking ID"
+          placeholder={t('placeholders.tracking-id')}
           onChange={(e) => {
             setAppData("TRACKING_ID", e.target.value);
           }}
@@ -42,7 +45,7 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
           disabled={disabled}
           name="Api host"
           value={apiHost}
-          placeholder="Enter your Api host url"
+          placeholder={t('placeholders.api-host-url')}
           onChange={(e) => {
             setAppData("API_HOST", e.target.value);
           }}

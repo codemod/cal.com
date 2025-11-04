@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -66,6 +68,8 @@ export const AddNewTeamsForm = () => {
 };
 
 const AddNewTeamsFormChild = ({ teams }: { teams: { id: number; name: string; slug: string | null }[] }) => {
+const t = useTranslations("add-new-teams-form");
+
   const { t } = useLocale();
   const router = useRouter();
   const [counter, setCounter] = useState(1);
@@ -157,11 +161,11 @@ const AddNewTeamsFormChild = ({ teams }: { teams: { id: number; name: string; sl
       <Form form={form} handleSubmit={handleFormSubmit}>
         {moveTeams.length ? (
           <>
-            <label className="text-emphasis mb-2 block text-sm font-medium leading-none">
-              Move existing teams
-            </label>
+            <label className="text-emphasis mb-2 block text-sm font-medium leading-none">{t('labels.move-existing-teams')}</label>
             <ul className="mb-8 space-y-4">
               {moveTeams.map((team, index) => {
+const t = useTranslations("add-new-teams-form");
+
                 const currentTeam = teams.find((t) => t.id === team.id);
                 // If the team slug conflicts with the org slug, this team must be moved
                 const slugConflictsWithOrg = currentTeam?.slug === orgSlug;
@@ -182,7 +186,7 @@ const AddNewTeamsFormChild = ({ teams }: { teams: { id: number; name: string; sl
                     />
                     {moveTeams[index].shouldMove ? (
                       <TextField
-                        placeholder="New Slug"
+                        placeholder={t('placeholders.new-slug')}
                         defaultValue={teams.find((t) => t.id === team.id)?.slug ?? ""}
                         {...register(`moveTeams.${index}.newSlug`)}
                         onChange={(e) => {
@@ -199,7 +203,7 @@ const AddNewTeamsFormChild = ({ teams }: { teams: { id: number; name: string; sl
             </ul>
           </>
         ) : null}
-        <label className="text-emphasis mb-2 block text-sm font-medium leading-none">Add New Teams</label>
+        <label className="text-emphasis mb-2 block text-sm font-medium leading-none">{t('labels.add-new-teams')}</label>
         {fields.map((field, index) => (
           <div className={classNames("relative", index > 0 ? "mb-2" : "")} key={field.id}>
             <TextField

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useCallback, useState } from "react";
 import { Query, Builder, Utils as QbUtils } from "react-awesome-query-builder";
@@ -190,9 +192,11 @@ export function Segment({
   onQueryValueChange: ({ queryValue }: { queryValue: AttributesQueryValue }) => void;
   className?: string;
 }) {
+const t = useTranslations("segment-attributes-filter");
+
   const { attributes, isPending } = useAttributes(teamId);
   const { t } = useLocale();
-  if (isPending) return <span>Loading...</span>;
+  if (isPending) return <span>{t('loading.fetching-attributes')}</span>;
   if (!attributes) {
     console.error("Error fetching attributes");
     return <span>{t("something_went_wrong")}</span>;

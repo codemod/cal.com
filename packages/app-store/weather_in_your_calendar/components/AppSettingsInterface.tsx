@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -5,6 +6,8 @@ import { Button } from "@calcom/ui/components/button";
 import { TextField } from "@calcom/ui/components/form";
 
 export default function AppSettings() {
+const t = useTranslations("weather-app-settings");
+
   const { t } = useLocale();
   const unit = "metric";
   const [location, setLocation] = useState("");
@@ -12,7 +15,7 @@ export default function AppSettings() {
   return (
     <div className="space-y-4 text-sm">
       <TextField
-        placeholder="San Francisco"
+        placeholder={t('placeholders.city-example')}
         value={location}
         name="Enter City"
         onChange={async (e) => {

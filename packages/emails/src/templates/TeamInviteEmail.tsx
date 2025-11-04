@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { TFunction } from "i18next";
 
 import ServerTrans from "@calcom/lib/components/ServerTrans";
@@ -24,6 +25,8 @@ type TeamInvite = {
 export const TeamInviteEmail = (
   props: TeamInvite & Partial<React.ComponentProps<typeof V2BaseEmailHtml>>
 ) => {
+const t = useTranslations("team-invite-email");
+
   const typeOfInvite = getTypeOfInvite(props);
 
   const heading = getHeading();
@@ -218,10 +221,8 @@ export const TeamInviteEmail = (
               i18nKey="email_team_invite|content|invited_to_org"
               values={{ teamName, invitedBy, appName: APP_NAME }}
             />
-          )}{" "}
-          {appName} is the event-juggling scheduler that enables you and your team to schedule meetings
-          without the email tennis.
-        </>
+          )}{t('descriptions.app-scheduler-pitch', { "appName": appName })}
+          </>
       );
     }
 
@@ -240,10 +241,8 @@ export const TeamInviteEmail = (
               i18nKey="email_team_invite|content|invited_to_subteam"
               values={{ teamName, parentTeamName: parentTeamName ?? "", invitedBy, appName: APP_NAME }}
             />
-          )}{" "}
-          {appName} is the event-juggling scheduler that enables you and your team to schedule meetings
-          without the email tennis.
-        </>
+          )}{t('descriptions.app-scheduler-pitch', { "appName": appName })}
+          </>
       );
     }
     // Regular team doesn't support auto-join. So, they have to be invited always

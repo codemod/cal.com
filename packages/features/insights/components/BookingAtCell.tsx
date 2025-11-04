@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import Link from "next/link";
 import { useId } from "react";
@@ -19,6 +21,8 @@ import type { RoutingFormTableRow } from "../lib/types";
 import { BookingStatusBadge } from "./BookingStatusBadge";
 
 export function BookingAtCell({ row, rowId }: { row: RoutingFormTableRow; rowId: number }) {
+const t = useTranslations("booking-at-cell");
+
   const cellId = useId();
   const { copyToClipboard } = useCopy();
 
@@ -58,7 +62,7 @@ export function BookingAtCell({ row, rowId }: { row: RoutingFormTableRow; rowId:
               </div>
             </div>
             <div className="text-emphasis mt-4 flex items-center gap-2 text-xs">
-              <span>Status:</span>
+              <span>{t('labels.status')}</span>
               <BookingStatusBadge bookingStatus={row.bookingStatus} />
             </div>
           </div>

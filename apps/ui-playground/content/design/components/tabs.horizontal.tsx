@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -31,13 +33,15 @@ const tabItems = [
 ] as const;
 
 export const HorizontalExample: React.FC = () => {
+const t = useTranslations("ui-playground-horizontal-tabs");
+
   const [activeTab, setActiveTab] = useState("Overview");
 
   return (
     <RenderComponentWithSnippet>
       <div className="space-y-6">
         <div>
-          <h3 className="text-emphasis mb-2 text-sm font-medium">Basic</h3>
+          <h3 className="text-emphasis mb-2 text-sm font-medium">{t('sections.basic')}</h3>
           <HorizontalTabs
             tabs={tabItems.map((item) => ({
               ...item,
@@ -49,7 +53,7 @@ export const HorizontalExample: React.FC = () => {
         </div>
 
         <div>
-          <h3 className="text-emphasis mb-2 text-sm font-medium">With Icons</h3>
+          <h3 className="text-emphasis mb-2 text-sm font-medium">{t('sections.with-icons')}</h3>
           <HorizontalTabs
             tabs={tabItems.map((item) => ({
               ...item,
@@ -60,7 +64,7 @@ export const HorizontalExample: React.FC = () => {
         </div>
 
         <div>
-          <h3 className="text-emphasis mb-2 text-sm font-medium">With Actions</h3>
+          <h3 className="text-emphasis mb-2 text-sm font-medium">{t('sections.with-actions')}</h3>
           <HorizontalTabs
             tabs={tabItems.map((item) => ({
               ...item,
@@ -70,7 +74,7 @@ export const HorizontalExample: React.FC = () => {
             actions={
               <button className="hover:text-emphasis text-default ml-auto flex items-center space-x-1 rounded-md px-3 py-[10px] transition">
                 <Icon name="plus" className="h-4 w-4" />
-                <span>Add New</span>
+                <span>{t('buttons.add-new')}</span>
               </button>
             }
           />

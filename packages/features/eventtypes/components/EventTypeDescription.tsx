@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
@@ -34,6 +35,8 @@ export const EventTypeDescription = ({
   shortenDescription,
   isPublic,
 }: EventTypeDescriptionProps) => {
+const t = useTranslations("event-type-description");
+
   const { t, i18n } = useLocale();
 
   const recurringEvent = useMemo(
@@ -65,18 +68,20 @@ export const EventTypeDescription = ({
         )}
         <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
           {metadata?.multipleDuration ? (
-            metadata.multipleDuration.map((dur, idx) => (
+            metadata.multipleDuration.map((dur, idx) =>  {
+const t = useTranslations("event-type-description");
+
+return (
               <li key={idx}>
                 <Badge variant="gray" startIcon="clock">
-                  {dur}m
-                </Badge>
+                  {t('duration.minutes-format', { "dur": dur })}</Badge>
               </li>
-            ))
+            )
+})
           ) : (
             <li>
               <Badge variant="gray" startIcon="clock">
-                {eventType.length}m
-              </Badge>
+                {t('duration.event-length-minutes', { "eventTypeLength": eventType.length })}</Badge>
             </li>
           )}
           {eventType.schedulingType && eventType.schedulingType !== SchedulingType.MANAGED && (

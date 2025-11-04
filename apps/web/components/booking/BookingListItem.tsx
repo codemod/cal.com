@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -121,6 +122,8 @@ const isBookingReroutable = (booking: ParsedBooking): booking is ReroutableBooki
 };
 
 function BookingListItem(booking: BookingItemProps) {
+const t = useTranslations("booking-list-item");
+
   const parsedBooking = buildParsedBooking(booking);
 
   const { userTimeZone, userTimeFormat, userEmail } = booking.loggedInUser;
@@ -495,7 +498,7 @@ function BookingListItem(booking: BookingItemProps) {
               label={
                 <>
                   {t("rejection_reason")}
-                  <span className="text-subtle font-normal"> (Optional)</span>
+                  <span className="text-subtle font-normal">{t('labels.optional-suffix')}</span>
                 </>
               }
               value={rejectionReason}
@@ -558,7 +561,7 @@ function BookingListItem(booking: BookingItemProps) {
                                 <img
                                   src={provider.iconUrl}
                                   className="h-4 w-4 rounded-sm"
-                                  alt={`${provider?.label} logo`}
+                                  alt={t('accessibility.provider-logo-alt', { "providerLabel": provider?.label })}
                                 />
                               )}
                               {provider?.label

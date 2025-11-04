@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useMemo, useEffect, startTransition } from "react";
 
 import { trpc } from "@calcom/trpc";
@@ -7,6 +8,8 @@ import { getQueryParam } from "../../bookings/Booker/utils/query-param";
 import { useTroubleshooterStore } from "../store";
 
 export function EventTypeSelect() {
+const t = useTranslations("troubleshooter-event-type-select");
+
   const { data: eventTypes, isPending } = trpc.viewer.eventTypes.list.useQuery();
   const selectedEventType = useTroubleshooterStore((state) => state.event);
   const setSelectedEventType = useTroubleshooterStore((state) => state.setEvent);
@@ -57,7 +60,7 @@ export function EventTypeSelect() {
 
   return (
     <SelectField
-      label="Event Type"
+      label={t('labels.event-type')}
       options={options}
       isDisabled={isPending || options.length === 0}
       value={options.find((option) => option.value === selectedEventType?.slug) || options[0]}

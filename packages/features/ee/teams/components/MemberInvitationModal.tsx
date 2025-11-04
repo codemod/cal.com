@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import type { FormEvent } from "react";
 import { useMemo, useRef, useState } from "react";
@@ -68,6 +69,8 @@ function toggleElementInArray(value: string[] | string | undefined, element: str
 }
 
 export default function MemberInvitationModal(props: MemberInvitationModalProps) {
+const t = useTranslations("member-invitation-modal");
+
   const { t } = useLocale();
   const { disableCopyLink = false, isOrg = false } = props;
   const trpcContext = trpc.useUtils();
@@ -211,9 +214,7 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                 t={t}
                 i18nKey="invite_new_member_description"
                 components={[
-                  <span key="invite_new_member_description" className="text-emphasis font-medium">
-                    cost an extra seat ($15/m)
-                  </span>,
+                  <span key="invite_new_member_description" className="text-emphasis font-medium">{t('billing.extra-seat-cost')}</span>,
                 ]}
               />
             </span>
@@ -259,7 +260,7 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                       label={t("email")}
                       id="inviteUser"
                       name="inviteUser"
-                      placeholder="email@example.com"
+                      placeholder={t('placeholders.email-example')}
                       required
                       onChange={(e) => onChange(e.target.value.trim().toLowerCase())}
                     />
@@ -292,7 +293,7 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                         label={t("invite_via_email")}
                         rows={4}
                         autoCorrect="off"
-                        placeholder="john@doe.com, alex@smith.com"
+                        placeholder={t('placeholders.bulk-email-example')}
                         required
                         value={value}
                         onChange={(e) => {

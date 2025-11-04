@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useAppContextWithSchema } from "@calcom/app-store/EventTypeAppContext";
 import AppCard from "@calcom/app-store/_components/AppCard";
 import useIsAppEnabled from "@calcom/app-store/_utils/useIsAppEnabled";
@@ -11,6 +12,8 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
   app,
   onAppInstallSuccess,
 }) {
+const t = useTranslations("event-type-app-card-template");
+
   const { getAppData, setAppData } = useAppContextWithSchema<typeof appDataSchema>();
   const isSunrise = getAppData("isSunrise");
   const { enabled, updateEnabled } = useIsAppEnabled(app);
@@ -32,15 +35,17 @@ const EventTypeAppCard: EventTypeAppCardComponent = function EventTypeAppCard({
       teamId={eventType.team?.id || undefined}>
       <div className="mt-2 text-sm">
         <div className="flex">
-          <span className="ltr:mr-2 rtl:ml-2">
+          {t.rich('demo.event-title-display', {
+      eventTypeTitle,
+      component0: (chunks) => <span className="ltr:mr-2 rtl:ml-2">
             <Icon name={isSunrise ? "sunrise" : "sunset"} />
           </span>
-          I am an AppCard for Event with Title: {eventType.title}
+    })}
         </div>{" "}
-        <div className="mt-2">
-          Edit <span className="italic">packages/app-store/{app.slug}/EventTypeAppCardInterface.tsx</span> to
-          play with me
-        </div>
+        <div className="mt-2">{t.rich('instructions.edit-template-file', {
+      appSlug,
+      component0: (chunks) => <span className="italic">{chunks}</span>
+    })}</div>
       </div>
     </AppCard>
   );

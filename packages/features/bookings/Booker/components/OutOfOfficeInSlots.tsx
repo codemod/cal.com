@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import type { IOutOfOfficeData } from "@calcom/features/availability/lib/getUserAvailability";
@@ -18,6 +19,8 @@ interface IOutOfOfficeInSlotsProps {
 }
 
 export const OutOfOfficeInSlots = (props: IOutOfOfficeInSlotsProps) => {
+const t = useTranslations("out-of-office-slots");
+
   const { t } = useLocale();
   const { fromUser, toUser, emoji = "🏝️", borderDashed = true, date, className } = props;
   const searchParams = useCompatSearchParams();
@@ -46,7 +49,7 @@ export const OutOfOfficeInSlots = (props: IOutOfOfficeInSlotsProps) => {
                 t={t}
                 i18nKey="ooo_slots_returning"
                 values={{ displayName: toUser.displayName }}
-                components={[<strong key="username">username</strong>]}
+                components={[<strong key="username">{t('labels.username')}</strong>]}
               />
             </p>
           )}

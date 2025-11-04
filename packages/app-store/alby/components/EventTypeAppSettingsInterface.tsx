@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 
 import { currencyOptions } from "@calcom/app-store/alby/lib/currencyOptions";
@@ -17,6 +18,8 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
   getAppData,
   setAppData,
 }) => {
+const t = useTranslations("alby-event-type-settings");
+
   const { t } = useLocale();
   const price = getAppData("price");
   const currency = getAppData("currency");
@@ -50,14 +53,14 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
           <>
             <div className="mt-2 block items-center sm:flex">
               <TextField
-                label="Price"
+                label={t('labels.price')}
                 labelSrOnly
                 addOnLeading={<SatSymbol className="h-4 w-4" />}
                 addOnSuffix={selectedCurrency.unit || selectedCurrency.value}
                 type="number"
                 required
                 className="block w-full rounded-sm border-gray-300 pl-2 pr-12 text-sm"
-                placeholder="Price"
+                placeholder={t('placeholders.price')}
                 onChange={(e) => {
                   setAppData("price", Number(e.target.value));
                   if (currency) {
@@ -87,9 +90,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
             </div>
 
             <div className="mt-2 w-60">
-              <label className="text-default block text-sm font-medium" htmlFor="currency">
-                Payment option
-              </label>
+              <label className="text-default block text-sm font-medium" htmlFor="currency">{t('labels.payment-option')}</label>
               <Select<Option>
                 defaultValue={
                   paymentOptionSelectValue

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { type Table } from "@tanstack/react-table";
 
@@ -17,6 +19,8 @@ export function DataTablePagination<TData>({
   totalRowCount,
   paginationMode = "infinite",
 }: DataTablePaginationProps<TData>) {
+const t = useTranslations("data-table-pagination");
+
   const { pageIndex, pageSize, setPageIndex, setPageSize } = useDataTable();
   if (!totalRowCount) {
     return null;
@@ -25,9 +29,11 @@ export function DataTablePagination<TData>({
   if (paginationMode === "infinite") {
     const loadedCount = table.getRowModel().rows.length;
     return (
-      <p className="text-subtle text-sm tabular-nums">
-        Loaded <span className="text-default font-medium">{loadedCount}</span> of{" "}
-        <span className="text-default font-medium">{totalRowCount}</span>
+      <p className="text-subtle text-sm tabular-nums">{t.rich('status.loaded-count-of-total', {
+      component0: (chunks) => <span className="text-default font-medium">{loadedCount}</span>,
+      component1: (chunks) => <span className="text-default font-medium">{totalRowCount}</span>
+    })}
+        
       </p>
     );
   } else if (paginationMode === "standard") {

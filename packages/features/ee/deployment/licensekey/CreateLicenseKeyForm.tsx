@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import type { SessionContextValue } from "next-auth/react";
 import { useSession } from "next-auth/react";
@@ -44,6 +46,8 @@ interface FormValues {
 }
 
 const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionContextValue, "data"> }) => {
+const t = useTranslations("license-key-creation-form");
+
   const { t } = useLocale();
   const [serverErrorMessage, setServerErrorMessage] = useState<string | null>(null);
   const [stripeCheckoutUrl, setStripeCheckoutUrl] = useState<string | null>(null);
@@ -101,9 +105,12 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
               <Controller
                 name="billingPeriod"
                 control={newLicenseKeyFormMethods.control}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("license-key-creation-form");
+
+return (
                   <>
-                    <Label htmlFor="billingPeriod">Billing Period</Label>
+                    <Label htmlFor="billingPeriod">{t('labels.billing-period')}</Label>
                     <ToggleGroup
                       isFullWidth
                       id="billingPeriod"
@@ -121,7 +128,8 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
                       ]}
                     />
                   </>
-                )}
+                )
+}}
               />
             </div>
 
@@ -131,29 +139,36 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
               rules={{
                 required: t("must_enter_billing_email"),
               }}
-              render={({ field: { value, onChange } }) => (
+              render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("license-key-creation-form");
+
+return (
                 <div className="flex">
                   <TextField
                     containerClassName="w-full"
-                    placeholder="john@acme.com"
+                    placeholder={t('placeholders.billing-email-example')}
                     name="billingEmail"
                     disabled={!isAdmin}
-                    label="Billing Email for Customer"
+                    label={t('labels.billing-email-customer')}
                     defaultValue={value}
                     onChange={onChange}
                     autoComplete="off"
                   />
                 </div>
-              )}
+              )
+}}
             />
           </div>
           <div>
             <Controller
               name="billingType"
               control={newLicenseKeyFormMethods.control}
-              render={({ field: { value, onChange } }) => (
+              render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("license-key-creation-form");
+
+return (
                 <>
-                  <Label htmlFor="bookingType">Booking Type</Label>
+                  <Label htmlFor="bookingType">{t('labels.booking-type')}</Label>
                   <ToggleGroup
                     isFullWidth
                     id="bookingType"
@@ -173,7 +188,8 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
                     ]}
                   />
                 </>
-              )}
+              )
+}}
             />
           </div>
 
@@ -184,16 +200,20 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
               rules={{
                 required: "Must enter a total of billable users",
               }}
-              render={({ field: { value, onChange } }) => (
+              render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("license-key-creation-form");
+
+return (
                 <TextField
                   className="mt-2"
                   name="entityCount"
-                  label="Total entities included"
+                  label={t('labels.total-entities-included')}
                   placeholder="100"
                   defaultValue={value}
                   onChange={(event) => onChange(+event.target.value)}
                 />
-              )}
+              )
+}}
             />
             <Controller
               name="entityPrice"
@@ -201,16 +221,20 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
               rules={{
                 required: "Must enter fixed price per user",
               }}
-              render={({ field: { value, onChange } }) => (
+              render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("license-key-creation-form");
+
+return (
                 <TextField
                   className="mt-2"
                   name="entityPrice"
-                  label="Fixed price per entity"
+                  label={t('labels.fixed-price-per-entity')}
                   addOnSuffix="$"
                   defaultValue={value / 100}
                   onChange={(event) => onChange(+event.target.value * 100)}
                 />
-              )}
+              )
+}}
             />
           </div>
 
@@ -221,21 +245,25 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
               rules={{
                 required: "Must enter overages",
               }}
-              render={({ field: { value, onChange } }) => (
+              render={({ field: { value, onChange } }) =>  {
+const t = useTranslations("license-key-creation-form");
+
+return (
                 <>
                   <TextField
                     className="mt-2"
-                    placeholder="Acme"
+                    placeholder={t('placeholders.company-name-example')}
                     name="overages"
                     addOnSuffix="$"
-                    label="Overages"
+                    label={t('labels.overages')}
                     disabled={!isAdmin}
                     defaultValue={value / 100}
                     onChange={(event) => onChange(+event.target.value * 100)}
                     autoComplete="off"
                   />
                 </>
-              )}
+              )
+}}
             />
           </div>
 
@@ -263,9 +291,7 @@ const CreateANewLicenseKeyFormChild = ({ session }: { session: Ensure<SessionCon
               onClick={() => {
                 newLicenseKeyFormMethods.reset();
                 setStripeCheckoutUrl(null);
-              }}>
-              Back
-            </Button>
+              }}>{t('buttons.back')}</Button>
           </div>
         </div>
       )}

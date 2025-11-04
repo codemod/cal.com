@@ -1,16 +1,22 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
 import { CheckboxField } from "@calcom/ui/components/form";
 
-export const InfoIconExample: React.FC = () => (
+export const InfoIconExample: React.FC = () =>  {
+const t = useTranslations("ui-playground-checkbox-info-icon");
+
+return (
   <RenderComponentWithSnippet>
     <CheckboxField
-      description="Checkbox with additional information"
+      description={t('checkbox.description')}
       id="info-icon"
-      label="Information Icon"
-      informationIconText="This is additional information that appears in a tooltip"
+      label={t('checkbox.label')}
+      informationIconText={t('tooltip.additional-info')}
     />
   </RenderComponentWithSnippet>
-);
+)
+};

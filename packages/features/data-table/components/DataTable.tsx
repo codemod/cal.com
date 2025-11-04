@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import type { Row } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
@@ -75,6 +77,8 @@ export function DataTable<TData>({
   separatorClassName,
   ...rest
 }: DataTableProps<TData> & React.ComponentPropsWithoutRef<"div">) {
+const t = useTranslations("data-table-component");
+
   const { rows } = table.getRowModel();
 
   const rowVirtualizer = useVirtualizer({
@@ -127,15 +131,7 @@ export function DataTable<TData>({
         Invalidate left & right properties for <= sm screen size,
         because we pin columns only for >= sm screen sizes.
       */}
-      <style jsx global>{`
-        @media (max-width: 640px) {
-          .data-table th,
-          .data-table td {
-            left: initial !important;
-            right: initial !important;
-          }
-        }
-      `}</style>
+      <style jsx global>{t('styles.mobile-column-reset')}</style>
       <div
         ref={tableContainerRef}
         onScroll={onScroll}

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -29,6 +31,8 @@ interface AppCardProps {
 }
 
 export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCardProps) {
+const t = useTranslations("app-card");
+
   const { t } = useLocale();
   const router = useRouter();
   const allowedMultipleInstalls = app.categories && app.categories.indexOf("calendar") > -1;
@@ -92,7 +96,7 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
       <div className="flex">
         <img
           src={app.logo}
-          alt={`${app.name} Logo`}
+          alt={t('images.app-logo-alt', { "appName": app.name })}
           className={classNames(
             app.logo.includes("-dark") && "dark:invert",
             "mb-4 h-12 w-12 rounded-sm" // TODO: Maybe find a better way to handle this @Hariom?
@@ -188,7 +192,7 @@ export function AppCard({ app, credentials, searchText, userAdminTeams }: AppCar
       <div className="max-w-44 absolute right-0 mr-4 flex flex-wrap justify-end gap-1">
         {appAdded > 0 ? <Badge variant="green">{t("installed", { count: appAdded })}</Badge> : null}
         {app.isTemplate && (
-          <span className="bg-error rounded-md px-2 py-1 text-sm font-normal text-red-800">Template</span>
+          <span className="bg-error rounded-md px-2 py-1 text-sm font-normal text-red-800">{t('badges.template')}</span>
         )}
         {(app.isDefault || (!app.isDefault && app.isGlobal)) && (
           <span className="bg-subtle text-emphasis flex items-center rounded-md px-2 py-1 text-sm font-normal">

@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useState } from "react";
 
@@ -11,6 +13,8 @@ import { Select } from "@calcom/ui/components/form";
 import { TestForm } from "../../components/apps/routing-forms/TestForm";
 
 export default function InsightsVirtualQueuesPage() {
+const t = useTranslations("insights-virtual-queues");
+
   const { t } = useLocale();
   const { data: routingForms, isLoading: isRoutingFormsLoading } =
     trpc.viewer.insights.getUserRelevantTeamRoutingForms.useQuery();
@@ -27,7 +31,7 @@ export default function InsightsVirtualQueuesPage() {
     <>
       <Label>{t("routing_form")}</Label>
       <Select
-        placeholder="Select project"
+        placeholder={t('form-selector.placeholder')}
         options={routingForms?.map((form) => ({ label: form.name, value: form.id })) ?? []}
         isLoading={isRoutingFormsLoading}
         className="w-60"

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Navbar } from "@/components/Navbar";
 import { Inter } from "next/font/google";
 // eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
@@ -16,6 +17,8 @@ import {
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Bookings(props: { calUsername: string; calEmail: string }) {
+const t = useTranslations("event-types-management");
+
   const [eventTypeId, setEventTypeId] = useState<number | null>(null);
   const [_isTeamEvent, setIsTeamEvent] = useState<boolean>(false);
   const router = useRouter();
@@ -56,11 +59,10 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
       className={`flex min-h-screen flex-col ${inter.className} main text-default flex min-h-full w-full flex-col items-center overflow-visible`}>
       <Navbar username={props.calUsername} />
       <div>
-        <h1 className="mx-10 my-4 text-2xl font-semibold">
-          EventTypes{eventTypeId ? `: ${eventTypeId}` : ""}
+        <h1 className="mx-10 my-4 text-2xl font-semibold">{t('headings.page-title-with-id', { "eventTypeId": eventTypeId })}
         </h1>
 
-        {isLoadingEvents && !eventTypeId && <p>Loading...</p>}
+        {isLoadingEvents && !eventTypeId && <p>{t('messages.loading')}</p>}
 
         {!isLoadingEvents && !eventTypeId && Boolean(eventTypes?.length) && !rescheduleUid && (
           <div className="flex flex-col gap-4">
@@ -92,7 +94,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
 
         {!isLoadingTeamEvents && !eventTypeId && Boolean(teamEventTypes?.length) && !rescheduleUid && (
           <div className="flex flex-col gap-4">
-            <h1>Team event types</h1>
+            <h1>{t('headings.team-event-types')}</h1>
             {teamEventTypes?.map(
               (event: { id: number; slug: string; title: string; lengthInMinutes: number }) => {
                 const formatEventSlug = event.slug
@@ -773,14 +775,10 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
             <div className="mt-4 flex justify-center gap-4">
               <button
                 onClick={handleValidate}
-                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-                Validate Form
-              </button>
+                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">{t('buttons.validate-form')}</button>
               <button
                 onClick={handleSubmit}
-                className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600">
-                Submit Form
-              </button>
+                className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600">{t('buttons.submit-form')}</button>
             </div>
           </div>
         )}
@@ -788,7 +786,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
         {!eventTypeId && (
           <div className="mt-8 flex flex-row items-center justify-center gap-24">
             <div data-testid="create-event-type-atom" className="flex w-[30vw] flex-col gap-2">
-              <h1 className="font-semibold">Create Event Type</h1>
+              <h1 className="font-semibold">{t('headings.create-event-type')}</h1>
               <CreateEventType
                 customClassNames={{
                   atomsWrapper: "border p-4 shadow-md rounded-md",
@@ -801,7 +799,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
             </div>
 
             <div data-testid="create-team-event-type-atom" className="flex w-[30vw] flex-col gap-2">
-              <h1 className="font-semibold">Create Team Event Type</h1>
+              <h1 className="font-semibold">{t('headings.create-team-event-type')}</h1>
               {teams?.[0]?.id && (
                 <CreateEventType
                   customClassNames={{

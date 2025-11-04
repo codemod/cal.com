@@ -1,12 +1,15 @@
+import { useTranslations } from "next-intl";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Badge } from "@calcom/ui/components/badge";
 
 import { TroubleshooterListItemHeader } from "./TroubleshooterListItemContainer";
 
 function ConnectedAppsItem() {
+const t = useTranslations("troubleshooter-connected-apps");
+
   return (
     <TroubleshooterListItemHeader
-      title="Google Cal"
+      title={t('apps.google-calendar-name')}
       subtitle="google@calendar.com"
       prefixSlot={
         <>
@@ -15,9 +18,7 @@ function ConnectedAppsItem() {
       }
       suffixSlot={
         <div>
-          <Badge variant="green" withDot size="sm">
-            Connected
-          </Badge>
+          <Badge variant="green" withDot size="sm">{t('status.connected')}</Badge>
         </div>
       }
     />

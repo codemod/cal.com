@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useForm, FormProvider } from "react-hook-form";
@@ -12,6 +14,8 @@ type FormValues = {
 };
 
 export const StatesExample: React.FC = () => {
+const t = useTranslations("multi-input-field-states");
+
   const methods = useForm<FormValues>();
 
   return (
@@ -20,7 +24,7 @@ export const StatesExample: React.FC = () => {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="flex flex-col space-y-2">
-              <h3 className="text-emphasis text-sm">Default State</h3>
+              <h3 className="text-emphasis text-sm">{t('states.default.heading')}</h3>
               <MultiOptionInput<FormValues>
                 fieldArrayName="defaultOptions"
                 optionPlaceholders={["First option", "Second option", "Third option"]}
@@ -29,7 +33,7 @@ export const StatesExample: React.FC = () => {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <h3 className="text-emphasis text-sm">Disabled State</h3>
+              <h3 className="text-emphasis text-sm">{t('states.disabled.heading')}</h3>
               <MultiOptionInput<FormValues>
                 fieldArrayName="disabledOptions"
                 optionPlaceholders={["Disabled option 1", "Disabled option 2"]}
@@ -39,7 +43,7 @@ export const StatesExample: React.FC = () => {
             </div>
 
             <div className="flex flex-col space-y-2">
-              <h3 className="text-emphasis text-sm">Minimum Options (2)</h3>
+              <h3 className="text-emphasis text-sm">{t('states.minimum-options.heading')}</h3>
               <MultiOptionInput<FormValues>
                 fieldArrayName="minOptions"
                 optionPlaceholders={["Required option 1", "Required option 2", "Optional option"]}

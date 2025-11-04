@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import LicenseRequired from "@calcom/features/ee/common/components/LicenseRequired";
 import { UpgradeTip } from "@calcom/features/tips";
@@ -8,6 +10,8 @@ import { ButtonGroup } from "@calcom/ui/components/buttonGroup";
 import { Icon } from "@calcom/ui/components/icon";
 
 export const AdminAPIView = () => {
+const t = useTranslations("organization-admin-api-settings");
+
   const { t } = useLocale();
 
   const features = [
@@ -48,7 +52,7 @@ export const AdminAPIView = () => {
               </ButtonGroup>
             </div>
           }>
-          <>Create Org</>
+          <>{t('buttons.create-organization')}</>
         </UpgradeTip>
       </div>
     </LicenseRequired>

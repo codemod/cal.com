@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 
 import {
@@ -24,6 +25,8 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
   setAppData,
   eventType,
 }) => {
+const t = useTranslations("paypal-payment-settings");
+
   const price = getAppData("price");
 
   const currency = getAppData("currency") || currencyOptions[0].value;
@@ -65,7 +68,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
     <>
       <div className="mt-2 block items-center sm:flex">
         <TextField
-          label="Price"
+          label={t('fields.price-label')}
           labelSrOnly
           addOnLeading={currencySymbol}
           addOnSuffix={currency}
@@ -74,7 +77,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
           type="number"
           required
           className="block w-full rounded-sm pl-2 text-sm"
-          placeholder="Price"
+          placeholder={t('fields.price-placeholder')}
           data-testid="paypal-price-input"
           onChange={(e) => {
             setAppData("price", convertToSmallestCurrencyUnit(Number(e.target.value), currency));
@@ -107,9 +110,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = ({
       </div>
 
       <div className="mt-4 w-60">
-        <label className="text-default mb-1 block text-sm font-medium" htmlFor="currency">
-          Payment option
-        </label>
+        <label className="text-default mb-1 block text-sm font-medium" htmlFor="currency">{t('fields.payment-option-label')}</label>
         <Select<Option>
           data-testid="paypal-payment-option-select"
           defaultValue={

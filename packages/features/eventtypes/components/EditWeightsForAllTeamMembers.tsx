@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import Link from "next/link";
 import { useState, useEffect, useRef, useMemo } from "react";
@@ -117,6 +119,8 @@ export const EditWeightsForAllTeamMembers = ({
   teamId,
   queryValue,
 }: Props) => {
+const t = useTranslations("edit-team-weights");
+
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useLocale();
   const [searchQuery, setSearchQuery] = useState("");
@@ -272,9 +276,7 @@ export const EditWeightsForAllTeamMembers = ({
                       key="weights_description"
                       className="underline underline-offset-2"
                       target="_blank"
-                      href="https://cal.com/docs/enterprise-features/teams/round-robin-scheduling#weights">
-                      Learn more
-                    </Link>,
+                      href="https://cal.com/docs/enterprise-features/teams/round-robin-scheduling#weights">{t('links.learn-more')}</Link>,
                   ]}
                 />
               </div>

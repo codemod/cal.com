@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Action } from "kbar";
 import {
   KBarAnimator,
@@ -249,6 +250,8 @@ export const KBarRoot = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const KBarContent = () => {
+const t = useTranslations("kbar-command-palette");
+
   const { t } = useLocale();
   useEventTypesAction();
   const [inputText, setInputText] = useState("");
@@ -281,7 +284,7 @@ export const KBarContent = () => {
             <Icon name="corner-down-left" className="h-4 w-4" />
             <span className="pr-2">{t("open")}</span>
             {isMac ? <Icon name="command" className="h-3 w-3" /> : "CTRL"}
-            <span className="pr-1">+ K </span>
+            <span className="pr-1">{t('shortcuts.close-key-combination')}</span>
             <span className="pr-2">{t("close")}</span>
           </div>
         </KBarAnimator>

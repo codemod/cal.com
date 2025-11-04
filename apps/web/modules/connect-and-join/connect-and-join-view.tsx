@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -17,6 +19,8 @@ import { EmptyScreen } from "@calcom/ui/components/empty-screen";
 import { TRPCClientError } from "@trpc/client";
 
 function ConnectAndJoin() {
+const t = useTranslations("connect-and-join");
+
   const { t } = useLocale();
   const router = useRouter();
   const token = getQueryParam("token");
@@ -66,9 +70,7 @@ function ConnectAndJoin() {
                       <Link
                         key="continue-to-meeting-link"
                         className="inline-block cursor-pointer underline"
-                        href={meetingUrl}>
-                        Continue to Meeting
-                      </Link>,
+                        href={meetingUrl}>{t('links.continue-to-meeting')}</Link>,
                     ]}
                   />
                 </div>

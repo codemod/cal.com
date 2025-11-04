@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import type { DailyCall } from "@daily-co/daily-js";
 import DailyIframe from "@daily-co/daily-js";
@@ -27,6 +29,8 @@ import { CalVideoPremiumFeatures } from "../cal-video-premium-features";
 export type PageProps = inferSSRProps<typeof getServerSideProps>;
 
 export default function JoinCall(props: PageProps) {
+const t = useTranslations("videos-single-view");
+
   const { t } = useLocale();
   const {
     meetingUrl,
@@ -187,7 +191,7 @@ export default function JoinCall(props: PageProps) {
           <img
             className="min-w-16 min-h-16 fixed z-10 hidden aspect-square h-16 w-16 rounded-full sm:inline-block"
             src={calVideoLogo}
-            alt="My Org Logo"
+            alt={t('logos.organization-alt-text')}
             style={{
               top: 32,
               left: 32,
@@ -197,7 +201,7 @@ export default function JoinCall(props: PageProps) {
           <img
             className="fixed z-10 hidden h-5 sm:inline-block"
             src={`${WEBSITE_URL}/cal-logo-word-dark.svg`}
-            alt="Logo"
+            alt={t('logos.default-alt-text')}
             style={{
               top: 47,
               left: 20,

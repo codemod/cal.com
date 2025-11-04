@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import type { PlatformOAuthClientDto } from "@calcom/platform-types";
@@ -13,16 +14,14 @@ type OAuthClientsListProps = {
 };
 
 export const OAuthClientsList = ({ oauthClients, isDeleting, handleDelete }: OAuthClientsListProps) => {
+const t = useTranslations("oauth-clients-list");
+
   return (
     <div className="mb-10">
       <div className="border-subtle mx-auto block justify-between rounded-t-lg border px-4 py-6 sm:flex sm:px-6">
         <div className="flex w-full flex-col">
-          <h1 className="font-cal text-emphasis mb-1 text-xl font-semibold leading-5 tracking-wide">
-            OAuth Clients
-          </h1>
-          <p className="text-default text-sm ltr:mr-4 rtl:ml-4">
-            Connect your platform to cal.com with OAuth
-          </p>
+          <h1 className="font-cal text-emphasis mb-1 text-xl font-semibold leading-5 tracking-wide">{t('headings.oauth-clients')}</h1>
+          <p className="text-default text-sm ltr:mr-4 rtl:ml-4">{t('descriptions.platform-connection')}</p>
         </div>
         <div>
           <NewOAuthClientButton redirectLink="/settings/platform/oauth-clients/create" />
@@ -58,7 +57,7 @@ export const OAuthClientsList = ({ oauthClients, isDeleting, handleDelete }: OAu
       ) : (
         <EmptyScreen
           headline="Create your first OAuth client"
-          description="OAuth clients facilitate access to Cal.com on behalf of users"
+          description={t('descriptions.oauth-client-purpose')}
           Icon="plus"
           className=""
           buttonRaw={<NewOAuthClientButton redirectLink="/settings/platform/oauth-clients/create" />}

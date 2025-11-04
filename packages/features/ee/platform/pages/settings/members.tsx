@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { checkAdminOrOwner } from "@calcom/features/auth/lib/checkAdminOrOwner";
 import { UserListTable } from "@calcom/features/users/components/UserTable/UserListTable";
@@ -9,6 +11,8 @@ import { useGetUserAttributes } from "@calcom/web/components/settings/platform/h
 import { PlatformPricing } from "@calcom/web/components/settings/platform/pricing/platform-pricing/index";
 
 const PlatformMembersView = (props: Omit<UserListTableProps, "facetedTeamValues" | "attributes">) => {
+const t = useTranslations("platform-members-settings");
+
   const { isUserLoading, isUserBillingDataLoading, isPlatformUser, isPaidUser, userBillingData, userOrgId } =
     useGetUserAttributes();
   const currentOrg = props.org;
@@ -27,7 +31,7 @@ const PlatformMembersView = (props: Omit<UserListTableProps, "facetedTeamValues"
         teamId={userOrgId}
         heading={
           <div className="mb-5 text-center text-2xl font-semibold">
-            <h1>Subscribe to Platform</h1>
+            <h1>{t('headings.subscribe-to-platform')}</h1>
           </div>
         }
       />

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 /**
  * @fileoverview This file is an example file and tells how to use the Cal component in a React application. This is also used by playwright e2e
  */
@@ -15,6 +16,8 @@ const api = getCalApi({
 });
 
 function App() {
+const t = useTranslations("embed-react-inline-demo");
+
   const [, setLoaded] = useState(false);
   useEffect(() => {
     // Simulate state change causing config object to change, causing rerender of Cal
@@ -93,9 +96,9 @@ function App() {
   }, []);
   return (
     <>
-      <h1>
-        There is <code>Cal</code> component below me
-      </h1>
+      <h1>{t.rich('headings.cal-component-introduction', {
+      component0: (chunks) => <code>{chunks}</code>
+    })}</h1>
       <Cal
         calOrigin="http://localhost:3000"
         embedJsUrl="//localhost:3000/embed/embed.js"
