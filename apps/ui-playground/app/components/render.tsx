@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { type PropsWithChildren, useState } from "react";
 
@@ -11,6 +13,8 @@ type Props = {
 };
 
 export const RenderComponentWithSnippet: React.FC<PropsWithChildren<Props>> = (props) => {
+const t = useTranslations("component-code-snippet-renderer");
+
   const [open, setOpen] = useState(false);
   // const snippet =
   //   props.customCodeSnippet ??
@@ -32,9 +36,7 @@ export const RenderComponentWithSnippet: React.FC<PropsWithChildren<Props>> = (p
           color="minimal"
           onClick={() => {
             setOpen(!open);
-          }}>
-          Code (WIP)
-        </Button>
+          }}>{t('buttons.show-code-wip')}</Button>
       </div>
 
       <div
