@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -14,6 +16,8 @@ const options = [
 ];
 
 export const FieldExample: React.FC = () => {
+const t = useTranslations("select-field-demo");
+
   const handleValueChange = (newValue: unknown, actionMeta: { action: string }) => {
     showToast(`Selected: ${JSON.stringify(newValue)}, Action: ${actionMeta.action}`, "success");
   };
@@ -22,41 +26,41 @@ export const FieldExample: React.FC = () => {
     <RenderComponentWithSnippet>
       <div className="space-y-4 md:w-80">
         <SelectField
-          label="Flavor"
+          label={t('labels.flavor')}
           options={options}
           onChange={handleValueChange}
-          placeholder="Choose a flavor..."
+          placeholder={t('placeholders.choose-flavor')}
         />
 
         <SelectField
-          label="Required Field"
+          label={t('labels.required-field')}
           options={options}
           required
           onChange={handleValueChange}
-          placeholder="This field is required..."
+          placeholder={t('placeholders.required-field')}
         />
 
-        <SelectField label="With Error" options={options} />
+        <SelectField label={t('labels.with-error')} options={options} />
       </div>
       <div className="mt-4 space-y-4 md:w-80">
         <SelectField
-          label="Flavor"
+          label={t('labels.flavor-small')}
           options={options}
           onChange={handleValueChange}
-          placeholder="Choose a flavor... (small)"
+          placeholder={t('placeholders.choose-flavor-small')}
           size="sm"
         />
 
         <SelectField
-          label="Required Field"
+          label={t('labels.required-field-small')}
           options={options}
           required
           onChange={handleValueChange}
-          placeholder="This field is required... (small)"
+          placeholder={t('placeholders.required-field-small')}
           size="sm"
         />
 
-        <SelectField label="With Error (small)" options={options} size="sm" />
+        <SelectField label={t('labels.with-error-small')} options={options} size="sm" />
       </div>
     </RenderComponentWithSnippet>
   );

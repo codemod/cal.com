@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -7,6 +9,8 @@ import { Switch } from "@calcom/ui/components/form";
 import { Section } from "@calcom/ui/components/section";
 
 export const WithIconExample = () => {
+const t = useTranslations("section-with-icon-demo");
+
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -20,10 +24,7 @@ export const WithIconExample = () => {
         </Section.Header>
         {isOpen && (
           <Section.Content>
-            <p>
-              This section demonstrates how to include an icon in the header and uses FormKit auto-animate for
-              smooth transitions when toggling content visibility.
-            </p>
+            <p>{t('descriptions.icon-animation-feature')}</p>
           </Section.Content>
         )}
       </Section>

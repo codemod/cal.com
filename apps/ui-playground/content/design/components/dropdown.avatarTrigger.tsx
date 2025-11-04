@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -12,27 +14,31 @@ import {
   DropdownMenuSeparator,
 } from "@calcom/ui/components/dropdown";
 
-export const AvatarTriggerExample: React.FC = () => (
+export const AvatarTriggerExample: React.FC = () =>  {
+const t = useTranslations("dropdown-avatar-trigger");
+
+return (
   <RenderComponentWithSnippet>
     <div className="flex flex-wrap items-center gap-8">
       <div className="flex flex-col items-center gap-2">
         <Dropdown>
           <DropdownMenuTrigger asChild>
             <button className="cursor-pointer">
-              <Avatar size="sm" imageSrc="https://cal.com/stakeholder/peer.jpg" alt="Avatar" />
+              <Avatar size="sm" imageSrc="https://cal.com/stakeholder/peer.jpg" alt={t('avatar.alt-text')} />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Profile</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('menu.profile-label')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownItem>View Profile</DropdownItem>
-            <DropdownItem>Settings</DropdownItem>
+            <DropdownItem>{t('menu.view-profile')}</DropdownItem>
+            <DropdownItem>{t('menu.settings')}</DropdownItem>
             <DropdownMenuSeparator />
-            <DropdownItem className="text-error">Sign out</DropdownItem>
+            <DropdownItem className="text-error">{t('menu.sign-out')}</DropdownItem>
           </DropdownMenuContent>
         </Dropdown>
-        <span className="text-subtle text-xs">Avatar Menu</span>
+        <span className="text-subtle text-xs">{t('demo.caption')}</span>
       </div>
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

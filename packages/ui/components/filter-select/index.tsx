@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import classNames from "@calcom/ui/classNames";
 
 import { Badge } from "../badge/Badge";
@@ -42,6 +43,8 @@ export function FilterSelect({
   emptyText = "No results",
   testId,
 }: FilterSelectProps) {
+const t = useTranslations("filter-select");
+
   const selectedOption = options.find((option) => option.value === selectedValue);
 
   return (
@@ -90,9 +93,7 @@ export function FilterSelect({
               <>
                 <CommandSeparator />
                 <CommandGroup>
-                  <CommandItem onSelect={() => onChange(null)} className="justify-center text-center">
-                    Clear filter
-                  </CommandItem>
+                  <CommandItem onSelect={() => onChange(null)} className="justify-center text-center">{t('actions.clear-filter')}</CommandItem>
                 </CommandGroup>
               </>
             )}

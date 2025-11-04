@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -33,6 +34,8 @@ const HorizontalTabItem = function ({
   matchFullPath,
   ...props
 }: HorizontalTabItemProps) {
+const t = useTranslations("horizontal-tab-item");
+
   const isCurrent = useUrlMatchesCurrentUrl(href, matchFullPath) || props?.isActive;
   const { t } = useLocale();
 
@@ -65,7 +68,7 @@ const HorizontalTabItem = function ({
           aria-hidden="true"
         />
       )}
-      {avatar && <Avatar size="xs" imageSrc={avatar} alt="avatar" className="-ml-0.5 me-1" />} {t(name)}
+      {avatar && <Avatar size="xs" imageSrc={avatar} alt={t('accessibility.avatar-alt-text')} className="-ml-0.5 me-1" />} {t(name)}
     </Link>
   );
 };

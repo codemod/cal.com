@@ -1,0 +1,197 @@
+{
+  "horizontal-tab-item": {
+    "accessibility": {
+      "avatar-alt-text": "avatar"
+    }
+  },
+  "filter-select": {
+    "actions": {
+      "clear-filter": "Clear filter"
+    }
+  },
+  "platform-members-layout": {
+    "headings": {
+      "member-management": "Member management"
+    }
+  },
+  "textarea-sizes-demo": {
+    "sections": {
+      "default-height": "Default Height",
+      "custom-height": "Custom Height (6 rows)"
+    },
+    "placeholders": {
+      "default-height": "Default height textarea...",
+      "taller-textarea": "Taller textarea...",
+      "auto-growing": "This textarea grows with content..."
+    }
+  },
+  "switch-playground": {
+    "examples": {
+      "basic-label": "Basic switch with label",
+      "label-trailing-default": "Label on trailing side (default)",
+      "label-leading": "Label on leading side"
+    },
+    "states": {
+      "enabled-label": "Enabled switch",
+      "disabled-label": "Disabled switch",
+      "disabled-checked-label": "Disabled and checked switch"
+    },
+    "controlled": {
+      "dynamic-status": "Switch is {checked,select,true{on} other{off}}",
+      "dynamic-status-with-padding": "Switch is {checked,select,true{on} other{off}}"
+    },
+    "sizes": {
+      "small-label": "Small switch",
+      "medium-label": "Medium switch"
+    }
+  },
+  "select-field-demo": {
+    "labels": {
+      "flavor": "Flavor",
+      "required-field": "Required Field",
+      "with-error": "With Error",
+      "flavor-small": "Flavor",
+      "required-field-small": "Required Field",
+      "with-error-small": "With Error (small)"
+    },
+    "placeholders": {
+      "choose-flavor": "Choose a flavor...",
+      "required-field": "This field is required...",
+      "choose-flavor-small": "Choose a flavor... (small)",
+      "required-field-small": "This field is required... (small)"
+    }
+  },
+  "section-with-icon-demo": {
+    "descriptions": {
+      "icon-animation-feature": "This section demonstrates how to include an icon in the header and uses FormKit auto-animate for smooth transitions when toggling content visibility."
+    }
+  },
+  "rangeslider-demo": {
+    "labels": {
+      "single-value": "Single Value:",
+      "range": "Range:",
+      "step-size-25": "Step Size 25:",
+      "disabled": "Disabled: 50%"
+    }
+  },
+  "multi-input-field-demo": {
+    "sections": {
+      "default-delimiters": {
+        "title": "Default Delimiters (Newline and Comma)",
+        "description": "Try pasting: “Option 1, Option 2” or multiple lines"
+      },
+      "comma-delimiter": {
+        "title": "Comma Only Delimiter",
+        "description": "Try pasting: “First, Second, Third”"
+      },
+      "key-value-pairs": {
+        "title": "Key-Value Pair Paste Support",
+        "description": "Try pasting: “NODE_ENV=production” or “KEY1:value1, KEY2:value2”"
+      },
+      "custom-delimiters": {
+        "title": "Custom Delimiters (Semicolon and Pipe)",
+        "description": "Try pasting: “One;Two|Three”"
+      }
+    }
+  },
+  "input-types-demo": {
+    "placeholders": {
+      "enter-type": "Enter {type}..."
+    }
+  },
+  "form-addons-demo": {
+    "labels": {
+      "website": "Website",
+      "website-with-subdomain": "Website",
+      "github-username": "GitHub Username",
+      "custom-domain": "Custom Domain"
+    },
+    "buttons": {
+      "reset": "Reset",
+      "submit": "Submit"
+    }
+  },
+  "empty-screen-border-demo": {
+    "sections": {
+      "without-border": "Without Border",
+      "with-solid-border": "With Solid Border"
+    },
+    "empty-states": {
+      "no-apps": {
+        "description": "Browse available apps in the marketplace"
+      },
+      "no-messages": {
+        "description": "Your inbox is empty"
+      }
+    },
+    "buttons": {
+      "browse-apps": "Browse Apps",
+      "compose": "Compose"
+    }
+  },
+  "dropdown-avatar-trigger": {
+    "avatar": {
+      "alt-text": "Avatar"
+    },
+    "menu": {
+      "profile-label": "Profile",
+      "view-profile": "View Profile",
+      "settings": "Settings",
+      "sign-out": "Sign out"
+    },
+    "demo": {
+      "caption": "Avatar Menu"
+    }
+  },
+  "dialog-basic-demo": {
+    "buttons": {
+      "open-dialog": "Open Basic Dialog",
+      "action": "Action"
+    },
+    "content": {
+      "description": "Dialogs are used to display content that requires user attention or interaction. They appear above the page content and must be closed before interacting with the page again."
+    }
+  },
+  "checkbox-basic-demo": {
+    "states": {
+      "unchecked": "Unchecked",
+      "checked": "Checked",
+      "disabled": "Disabled",
+      "disabled-checked": "Disabled Checked"
+    }
+  },
+  "button-icons-demo": {
+    "sections": {
+      "start-icon-heading": "Start Icon",
+      "end-icon-heading": "End Icon"
+    },
+    "labels": {
+      "start-icon-caption": "Start Icon",
+      "end-icon-caption": "End Icon"
+    }
+  },
+  "badge-dots-demo": {
+    "labels": {
+      "dot-indicator": "Dot"
+    }
+  },
+  "avatar-indicator-demo": {
+    "alt-text": {
+      "with-indicator": "With indicator"
+    },
+    "labels": {
+      "status-indicator-description": "With Status Indicator"
+    }
+  },
+  "alert-basic-demo": {
+    "titles": {
+      "severity-alert": "{severityCharAt0ToUpperCaseSeveritySlice1} Alert"
+    }
+  },
+  "spacing-table": {
+    "token": {
+      "display-format_0": "px",
+      "display-format_1": "{tokenName} ({tokenPixels})"
+    }
+  }
+}

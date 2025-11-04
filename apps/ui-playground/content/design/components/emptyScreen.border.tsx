@@ -1,20 +1,25 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
 import { EmptyScreen } from "@calcom/ui/components/empty-screen";
 
-export const BorderExample: React.FC = () => (
+export const BorderExample: React.FC = () =>  {
+const t = useTranslations("empty-screen-border-demo");
+
+return (
   <RenderComponentWithSnippet>
     <div className="space-y-8">
       {/* Without Border */}
       <div>
-        <h4 className="text-emphasis mb-4 text-sm font-medium">Without Border</h4>
+        <h4 className="text-emphasis mb-4 text-sm font-medium">{t('sections.without-border')}</h4>
         <EmptyScreen
           Icon="grid-3x3"
           headline="No apps installed"
-          description="Browse available apps in the marketplace"
-          buttonText="Browse Apps"
+          description={t('empty-states.no-apps.description')}
+          buttonText={t('buttons.browse-apps')}
           buttonOnClick={() => alert("Browse Apps clicked")}
           border={false}
         />
@@ -22,16 +27,17 @@ export const BorderExample: React.FC = () => (
 
       {/* With Solid Border */}
       <div>
-        <h4 className="text-emphasis mb-4 text-sm font-medium">With Solid Border</h4>
+        <h4 className="text-emphasis mb-4 text-sm font-medium">{t('sections.with-solid-border')}</h4>
         <EmptyScreen
           Icon="mail"
           headline="No messages"
-          description="Your inbox is empty"
-          buttonText="Compose"
+          description={t('empty-states.no-messages.description')}
+          buttonText={t('buttons.compose')}
           buttonOnClick={() => alert("Compose clicked")}
           dashedBorder={false}
         />
       </div>
     </div>
   </RenderComponentWithSnippet>
-);
+)
+};

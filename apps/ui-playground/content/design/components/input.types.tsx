@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 
@@ -15,11 +17,14 @@ export const TypesExample: React.FC = () => (
           <div key={type} className="flex flex-col space-y-2">
             <h3 className="text-emphasis text-sm capitalize">{type}</h3>
             <div className="flex flex-wrap items-center gap-4">
-              {sizes.map((size) => (
+              {sizes.map((size) =>  {
+const t = useTranslations("input-types-demo");
+
+return (
                 <div key={size} className="flex flex-col items-center gap-2">
                   <Input
                     type={type}
-                    placeholder={`Enter ${type}...`}
+                    placeholder={t('placeholders.enter-type', { "type": type })}
                     defaultValue={
                       type === "email"
                         ? "example@cal.com"
@@ -36,7 +41,8 @@ export const TypesExample: React.FC = () => (
                   />
                   <span className="text-subtle text-xs">{size}</span>
                 </div>
-              ))}
+              )
+})}
             </div>
           </div>
         ))}

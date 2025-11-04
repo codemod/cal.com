@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
 import { useState } from "react";
@@ -6,6 +8,8 @@ import { useState } from "react";
 import { RangeSlider } from "@calcom/ui/components/form";
 
 export const BasicExample: React.FC = () => {
+const t = useTranslations("rangeslider-demo");
+
   const [singleValue, setSingleValue] = useState([50]);
   const [rangeValue, setRangeValue] = useState([20, 80]);
   const [steppedValue, setSteppedValue] = useState([25]);
@@ -16,7 +20,7 @@ export const BasicExample: React.FC = () => {
         <div className="w-full max-w-[300px] space-y-6">
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-default text-sm">Single Value: {singleValue[0]}%</span>
+              <span className="text-default text-sm">{t('labels.single-value')}{singleValue[0]}%</span>
             </div>
             <RangeSlider
               value={singleValue}
@@ -30,8 +34,7 @@ export const BasicExample: React.FC = () => {
         <div className="w-full max-w-[300px] space-y-6">
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-default text-sm">
-                Range: {rangeValue[0]}% - {rangeValue[1]}%
+              <span className="text-default text-sm">{t('labels.range')}{rangeValue[0]}% - {rangeValue[1]}%
               </span>
             </div>
             <RangeSlider
@@ -47,7 +50,7 @@ export const BasicExample: React.FC = () => {
         <div className="w-full max-w-[300px] space-y-6">
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-default text-sm">Step Size 25: {steppedValue[0]}%</span>
+              <span className="text-default text-sm">{t('labels.step-size-25')}{steppedValue[0]}%</span>
             </div>
             <RangeSlider
               value={steppedValue}
@@ -61,7 +64,7 @@ export const BasicExample: React.FC = () => {
         <div className="w-full max-w-[300px] space-y-6">
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-default text-sm">Disabled: 50%</span>
+              <span className="text-default text-sm">{t('labels.disabled')}</span>
             </div>
             <RangeSlider value={[50]} max={100} step={1} disabled aria-label="Disabled" />
           </div>

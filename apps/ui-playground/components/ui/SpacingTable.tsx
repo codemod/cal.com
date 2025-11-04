@@ -1,4 +1,6 @@
 "use client";
+import { useTranslations } from "next-intl";
+
 
 import React from "react";
 import { Toaster } from "react-hot-toast";
@@ -19,14 +21,17 @@ export const SpacingTable: React.FC<SpacingTableProps> = ({ tokens }) => {
       <Toaster position="bottom-right" />
       <div className="space-y-6">
         <div className="grid grid-cols-3 gap-4">
-          {tokens.map((token, index) => (
+          {tokens.map((token, index) =>  {
+const t = useTranslations("spacing-table");
+
+return (
             <div
               key={index}
               className="border-subtle bg-default group relative overflow-hidden rounded-lg border">
               <div className="flex items-center gap-4 p-4">
                 <div className="w-[100px] space-y-1">
                   <p className="text-emphasis text-sm font-medium">
-                    {token.name === "px" ? "px" : `${token.name} (${token.pixels})`}
+                    {token.name === "px" ? t('token.display-format_0') : t('token.display-format_1', { "tokenName": token.name, "tokenPixels": token.pixels })}
                   </p>
                 </div>
                 <div className="bg-subtle relative h-8 rounded">
@@ -37,7 +42,8 @@ export const SpacingTable: React.FC<SpacingTableProps> = ({ tokens }) => {
                 </div>
               </div>
             </div>
-          ))}
+          )
+})}
         </div>
       </div>
     </>
