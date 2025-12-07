@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /* eslint-disable */
 require("dotenv").config({ path: "../../.env" });
 const englishTranslation = require("./public/static/locales/en/common.json");
@@ -45,7 +47,7 @@ if (
 }
 
 if (!process.env.EMAIL_FROM) {
-  console.warn(
+  logger.warn(
     "\x1b[33mwarn",
     "\x1b[0m",
     "EMAIL_FROM environment variable is not set, this may indicate mailing is currently disabled. Please refer to the .env.example file."
@@ -75,13 +77,13 @@ const validJson = (jsonString) => {
       return o;
     }
   } catch (e) {
-    console.error(e);
+    logger.error(e);
   }
   return false;
 };
 
 if (process.env.GOOGLE_API_CREDENTIALS && !validJson(process.env.GOOGLE_API_CREDENTIALS)) {
-  console.warn(
+  logger.warn(
     "\x1b[33mwarn",
     "\x1b[0m",
     '- Disabled \'Google Calendar\' integration. Reason: Invalid value for GOOGLE_API_CREDENTIALS environment variable. When set, this value needs to contain valid JSON like {"web":{"client_id":"<clid>","client_secret":"<secret>","redirect_uris":["<yourhost>/api/integrations/googlecalendar/callback>"]}. You can download this JSON from your OAuth Client @ https://console.cloud.google.com/apis/credentials.'
@@ -95,7 +97,7 @@ const informAboutDuplicateTranslations = () => {
     const value = englishTranslation[key];
 
     if (valueMap[value]) {
-      console.warn(
+      logger.warn(
         "\x1b[33mDuplicate value found in common.json keys:",
         "\x1b[0m ",
         key,
@@ -184,11 +186,11 @@ const orgDomainMatcherConfig = {
 const nextConfig = (phase) => {
   if (isOrganizationsEnabled) {
     // We want to log the phase here because it is important that the rewrite is added during the build phase(phase=phase-production-build)
-    console.log(
+    logger.info(
       `[Phase: ${phase}] Adding rewrite config for organizations - orgHostPath: ${nextJsOrgRewriteConfig.orgHostPath}, orgSlug: ${nextJsOrgRewriteConfig.orgSlug}, disableRootPathRewrite: ${nextJsOrgRewriteConfig.disableRootPathRewrite}`
     );
   } else {
-    console.log(
+    logger.info(
       `[Phase: ${phase}] Skipping rewrite config for organizations because ORGANIZATIONS_ENABLED is not set`
     );
   }
@@ -730,7 +732,7 @@ function adjustEnvVariables() {
   if (process.env.NEXT_PUBLIC_SINGLE_ORG_SLUG) {
     if (process.env.RESERVED_SUBDOMAINS) {
       // It is better to ignore it completely so that accidentally if the org slug is itself in Reserved Subdomain that doesn't cause the booking pages to start giving 404s
-      console.warn(
+      logger.warn(
         `⚠️  WARNING: RESERVED_SUBDOMAINS is ignored when SINGLE_ORG_SLUG is set. Single org mode doesn't need to use reserved subdomain validation.`
       );
       delete process.env.RESERVED_SUBDOMAINS;
@@ -738,7 +740,7 @@ function adjustEnvVariables() {
 
     if (!process.env.ORGANIZATIONS_ENABLED) {
       // This is basically a consent to add rewrites related to organizations. So, if single org slug mode is there, we have the consent already.
-      console.log("Auto-enabling ORGANIZATIONS_ENABLED because SINGLE_ORG_SLUG is set");
+      logger.info("Auto-enabling ORGANIZATIONS_ENABLED because SINGLE_ORG_SLUG is set");
       process.env.ORGANIZATIONS_ENABLED = "1";
     }
   }

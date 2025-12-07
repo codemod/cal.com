@@ -1,5 +1,7 @@
+import pino from 'pino'
 import Link from "next/link";
 import { useState } from "react";
+const logger = pino()
 
 import { InstallAppButtonWithoutPlanCheck } from "@calcom/app-store/InstallAppButtonWithoutPlanCheck";
 import type { TDependencyData } from "@calcom/app-store/_appRegistry";
@@ -34,7 +36,7 @@ const AppConnectionItem = (props: IAppConnectionItem) => {
     },
     onError: (error) => {
       showToast(t("something_went_wrong"), "error");
-      console.error(error);
+      logger.error(error);
     },
   });
   const dependency = props.dependencyData?.find((data) => !data.installed);

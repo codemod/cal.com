@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+const logger = pino()
 
 import { useFlagMap } from "@calcom/features/flags/context/provider";
 import { CreationSource } from "@calcom/prisma/enums";
@@ -89,7 +91,7 @@ export const useSubmitOnboarding = () => {
       const errorMessage = err instanceof Error ? err.message : "Failed to create organization";
       setError(errorMessage);
       showToast(errorMessage, "error");
-      console.error("Organization creation error:", err);
+      logger.error("Organization creation error:", err);
     } finally {
       setIsSubmitting(false);
     }

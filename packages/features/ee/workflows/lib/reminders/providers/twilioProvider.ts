@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { NextRequest } from "next/server";
 import TwilioClient from "twilio";
 import { v4 as uuidv4 } from "uuid";
+const logger = pino()
 
 import { checkSMSRateLimit } from "@calcom/lib/checkRateLimitAndThrowError";
 import { WEBAPP_URL } from "@calcom/lib/constants";
@@ -68,7 +70,7 @@ export const sendSMS = async ({
       from: isWhatsapp ? getDefaultSender(isWhatsapp) : sender || getDefaultSender(),
       message: body,
     });
-    console.log(
+    logger.info(
       "Skipped sending SMS because process.env.NEXT_PUBLIC_IS_E2E or process.env.INTEGRATION_TEST_MODE is set. SMS are available in globalThis.testSMS"
     );
 
@@ -156,7 +158,7 @@ export const scheduleSMS = async ({
       from: isWhatsapp ? getDefaultSender(isWhatsapp) : sender || getDefaultSender(),
       message: body,
     });
-    console.log(
+    logger.info(
       "Skipped sending SMS because process.env.NEXT_PUBLIC_IS_E2E or process.env.INTEGRATION_TEST_MODE is set. SMS are available in globalThis.testSMS"
     );
     return { sid: uuidv4() };

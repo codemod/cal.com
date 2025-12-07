@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import pino from 'pino'
+const logger = pino()
 /**
  * This script is used to prepare local environment for delegation credentials testing.
  * It prepares Acme organization and its owner user with email owner1-acme@example.com to test Delegation Credentials with Calendar Cache
@@ -9,7 +11,7 @@ const prisma = new PrismaClient();
 async function main() {
   // Parse newEmail from args
   const newEmail = process.argv[2] || "hariom@cal.com";
-  console.log(`Using newEmail: ${newEmail}`);
+  logger.info(`Using newEmail: ${newEmail}`);
 
   // 1. Update user email
   let user = await prisma.user.findUnique({
@@ -19,9 +21,9 @@ async function main() {
     // Check if user with newEmail exists
     user = await prisma.user.findUnique({ where: { email: newEmail } });
     if (user) {
-      console.log(`User with newEmail (${newEmail}) already exists. Skipping email update step.`);
+      logger.info(`User with newEmail (${newEmail}) already exists. Skipping email update step.`);
     } else {
-      console.error(
+      logger.error(
         "User with email owner1-acme@example.com not found, and user with newEmail also not found."
       );
       process.exit(1);
@@ -32,9 +34,9 @@ async function main() {
         where: { id: user.id },
         data: { email: newEmail },
       });
-      console.log(`Updated user email to ${newEmail}`);
+      logger.info(`Updated user email to ${newEmail}`);
     } else {
-      console.log("User email already set to newEmail, skipping update.");
+      logger.info("User email already set to newEmail, skipping update.");
     }
   }
 
@@ -43,10 +45,10 @@ async function main() {
     where: { slug: "acme", isOrganization: true },
   });
   if (!org) {
-    console.error("Organization (Team) with slug=acme and isOrganization=true not found.");
+    logger.error("Organization (Team) with slug=acme and isOrganization=true not found.");
     process.exit(1);
   }
-  console.log(`Found organization: id=${org.id}, slug=${org.slug}`);
+  logger.info(`Found organization: id=${org.id}, slug=${org.slug}`);
 
   // 3. Ensure TeamFeatures: delegation-credential
   const delegationFeature = await prisma.teamFeatures.findUnique({
@@ -66,9 +68,9 @@ async function main() {
         assignedBy: "prepare-local-script",
       },
     });
-    console.log("Created TeamFeatures: delegation-credential");
+    logger.info("Created TeamFeatures: delegation-credential");
   } else {
-    console.log("TeamFeatures: delegation-credential already exists, skipping.");
+    logger.info("TeamFeatures: delegation-credential already exists, skipping.");
   }
 
   // 4. Ensure TeamFeatures: calendar-cache
@@ -89,9 +91,9 @@ async function main() {
         assignedBy: "prepare-local-script",
       },
     });
-    console.log("Created TeamFeatures: calendar-cache");
+    logger.info("Created TeamFeatures: calendar-cache");
   } else {
-    console.log("TeamFeatures: calendar-cache already exists, skipping.");
+    logger.info("TeamFeatures: calendar-cache already exists, skipping.");
   }
 
   // 5. Add WorkspacePlatform record
@@ -108,9 +110,9 @@ async function main() {
         defaultServiceAccountKey: {}, // Empty object, update as needed
       },
     });
-    console.log("Created WorkspacePlatform: google");
+    logger.info("Created WorkspacePlatform: google");
   } else {
-    console.log("WorkspacePlatform: google already exists, skipping.");
+    logger.info("WorkspacePlatform: google already exists, skipping.");
   }
 
   // 6. Enable Feature records for 'calendar-cache' and 'delegation-credential'
@@ -118,22 +120,22 @@ async function main() {
   for (const slug of featureSlugs) {
     const feature = await prisma.feature.findUnique({ where: { slug } });
     if (!feature) {
-      console.error(`Feature with slug ${slug} not found.`);
+      logger.error(`Feature with slug ${slug} not found.`);
       process.exit(1);
     }
     if (!feature.enabled) {
       await prisma.feature.update({ where: { slug }, data: { enabled: true } });
-      console.log(`Enabled Feature: ${slug}`);
+      logger.info(`Enabled Feature: ${slug}`);
     } else {
-      console.log(`Feature: ${slug} already enabled, skipping.`);
+      logger.info(`Feature: ${slug} already enabled, skipping.`);
     }
   }
-  console.log(`Now you can sign in with ${newEmail} and create a new Delegation Credential.`);
+  logger.info(`Now you can sign in with ${newEmail} and create a new Delegation Credential.`);
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    logger.error(e);
     process.exit(1);
   })
   .finally(async () => {

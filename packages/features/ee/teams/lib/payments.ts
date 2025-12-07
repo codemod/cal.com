@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type Stripe from "stripe";
 import { z } from "zod";
+const logger = pino()
 
 import { getStripeCustomerIdFromUserId } from "@calcom/app-store/stripepayment/lib/customer";
 import { getDubCustomer } from "@calcom/features/auth/lib/dub";
@@ -299,7 +301,7 @@ export const updateQuantitySubscriptionFromStripe = async (teamId: number) => {
     if (!subscriptionQuantity) throw new Error("Subscription not found");
 
     if (team.isOrganization && membershipCount < orgMinimumSubscriptionQuantity) {
-      console.info(
+      logger.info(
         `Org ${teamId} has less members than the min required ${orgMinimumSubscriptionQuantity}, skipping updating subscription.`
       );
       return;
@@ -308,12 +310,12 @@ export const updateQuantitySubscriptionFromStripe = async (teamId: number) => {
     await stripe.subscriptions.update(subscriptionId, {
       items: [{ quantity: membershipCount, id: subscriptionItemId }],
     });
-    console.info(
+    logger.info(
       `Updated subscription ${subscriptionId} for team ${teamId} to ${team.members.length} seats.`
     );
   } catch (error) {
     let message = "Unknown error on updateQuantitySubscriptionFromStripe";
     if (error instanceof Error) message = error.message;
-    console.error(message);
+    logger.error(message);
   }
 };

@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { z } from "zod";
+const logger = pino()
 
 import { getDefaultLocations } from "@calcom/app-store/_utils/getDefaultLocations";
 import { DailyLocationType } from "@calcom/app-store/constants";
@@ -110,7 +112,7 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
     if (!isSystemAdmin && !hasOrgEventTypeCreatePermission && !hasCreatePermission) {
       // If none of the above conditions are met, the user is unauthorized.
       // which means the user is not admin of the team nor the org.
-      console.warn(`User ${userId} does not have eventType.create permission for team ${teamId}`);
+      logger.warn(`User ${userId} does not have eventType.create permission for team ${teamId}`);
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
 
@@ -136,7 +138,7 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
 
     const orgHasLockedEventTypes = !!orgSettings?.lockEventTypeCreationForUsers;
     if (orgHasLockedEventTypes) {
-      console.warn(
+      logger.warn(
         `User ${userId} does not have permission to create this new event type - Locked status: ${orgHasLockedEventTypes}`
       );
       throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -152,7 +154,7 @@ export const createHandler = async ({ ctx, input }: CreateOptions) => {
     });
     return { eventType };
   } catch (e) {
-    console.warn(e);
+    logger.warn(e);
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002" && Array.isArray(e.meta?.target) && e.meta?.target.includes("slug")) {
         throw new TRPCError({ code: "BAD_REQUEST", message: "URL Slug already exists for given user." });

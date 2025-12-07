@@ -1,9 +1,11 @@
+import pino from 'pino'
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+const logger = pino()
 
 import PlaygroundAutoLinkPlugin from "./AutoLinkPlugin";
 
@@ -17,7 +19,7 @@ vi.mock("@lexical/react/LexicalAutoLinkPlugin", () => ({
 function setup() {
   const initialConfig = {
     namespace: "test-editor",
-    onError: (error: Error) => console.error(error),
+    onError: (error: Error) => logger.error(error),
   };
 
   return render(

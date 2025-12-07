@@ -1,4 +1,6 @@
+import pino from 'pino'
 import "../test/__mocks__/windowMatchMedia";
+const logger = pino()
 
 import { describe, it, expect, beforeEach, vi, beforeAll } from "vitest";
 
@@ -27,7 +29,7 @@ type ExpectedIframeUrlObject = {
 };
 
 function log(...args: any[]) {
-  console.log("Test:", ...args);
+  logger.info("Test:", ...args);
 }
 
 function buildModalArg(arg: { calLink: string; config: Record<string, string> }) {
@@ -73,7 +75,7 @@ function compareUrlSearchParams(actual: URLSearchParams, expected: URLSearchPara
   const expectedObj = Object.fromEntries(expected.entries());
 
   if (JSON.stringify(actualObj) !== JSON.stringify(expectedObj)) {
-    console.log({
+    logger.info({
       actual: actualObj,
       expected: expectedObj,
     });

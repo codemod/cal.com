@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -54,7 +56,7 @@ const WorkspacePlatformsPage = () => {
       utils.viewer.admin.workspacePlatform.list.invalidate();
     },
     onError: (error) => {
-      console.error(error);
+      logger.error(error);
       showToast(t("something_went_wrong"), "error");
     },
   });

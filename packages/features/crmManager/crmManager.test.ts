@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { mockCrmApp } from "@calcom/web/test/utils/bookingScenario/bookingScenario";
+const logger = pino()
 
 import type { TFunction } from "i18next";
 import { describe, expect, test, vi } from "vitest";
@@ -92,7 +94,7 @@ describe.skip("crmManager tests", () => {
         ],
       });
 
-      console.log(mockedCrmApp);
+      logger.info(mockedCrmApp);
     });
   });
 });

@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 import { authenticator } from "otplib";
+const logger = pino()
 
 import { symmetricDecrypt } from "@calcom/lib/crypto";
 import { totpAuthenticatorCheck } from "@calcom/lib/totp";
@@ -170,7 +172,7 @@ async function removeOtpInput(page: Page) {
 async function fillOtp({ page, secret, noRetry }: { page: Page; secret: string; noRetry?: boolean }) {
   let token = authenticator.generate(secret);
   if (!noRetry && !totpAuthenticatorCheck(token, secret)) {
-    console.log("Token expired, Renerating.");
+    logger.info("Token expired, Renerating.");
     // Maybe token was just about to expire, try again just once more
     token = authenticator.generate(secret);
   }

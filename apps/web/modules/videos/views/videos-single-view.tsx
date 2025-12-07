@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import type { DailyCall } from "@daily-co/daily-js";
@@ -131,7 +133,7 @@ export default function JoinCall(props: PageProps) {
 
       callFrame?.join();
     } catch (error) {
-      console.error("Failed to create or join call:", error);
+      logger.error("Failed to create or join call:", error);
     }
 
     return () => {
@@ -139,7 +141,7 @@ export default function JoinCall(props: PageProps) {
         try {
           callFrame.destroy();
         } catch (error) {
-          console.error("Error destroying call frame:", error);
+          logger.error("Error destroying call frame:", error);
         }
       }
       setDaily(null);
@@ -323,7 +325,7 @@ export function LogInOverlay(props: LogInOverlayProps) {
       onUserNameConfirmed?.();
       setIsOpen(false);
     } catch (error) {
-      console.error("Error joining as guest:", error);
+      logger.error("Error joining as guest:", error);
       const errorMessage = error instanceof Error ? error.message : t("failed_to_join_call");
 
       setError(errorMessage);

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { enrichUserWithDelegationCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
 import {
+const logger = pino()
   getCalendarCredentials,
   getConnectedCalendars,
 } from "@calcom/features/calendars/lib/CalendarManager";
@@ -235,7 +237,7 @@ async function ensureSelectedCalendarIsInDb({
   };
   eventTypeId: number | null;
 }) {
-  console.log(
+  logger.info(
     `Upsert the selectedCalendar record to the DB for user ${user.id} with details ${JSON.stringify(
       selectedCalendar
     )}`

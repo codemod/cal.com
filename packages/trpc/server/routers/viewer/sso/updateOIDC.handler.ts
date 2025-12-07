@@ -1,5 +1,7 @@
+import pino from 'pino'
 import jackson from "@calcom/features/ee/sso/lib/jackson";
 import {
+const logger = pino()
   canAccessOrganization,
   samlProductID,
   samlTenantID,
@@ -43,7 +45,7 @@ export const updateOIDCHandler = async ({ ctx, input }: UpdateOIDCOptions) => {
       oidcDiscoveryUrl: wellKnownUrl,
     });
   } catch (err) {
-    console.error("Error updating OIDC connection", err);
+    logger.error("Error updating OIDC connection", err);
     throw new TRPCError({ code: "BAD_REQUEST", message: "Updating OIDC Connection failed." });
   }
 };

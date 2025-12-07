@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * @deprecated
  * This file is deprecated. The only use of this file is to seed the database for E2E tests. Each test should take care of seeding it's own data going forward.
@@ -54,7 +56,7 @@ async function createApp(
       await prisma.app.create({
         data,
       });
-      console.log(`📲 Created ${isTemplate ? "template" : "app"}: '${slug}'`);
+      logger.info(`📲 Created ${isTemplate ? "template" : "app"}: '${slug}'`);
     } else {
       // We know that the app exists, so either it would have the same slug or dirName
       // Because update query can't have both slug and dirName, try to find the app to update by slug and dirName one by one
@@ -67,7 +69,7 @@ async function createApp(
         where: { dirName: foundApp.dirName },
         data,
       });
-      console.log(`📲 Updated ${isTemplate ? "template" : "app"}: '${slug}'`);
+      logger.info(`📲 Updated ${isTemplate ? "template" : "app"}: '${slug}'`);
     }
 
     await prisma.credential.updateMany({
@@ -77,7 +79,7 @@ async function createApp(
       data: { appId: slug },
     });
   } catch (e) {
-    console.log(`Could not upsert app: ${slug}. Error:`, e);
+    logger.info(`Could not upsert app: ${slug}. Error:`, e);
   }
 }
 
@@ -111,7 +113,7 @@ export default async function main() {
       redirect_uris,
     });
   } catch (e) {
-    if (e instanceof Error) console.error("Error adding google credentials to DB:", e.message);
+    if (e instanceof Error) logger.error("Error adding google credentials to DB:", e.message);
   }
   if (process.env.MS_GRAPH_CLIENT_ID && process.env.MS_GRAPH_CLIENT_SECRET) {
     await createApp("office365-calendar", "office365calendar", ["calendar"], "office365_calendar", {
@@ -258,7 +260,7 @@ if (require.main === module) {
     await seedAppData();
   })()
     .catch((e) => {
-      console.error(e);
+      logger.error(e);
       process.exit(1);
     })
     .finally(async () => {

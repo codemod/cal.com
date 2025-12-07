@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { v4 as uuidv4 } from "uuid";
 import z from "zod";
+const logger = pino()
 
 import { IS_PRODUCTION, WEBAPP_URL } from "@calcom/lib/constants";
 import logger from "@calcom/lib/logger";
@@ -55,10 +57,10 @@ class Paypal {
         this.accessToken = access_token;
         this.expiresAt = Date.now() + expires_in;
       } else if (response?.status) {
-        console.error(`Request failed with status ${response.status}`);
+        logger.error(`Request failed with status ${response.status}`);
       }
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -113,10 +115,10 @@ class Paypal {
         const createOrderResponse: CreateOrderResponse = await response.json();
         return createOrderResponse;
       } else {
-        console.error(`Request failed with status ${response.status}`);
+        logger.error(`Request failed with status ${response.status}`);
       }
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
     return {} as CreateOrderResponse;
   }
@@ -173,7 +175,7 @@ class Paypal {
         }
       }
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       throw error;
     }
     return false;
@@ -226,7 +228,7 @@ class Paypal {
           .map((webhook: { id: string }) => webhook.id);
       }
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return [];
     }
     return [];
@@ -242,7 +244,7 @@ class Paypal {
         return true;
       }
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
     return false;
   }
@@ -252,7 +254,7 @@ class Paypal {
     try {
       await this.getAccessToken();
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return false;
     }
     return true;
@@ -263,7 +265,7 @@ class Paypal {
 
     // Webhook event should be parsable
     if (!parseRequest.success) {
-      console.error(parseRequest.error);
+      logger.error(parseRequest.error);
       throw new Error("Request is malformed");
     }
 
@@ -293,7 +295,7 @@ class Paypal {
         throw data;
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       throw err;
     }
   }

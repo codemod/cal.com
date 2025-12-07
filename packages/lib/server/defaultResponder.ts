@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
+const logger = pino()
 
 import { TRPCError } from "@trpc/server";
 import { getHTTPStatusCodeFromError } from "@trpc/server/http";
@@ -42,7 +44,7 @@ export function defaultResponder<T>(
       }
       // we don't want to report Bad Request errors to Sentry / console
       if (!(error.statusCode >= 400 && error.statusCode < 500)) {
-        console.error(error);
+        logger.error(error);
         const { captureException } = await import("@sentry/nextjs");
         captureException(error);
       }

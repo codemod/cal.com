@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import type { EventTypeRepository } from "@calcom/features/eventtypes/repositories/eventTypeRepository";
 import type { PermissionString } from "@calcom/features/pbac/domain/types/permission-registry";
@@ -79,7 +81,7 @@ export const eventOwnerProcedure = authedProcedure
     })();
 
     if (!isAllowed) {
-      console.warn(
+      logger.warn(
         `User ${ctx.user.id} attempted to an create an event for users ${input.users.join(", ")}.`
       );
       throw new TRPCError({ code: "FORBIDDEN" });
@@ -179,7 +181,7 @@ export const createEventPbacProcedure = (
         })();
 
         if (!isAllowed) {
-          console.warn(
+          logger.warn(
             `User ${ctx.user.id} attempted to assign event ${event.id} to users ${input.users.join(", ")}.`
           );
           throw new TRPCError({

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import { determineOptOutType } from "../lib/reminders/providers/twilioProvider";
 import { WorkflowOptOutContactRepository } from "../lib/repository/workflowOptOutContact";
@@ -20,7 +22,7 @@ const handleSMSResponse = async (request: NextRequest) => {
 
     return NextResponse.json({ message: "Opt status updated successfully" }, { status: 200 });
   } catch (e) {
-    console.error("Error processing user response webhook:", e);
+    logger.error("Error processing user response webhook:", e);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 };

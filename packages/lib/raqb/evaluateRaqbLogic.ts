@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { Utils as QbUtils, type JsonTree } from "react-awesome-query-builder";
@@ -43,7 +45,7 @@ export const evaluateRaqbLogic = (
     if (beStrictWithEmptyLogic && queryValue.children1 && Object.keys(queryValue.children1).length > 0) {
       throw new Error("Couldn't build the logic from the query value");
     }
-    console.log(
+    logger.info(
       "No logic found",
       safeStringify({ queryValue, queryBuilderConfigFields: queryBuilderConfig.fields })
     );
@@ -52,7 +54,7 @@ export const evaluateRaqbLogic = (
   }
 
   if (config.logLevel >= 1) {
-    console.log("Checking logic with data", safeStringify({ logic, data }));
+    logger.info("Checking logic with data", safeStringify({ logic, data }));
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return !!jsonLogic.apply(logic as any, data) ? RaqbLogicResult.MATCH : RaqbLogicResult.NO_MATCH;

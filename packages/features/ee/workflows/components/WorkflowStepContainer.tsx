@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { type TFunction } from "i18next";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
@@ -5,6 +6,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import { Controller, useWatch } from "react-hook-form";
 import "react-phone-number-input/style.css";
+const logger = pino()
 
 import { useHasActiveTeamPlan } from "@calcom/features/billing/hooks/useHasPaidPlan";
 import type { RetellAgentWithDetails } from "@calcom/features/calAIPhone/providers/retellAI";
@@ -332,7 +334,7 @@ export default function WorkflowStepContainer(props: WorkflowStepProps) {
           showToast(t("failed_to_get_workflow_step_id"), "error");
         }
       } catch (error) {
-        console.error("Failed to create agent:", error);
+        logger.error("Failed to create agent:", error);
         showToast(t("failed_to_create_agent"), "error");
       } finally {
         isCreatingAgent.current = false;

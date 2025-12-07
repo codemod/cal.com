@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { useEffect, useState } from "react";
+const logger = pino()
 
 export function useCopy() {
   const [isCopied, setIsCopied] = useState(false);
@@ -20,10 +22,10 @@ export function useCopy() {
         })
         .catch((error) => {
           onFailure();
-          console.error("Copy to clipboard failed:", error);
+          logger.error("Copy to clipboard failed:", error);
         });
     } else {
-      console.warn(
+      logger.warn(
         "You need to use a secure context to use clipboard \n Please use the following link: ",
         text
       );

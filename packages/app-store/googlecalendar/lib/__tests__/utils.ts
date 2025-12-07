@@ -1,5 +1,7 @@
+import pino from 'pino'
 import prismock from "../../../../../tests/libs/__mocks__/prisma";
 import { MOCK_JWT_TOKEN, setLastCreatedJWT } from "../__mocks__/googleapis";
+const logger = pino()
 
 import { JWT } from "googleapis-common";
 import { vi } from "vitest";
@@ -140,7 +142,7 @@ export const createMockJWTInstance = ({
   authorizeError?: { response?: { data?: { error?: string } } } | Error;
   tokenExpiryDate?: number;
 }) => {
-  console.log("createMockJWTInstance", { email, authorizeError });
+  logger.info("createMockJWTInstance", { email, authorizeError });
   const mockJWTInstance = {
     type: "jwt" as const,
     config: {

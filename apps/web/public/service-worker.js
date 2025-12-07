@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 self.addEventListener("push", async (event) => {
   if (!event.data) return
 
@@ -9,7 +11,7 @@ self.addEventListener("push", async (event) => {
   });
 
   if (!allClients.length) {
-    console.log("No open tabs, skipping the push notification.");
+    logger.info("No open tabs, skipping the push notification.");
     return;
   }
 
@@ -50,12 +52,12 @@ self.addEventListener("push", async (event) => {
           urgency: 'high'
         };
 
-        console.log("notificationOptions", notificationOptions);
+        logger.info("notificationOptions", notificationOptions);
 
         await self.registration.showNotification(title, notificationOptions);
-        console.log("Notification shown successfully");
+        logger.info("Notification shown successfully");
       } catch (error) {
-        console.error("Error showing notification:", error);
+        logger.error("Error showing notification:", error);
       }
     })()
   );
@@ -97,11 +99,11 @@ self.addEventListener("notificationclick", (event) => {
 });
 
 self.addEventListener('install', (event) => {
-  console.log('Service Worker installing.');
+  logger.info('Service Worker installing.');
 });
 
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker activated.');
+  logger.info('Service Worker activated.');
 
   event.waitUntil(
     (async () => {

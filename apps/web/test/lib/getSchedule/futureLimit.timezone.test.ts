@@ -1,4 +1,6 @@
+import pino from 'pino'
 import {
+const logger = pino()
   TestData,
   Timezones,
   createBookingScenario,
@@ -498,7 +500,7 @@ describe("getSchedule", () => {
             },
           });
 
-          console.log({ scheduleForEvent });
+          logger.info({ scheduleForEvent });
 
           expect(scheduleForEvent).toHaveTimeSlots(
             // All slots on current day are available

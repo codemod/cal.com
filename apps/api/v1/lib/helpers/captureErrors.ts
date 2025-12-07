@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { captureException as SentryCaptureException } from "@sentry/nextjs";
 import type { NextMiddleware } from "next-api-middleware";
+const logger = pino()
 
 export const captureErrors: NextMiddleware = async (_req, res, next) => {
   try {
@@ -7,7 +9,7 @@ export const captureErrors: NextMiddleware = async (_req, res, next) => {
     // middleware and the API route handler
     await next();
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     SentryCaptureException(error);
     res.status(500).json({ message: "Something went wrong" });
   }

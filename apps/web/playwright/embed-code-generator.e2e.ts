@@ -1,7 +1,9 @@
+import pino from 'pino'
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 import { Linter } from "eslint";
 import { parse } from "node-html-parser";
+const logger = pino()
 
 import { getOrgFullOrigin } from "@calcom/features/ee/organizations/lib/orgDomains";
 import { EMBED_LIB_URL, WEBAPP_URL } from "@calcom/lib/constants";
@@ -450,7 +452,7 @@ function assertThatCodeIsValidVanillaJsCode(code: string) {
   ]);
 
   if (lintResult.length) {
-    console.log(
+    logger.info(
       JSON.stringify({
         lintResult,
         code,
@@ -487,7 +489,7 @@ function assertThatCodeIsValidReactCode(code: string) {
   ]);
 
   if (lintResult.length) {
-    console.log(
+    logger.info(
       JSON.stringify({
         lintResult,
         code,

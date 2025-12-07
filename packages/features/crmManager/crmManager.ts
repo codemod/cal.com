@@ -1,8 +1,10 @@
+import pino from 'pino'
 import getCrm from "@calcom/app-store/_utils/getCrm";
 import logger from "@calcom/lib/logger";
 import type { CalendarEvent, CalEventResponses } from "@calcom/types/Calendar";
 import type { CredentialPayload } from "@calcom/types/Credential";
 import type { CRM, ContactCreateInput } from "@calcom/types/CrmService";
+const logger = pino()
 
 const log = logger.getSubLogger({ prefix: ["CrmManager"] });
 export default class CrmManager {
@@ -20,7 +22,7 @@ export default class CrmManager {
     this.crmService = crmService;
 
     if (!this.crmService) {
-      console.log("💀 Error initializing CRM service");
+      logger.info("💀 Error initializing CRM service");
       log.error("CRM service initialization failed");
     }
 

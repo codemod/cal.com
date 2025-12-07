@@ -1,4 +1,6 @@
+import pino from 'pino'
 import fs from "fs";
+const logger = pino()
 
 import logger from "./logger";
 
@@ -16,8 +18,8 @@ export const criticalLogger = logger.getSubLogger({
       try {
         fs.writeSync(process.stdout.fd, buffer);
       } catch (error) {
-        console.log(`Critical logger: Failed to write log using fs.writeSync: ${error}`);
-        console.log(logString);
+        logger.info(`Critical logger: Failed to write log using fs.writeSync: ${error}`);
+        logger.info(logString);
       }
     },
   },

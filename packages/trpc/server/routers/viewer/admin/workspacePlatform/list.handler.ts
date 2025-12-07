@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { WorkspacePlatformRepository } from "@calcom/lib/server/repository/workspacePlatform";
+const logger = pino()
 
 import { TRPCError } from "@trpc/server";
 
@@ -9,7 +11,7 @@ export default async function listHandler() {
     const workspacePlatforms = await WorkspacePlatformRepository.findAll();
     return workspacePlatforms.map(ensureNoServiceAccountKey);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to fetch workspace platforms" });
   }
 }

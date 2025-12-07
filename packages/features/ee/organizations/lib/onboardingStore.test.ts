@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * @vitest-environment jsdom
  */
@@ -132,8 +134,8 @@ Object.defineProperty(window, "localStorage", {
 
 // Mock implementations
 const mockRouterPush = vi.fn().mockImplementation((...args: string[]) => {
-  console.trace();
-  console.log("mockRouterPush called", args[0]);
+  logger.trace();
+  logger.info("mockRouterPush called", args[0]);
 });
 const mockUseSession = vi.mocked(useSession);
 vi.mocked(useRouter).mockReturnValue({

@@ -1,8 +1,10 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { z } from "zod";
+const logger = pino()
 
 import { Plan, SubscriptionStatus } from "@calcom/features/ee/billing/repository/IBillingRepository";
 import { StripeBillingService } from "@calcom/features/ee/billing/stripe-billing-service";
@@ -82,7 +84,7 @@ async function handler(request: NextRequest) {
 
     return NextResponse.json(response);
   } catch (error) {
-    console.error("Error creating team:", error);
+    logger.error("Error creating team:", error);
 
     if (error instanceof HttpError) {
       return NextResponse.json({ message: error.message }, { status: error.statusCode });

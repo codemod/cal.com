@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 import { usePrevious } from "react-use";
+const logger = pino()
 
 import { SUCCESS_STATUS } from "@calcom/platform-constants";
 import type { ApiResponse } from "@calcom/platform-types";
@@ -52,7 +54,7 @@ export const useOAuthClient = ({
             }
           });
       } catch (err) {
-        console.error(err);
+        logger.error(err);
       }
     }
   }, [isEmbed, clientId, onError, prevClientId, onSuccess, http.getUrl()]);

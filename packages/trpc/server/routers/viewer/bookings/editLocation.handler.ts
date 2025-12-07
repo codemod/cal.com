@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { z } from "zod";
+const logger = pino()
 
 import { getUsersCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
 import { getEventLocationType, OrganizerDefaultConferencingAppType } from "@calcom/app-store/locations";
@@ -289,7 +291,7 @@ export async function editLocationHandler({ ctx, input }: EditLocationOptions) {
       booking?.eventType?.metadata as EventTypeMetadata
     );
   } catch (error) {
-    console.log("Error sending LocationChangeEmails", safeStringify(error));
+    logger.info("Error sending LocationChangeEmails", safeStringify(error));
   }
 
   return { message: "Location updated" };

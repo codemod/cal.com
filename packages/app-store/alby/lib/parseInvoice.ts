@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { Invoice } from "@getalby/sdk/dist/types";
 import { Webhook } from "svix";
+const logger = pino()
 
 export default function parseInvoice(
   body: string,
@@ -16,7 +18,7 @@ export default function parseInvoice(
   } catch (err) {
     // Looks like alby might sent multiple webhooks for the same invoice but it should only work once
     // TODO: remove the Alby webhook when uninstalling the Alby app
-    console.error(err);
+    logger.error(err);
   }
   return null;
 }

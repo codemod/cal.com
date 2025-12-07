@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+const logger = pino()
 
 import { getCurrentVersion } from "./prepublish.js";
 
@@ -51,19 +53,19 @@ async function main() {
 
     yarnInstall.on("close", (code) => {
       if (code !== 0) {
-        console.error("yarn install failed");
+        logger.error("yarn install failed");
         process.exit(1);
       }
-      console.log("Successfully reset version and updated dependencies");
+      logger.info("Successfully reset version and updated dependencies");
     });
   } catch (error) {
-    console.error("Error:", error);
+    logger.error("Error:", error);
     process.exit(1);
   }
 }
 
 async function waitForNewestNpmRelease(publishedVersion) {
-  console.log(`Waiting for npm registry to update with version ${publishedVersion}...`);
+  logger.info(`Waiting for npm registry to update with version ${publishedVersion}...`);
   let npmVersion;
   let attempts = 0;
   const maxAttempts = 12;
@@ -73,21 +75,21 @@ async function waitForNewestNpmRelease(publishedVersion) {
     npmVersion = await getCurrentVersion();
 
     if (publishedVersion === npmVersion) {
-      console.log(
+      logger.info(
         `Version match confirmed (${publishedVersion}) after ${attempts} attempts. Proceeding with updates...`
       );
       break;
     }
 
     if (attempts >= maxAttempts) {
-      console.log(
+      logger.info(
         `Reached maximum attempts (${maxAttempts}). Latest npm version: ${npmVersion}, local version: ${publishedVersion}`
       );
-      console.log("Proceeding with updates anyway...");
+      logger.info("Proceeding with updates anyway...");
       break;
     }
 
-    console.log(
+    logger.info(
       `Attempt ${attempts}/${maxAttempts}: npm version (${npmVersion}) doesn't match local version (${publishedVersion}) yet. Retrying in 5 seconds...`
     );
     await new Promise((resolve) => setTimeout(resolve, 5000));

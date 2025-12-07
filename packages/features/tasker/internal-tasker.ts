@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { Task } from "./repository";
 import type { TaskTypes } from "./tasker";
 import { type TaskerCreate, type Tasker } from "./tasker";
+const logger = pino()
 
 /**
  * This is the default internal Tasker that uses the Task repository to create tasks.
@@ -16,7 +18,7 @@ export class InternalTasker implements Tasker {
 
   async cleanup(): Promise<void> {
     const count = await Task.cleanup();
-    console.info(`Cleaned up ${count} tasks`);
+    logger.info(`Cleaned up ${count} tasks`);
   }
 
   async cancel(id: string): Promise<string> {

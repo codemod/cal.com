@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { createDefaultAIPhoneServiceProvider } from "@calcom/features/calAIPhone";
 import stripe from "@calcom/features/ee/payments/server/stripe";
 import { PrismaAgentRepository } from "@calcom/lib/server/repository/PrismaAgentRepository";
@@ -5,6 +6,7 @@ import { PrismaPhoneNumberRepository } from "@calcom/lib/server/repository/Prism
 import { CreditsRepository } from "@calcom/lib/server/repository/credits";
 import prisma from "@calcom/prisma";
 import { PhoneNumberSubscriptionStatus } from "@calcom/prisma/enums";
+const logger = pino()
 
 import { CHECKOUT_SESSION_TYPES } from "../../constants";
 import type { SWHMap } from "./__handler";
@@ -85,7 +87,7 @@ async function handleCalAIPhoneNumberSubscription(
   const agentId = session.metadata?.agentId || null;
 
   if (!userId || !session.subscription) {
-    console.error("Missing required data for phone number subscription", {
+    logger.error("Missing required data for phone number subscription", {
       userId,
       hasSubscription: !!session.subscription,
     });
@@ -93,7 +95,7 @@ async function handleCalAIPhoneNumberSubscription(
   }
 
   if (!agentId || agentId?.trim() === "") {
-    console.error("Missing agentId for phone number subscription", {
+    logger.error("Missing agentId for phone number subscription", {
       userId,
       teamId,
     });
@@ -108,7 +110,7 @@ async function handleCalAIPhoneNumberSubscription(
   });
 
   if (!agent) {
-    console.error("Agent not found or user does not have access", { agentId, userId });
+    logger.error("Agent not found or user does not have access", { agentId, userId });
     throw new HttpCode(404, "Agent not found or user does not have access to it");
   }
 
@@ -119,7 +121,7 @@ async function handleCalAIPhoneNumberSubscription(
   });
 
   if (!calAIPhoneNumber?.phone_number) {
-    console.error("Failed to create phone number - invalid response from Retell");
+    logger.error("Failed to create phone number - invalid response from Retell");
     throw new HttpCode(500, "Failed to create phone number - invalid response");
   }
 
@@ -127,7 +129,7 @@ async function handleCalAIPhoneNumberSubscription(
     typeof session.subscription === "string" ? session.subscription : session.subscription?.id;
 
   if (!subscriptionId) {
-    console.error("Invalid subscription data", { subscription: session.subscription });
+    logger.error("Invalid subscription data", { subscription: session.subscription });
     throw new HttpCode(400, "Invalid subscription data");
   }
 
@@ -144,7 +146,7 @@ async function handleCalAIPhoneNumberSubscription(
   });
 
   try {
-    console.log("Attempting to link agent to phone number:", { agentId, phoneNumberId: newNumber.id });
+    logger.info("Attempting to link agent to phone number:", { agentId, phoneNumberId: newNumber.id });
 
     const agent = await agentRepo.findByIdWithUserAccess({
       agentId,
@@ -152,11 +154,11 @@ async function handleCalAIPhoneNumberSubscription(
     });
 
     if (!agent) {
-      console.error("Agent not found or user does not have access", { agentId, userId });
+      logger.error("Agent not found or user does not have access", { agentId, userId });
       throw new HttpCode(404, "Agent not found or user does not have access to it");
     }
 
-    console.log("Found agent:", { agentId: agent.id, providerAgentId: agent.providerAgentId });
+    logger.info("Found agent:", { agentId: agent.id, providerAgentId: agent.providerAgentId });
 
     // Assign agent to the new number via Retell API
     await aiService.updatePhoneNumber(calAIPhoneNumber.phone_number, {
@@ -173,9 +175,9 @@ async function handleCalAIPhoneNumberSubscription(
       },
     });
 
-    console.log("Phone number successfully linked to agent");
+    logger.info("Phone number successfully linked to agent");
   } catch (error) {
-    console.error("Agent linking error details:", {
+    logger.error("Agent linking error details:", {
       error,
       agentId,
       phoneNumber: calAIPhoneNumber.phone_number,

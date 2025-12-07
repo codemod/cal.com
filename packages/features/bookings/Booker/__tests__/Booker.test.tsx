@@ -1,3 +1,4 @@
+import pino from 'pino'
 import "@calcom/features/bookings/Booker/__mocks__/config";
 import "@calcom/features/bookings/Booker/components/OverlayCalendar/__mocks__/OverlayCalendar";
 import "@calcom/features/bookings/Booker/components/__mocks__/AvailableTimeSlots";
@@ -9,6 +10,7 @@ import "@calcom/features/bookings/Booker/components/__mocks__/LargeCalendar";
 import "@calcom/features/bookings/Booker/components/__mocks__/Section";
 import { constantsScenarios } from "@calcom/lib/__mocks__/constants";
 import "@calcom/lib/__mocks__/logger";
+const logger = pino()
 
 import React from "react";
 import { vi } from "vitest";
@@ -35,7 +37,7 @@ vi.mock("../components/BookEventForm", () => ({
     isTimeslotUnavailable: boolean;
     onCancel: () => void;
   }) => {
-    console.log("BookEventForm Called", { isTimeslotUnavailable, onCancel });
+    logger.info("BookEventForm Called", { isTimeslotUnavailable, onCancel });
     return (
       <div data-testid="book-event-form" data-unavailable={isTimeslotUnavailable}>
         Mock Book Event Form

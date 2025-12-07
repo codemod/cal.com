@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
 import logger from "@calcom/lib/logger";
 import { safeStringify } from "@calcom/lib/safeStringify";
@@ -5,6 +6,7 @@ import { PrismaAttributeOptionRepository } from "@calcom/lib/server/repository/P
 import { PrismaAttributeRepository } from "@calcom/lib/server/repository/PrismaAttributeRepository";
 import { findAssignmentsForMember } from "@calcom/lib/service/attribute/server/utils";
 import type {
+const logger = pino()
   AttributeId,
   AttributeName,
   BulkAttributeAssigner,
@@ -132,7 +134,7 @@ export const buildPrismaQueriesForAttributeOptionToUser = ({
           updater,
         })
       ) {
-        console.warn(
+        logger.warn(
           `Attribute ${existingAttributeOptionAssignment.attributeOption.attribute.id} already assigned to user ${memberId} and is not a multi-select attribute. So, skipping`
         );
         return acc;
@@ -375,7 +377,7 @@ const buildAttributeOptionsToAssign = async ({
       const valueAsArray = value instanceof Array ? value : [value];
       const attribute = lookupByLabel({ label: attributeLabel, items: allAttributesBeingAssigned });
       if (!attribute) {
-        console.warn(`Attribute ${attributeLabel} not found, will not be assigned to user`);
+        logger.warn(`Attribute ${attributeLabel} not found, will not be assigned to user`);
         return null;
       }
 
@@ -426,7 +428,7 @@ export const assignValueToUserInOrgBulk = async ({
   const membership = await MembershipRepository.findUniqueByUserIdAndTeamId({ userId, teamId: orgId });
   const defaultReturn = { numOfAttributeOptionsSet: 0, numOfAttributeOptionsDeleted: 0 };
   if (!membership) {
-    console.error(`User ${userId} not a member of org ${orgId}, not assigning attribute options`);
+    logger.error(`User ${userId} not a member of org ${orgId}, not assigning attribute options`);
     return defaultReturn;
   }
 
@@ -439,7 +441,7 @@ export const assignValueToUserInOrgBulk = async ({
   });
 
   if (!allAttributesBeingAssigned.length) {
-    console.warn(`None of the attributes ${attributeNames.join(", ")} found in org ${orgId}`);
+    logger.warn(`None of the attributes ${attributeNames.join(", ")} found in org ${orgId}`);
     return defaultReturn;
   }
 

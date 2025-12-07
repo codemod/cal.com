@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { expect } from "@playwright/test";
+const logger = pino()
 
 import { test } from "../lib/fixtures";
 import { submitAndWaitForResponse } from "../lib/testUtils";
@@ -81,7 +83,7 @@ test.describe("Can signup from a team invite", async () => {
       },
     });
 
-    console.log("createdUser", createdUser);
+    logger.info("createdUser", createdUser);
 
     // Check that the user was created
     expect(createdUser).not.toBeNull();

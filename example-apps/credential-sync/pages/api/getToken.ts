@@ -1,11 +1,13 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
+const logger = pino()
 
 import { CALCOM_CREDENTIAL_SYNC_HEADER_NAME, CALCOM_CREDENTIAL_SYNC_SECRET } from "../../constants";
 import { generateGoogleCalendarAccessToken, generateZoomAccessToken } from "../../lib/integrations";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const secret = req.headers[CALCOM_CREDENTIAL_SYNC_HEADER_NAME];
-  console.log("getToken hit");
+  logger.info("getToken hit");
   try {
     if (!secret) {
       return res.status(403).json({ message: "secret header not set" });
@@ -16,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const calcomUserId = req.body.calcomUserId;
     const appSlug = req.body.appSlug;
-    console.log("getToken Params", {
+    logger.info("getToken Params", {
       calcomUserId,
       appSlug,
     });

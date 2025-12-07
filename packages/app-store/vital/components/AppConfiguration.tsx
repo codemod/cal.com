@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { useEffect, useState, useMemo } from "react";
+const logger = pino()
 
 import { Select } from "@calcom/ui/components/form";
 import { Button } from "@calcom/ui/components/button";
@@ -29,7 +31,7 @@ const saveSettings = async ({
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
+      logger.error(error.message);
     }
   }
 };

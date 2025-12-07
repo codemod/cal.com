@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { NextApiResponse, GetServerSidePropsContext } from "next";
+const logger = pino()
 
 import type { appDataSchemas } from "@calcom/app-store/apps.schemas.generated";
 import { DailyLocationType } from "@calcom/app-store/constants";
@@ -554,11 +556,11 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
       break;
     }
   }
-  console.log("multiplePrivateLinks", multiplePrivateLinks);
+  logger.info("multiplePrivateLinks", multiplePrivateLinks);
   // Handle multiple private links using the service
   const privateLinksRepo = HashedLinkRepository.create();
   const connectedLinks = await privateLinksRepo.findLinksByEventTypeId(input.id);
-  console.log("connectedLinks", connectedLinks);
+  logger.info("connectedLinks", connectedLinks);
   const connectedMultiplePrivateLinks = connectedLinks.map((link) => link.link);
 
   const privateLinksService = new HashedLinkService();

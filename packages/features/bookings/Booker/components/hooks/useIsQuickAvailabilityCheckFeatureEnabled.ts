@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { useEffect, useRef } from "react";
+const logger = pino()
 
 import { PUBLIC_QUICK_AVAILABILITY_ROLLOUT } from "@calcom/lib/constants";
 
@@ -10,7 +12,7 @@ export const useIsQuickAvailabilityCheckFeatureEnabled = () => {
   );
 
   useEffect(() => {
-    console.log("QuickAvailabilityCheck feature enabled:", isQuickAvailabilityCheckFeatureEnabledRef.current);
+    logger.info("QuickAvailabilityCheck feature enabled:", isQuickAvailabilityCheckFeatureEnabledRef.current);
   }, []);
 
   return isQuickAvailabilityCheckFeatureEnabledRef.current;

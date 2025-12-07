@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { getOrgUsernameFromEmail } from "@calcom/features/auth/signup/utils/getOrgUsernameFromEmail";
 import prisma from "@calcom/prisma";
+const logger = pino()
 
 export const getUsernameForOrgMember = async ({
   email,
@@ -102,7 +104,7 @@ export const validateAndGetCorrectedUsernameInTeam = async (
       },
     });
 
-    console.log("validateAndGetCorrectedUsernameInTeam", {
+    logger.info("validateAndGetCorrectedUsernameInTeam", {
       teamId,
       team,
     });
@@ -122,7 +124,7 @@ export const validateAndGetCorrectedUsernameInTeam = async (
       return validateAndGetCorrectedUsernameAndEmail({ username, email, isSignup });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return { isValid: false, username: undefined, email: undefined };
   }
 };

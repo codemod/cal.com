@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { eventTypeAppMetadataOptionalSchema } from "@calcom/app-store/zod-utils";
 import { scheduleMandatoryReminder } from "@calcom/ee/workflows/lib/reminders/scheduleMandatoryReminder";
 import { sendScheduledEmailsAndSMS } from "@calcom/emails";
@@ -5,6 +6,7 @@ import type { EventManagerUser } from "@calcom/features/bookings/lib/EventManage
 import EventManager, { placeholderCreatedEvent } from "@calcom/features/bookings/lib/EventManager";
 import { getBookerBaseUrl } from "@calcom/features/ee/organizations/lib/getBookerUrlServer";
 import {
+const logger = pino()
   allowDisablingAttendeeConfirmationEmails,
   allowDisablingHostConfirmationEmails,
 } from "@calcom/features/ee/workflows/lib/allowDisablingStandardEmails";
@@ -374,7 +376,7 @@ export async function handleConfirmation(args: {
     }
   } catch (error) {
     // Silently fail
-    console.error(error);
+    logger.error(error);
   }
 
   try {
@@ -586,6 +588,6 @@ export async function handleConfirmation(args: {
     }
   } catch (error) {
     // Silently fail
-    console.error(error);
+    logger.error(error);
   }
 }

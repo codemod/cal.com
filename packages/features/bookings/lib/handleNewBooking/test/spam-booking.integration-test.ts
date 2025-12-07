@@ -1,4 +1,6 @@
+import pino from 'pino'
 import {
+const logger = pino()
   createBookingScenario,
   TestData,
   getGoogleCalendarCredential,
@@ -121,7 +123,7 @@ describe("handleNewBooking - Spam Detection", () => {
           action: "BLOCK",
         });
 
-        console.log("watchlists", await prisma.watchlist.findMany());
+        logger.info("watchlists", await prisma.watchlist.findMany());
 
         await createBookingScenario(
           getScenarioData({

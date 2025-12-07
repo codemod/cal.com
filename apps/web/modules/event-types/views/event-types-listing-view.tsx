@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -267,7 +269,7 @@ export const InfiniteEventTypeList = ({
   const utils = trpc.useUtils();
   const mutation = trpc.viewer.loggedInViewerRouter.eventTypeOrder.useMutation({
     onError: async (err) => {
-      console.error(err.message);
+      logger.error(err.message);
       // REVIEW: Should we invalidate the entire router or just the `getByViewer` query?
       await utils.viewer.eventTypes.getEventTypesFromGroup.cancel();
     },
@@ -305,7 +307,7 @@ export const InfiniteEventTypeList = ({
           context.previousValue
         );
       }
-      console.error(err.message);
+      logger.error(err.message);
     },
   });
 

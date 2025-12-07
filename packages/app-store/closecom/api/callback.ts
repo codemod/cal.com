@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
+const logger = pino()
 
 import { WEBAPP_URL } from "@calcom/lib/constants";
 import { getSafeRedirectUrl } from "@calcom/lib/getSafeRedirectUrl";
@@ -79,7 +81,7 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
 
     return res.redirect(redirectAfterSuccess);
   } catch (error) {
-    console.error("Error getting close.com access token", error);
+    logger.error("Error getting close.com access token", error);
     return res.redirect(`${redirectAfterSuccessOrError}?error=Error getting close.com access token`);
   }
 }

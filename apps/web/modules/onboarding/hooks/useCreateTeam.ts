@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+const logger = pino()
 
 import { useFlagMap } from "@calcom/features/flags/context/provider";
 import { trpc } from "@calcom/trpc/react";
@@ -40,7 +42,7 @@ export function useCreateTeam() {
         router.push(gettingStartedPath);
       }
     } catch (error) {
-      console.error("Failed to create team:", error);
+      logger.error("Failed to create team:", error);
       throw error;
     } finally {
       setIsSubmitting(false);

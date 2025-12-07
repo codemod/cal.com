@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { buffer } from "micro";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type Stripe from "stripe";
+const logger = pino()
 
 import stripe from "@calcom/features/ee/payments/server/stripe";
 import { IS_PRODUCTION } from "@calcom/lib/constants";
@@ -110,7 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } catch (_err) {
     const err = getErrorFromUnknown(_err);
     if (!err.message.includes("No credential found with subscription ID")) {
-      console.error(`Webhook Error: ${err.message}`);
+      logger.error(`Webhook Error: ${err.message}`);
     }
     res.status(err.statusCode ?? 500).send({
       message: err.message,

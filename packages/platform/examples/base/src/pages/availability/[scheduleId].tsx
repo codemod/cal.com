@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { Navbar } from "@/components/Navbar";
 import { Inter } from "next/font/google";
+const logger = pino()
 // eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
 import { useRouter } from "next/router";
 import { useRef, useCallback } from "react";
@@ -14,21 +16,21 @@ export default function Availability(props: { calUsername: string; calEmail: str
   const availabilityRef = useRef<AvailabilitySettingsFormRef>(null);
 
   const handleFormStateChange = useCallback((formState: unknown) => {
-    console.log(formState, "formStateeeeee");
+    logger.info(formState, "formStateeeeee");
   }, []);
 
   const handleValidate = async () => {
     const result = await availabilityRef.current?.validateForm();
-    console.log("Validation result:", result);
+    logger.info("Validation result:", result);
   };
 
   const handleSubmit = () => {
     availabilityRef.current?.handleFormSubmit({
       onSuccess: () => {
-        console.log("Form submitted successfully");
+        logger.info("Form submitted successfully");
       },
       onError: (error) => {
-        console.error("Form submission failed:", error);
+        logger.error("Form submission failed:", error);
       },
     });
   };
@@ -85,17 +87,17 @@ export default function Availability(props: { calUsername: string; calEmail: str
           }}
           onFormStateChange={handleFormStateChange}
           onUpdateSuccess={() => {
-            console.log("Updated successfully");
+            logger.info("Updated successfully");
             router.push(`/availability`);
           }}
           onUpdateError={() => {
-            console.log("update error");
+            logger.info("update error");
           }}
           onDeleteError={() => {
-            console.log("delete error");
+            logger.info("delete error");
           }}
           onDeleteSuccess={() => {
-            console.log("Deleted successfully");
+            logger.info("Deleted successfully");
           }}
         />
       </div>

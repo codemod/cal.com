@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import { handleErrorsJson } from "@calcom/lib/errors";
 import type { GetRecordingsResponseSchema, GetAccessLinkResponseSchema } from "@calcom/prisma/zod-utils";
@@ -185,7 +187,7 @@ const ShimmerDailyVideoApiAdapter = (): VideoApiAdapter => {
         );
         return Promise.resolve(res);
       } catch (err) {
-        console.log("err", err);
+        logger.info("err", err);
         throw new Error("Something went wrong! Unable to get recording access link");
       }
     },

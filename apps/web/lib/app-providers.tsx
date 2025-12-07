@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { dir } from "i18next";
 import type { Session } from "next-auth";
@@ -12,6 +13,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/pages";
 import type { ParsedUrlQuery } from "querystring";
 import type { PropsWithChildren, ReactNode } from "react";
 import { useEffect } from "react";
+const logger = pino()
 
 import DynamicPostHogProvider from "@calcom/features/ee/event-tracking/lib/posthog/providerDynamic";
 import { OrgBrandingProvider } from "@calcom/features/ee/organizations/context/provider";
@@ -101,7 +103,7 @@ const CustomI18nextProvider = (props: AppPropsWithChildren) => {
         },
       });
     } catch (error) {
-      console.error(error);
+      logger.error(error);
 
       window.document.documentElement.lang = locale;
     }
@@ -217,7 +219,7 @@ function getThemeProviderProps({
   const themeBasis = props.themeBasis;
 
   if (!process.env.NEXT_PUBLIC_IS_E2E && (isBookingPageThemeSupportRequired || isEmbedMode) && !themeBasis) {
-    console.warn(
+    logger.warn(
       "`themeBasis` is required for booking page theme support. Not providing it will cause theme flicker."
     );
   }

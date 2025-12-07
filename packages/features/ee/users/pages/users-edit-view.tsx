@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -47,7 +49,7 @@ export const UsersEditView = ({ user }: { user: User }) => {
       router.replace(`${pathname?.split("/users/")[0]}/users`);
     },
     onError: (err) => {
-      console.error(err.message);
+      logger.error(err.message);
       showToast("There has been an error updating this user.", "error");
     },
   });

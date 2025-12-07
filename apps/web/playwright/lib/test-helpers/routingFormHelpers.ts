@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { uuid } from "short-uuid";
+const logger = pino()
 
 import { WEBAPP_URL } from "@calcom/lib/constants";
 import { prisma } from "@calcom/prisma";
@@ -369,7 +371,7 @@ export async function createRoutingForm(config: CreateRoutingFormConfig) {
         name: form.name,
       },
     });
-    console.log(`🎯 Created form ${createdForm.id}`, JSON.stringify(createdForm, null, 2));
+    logger.info(`🎯 Created form ${createdForm.id}`, JSON.stringify(createdForm, null, 2));
     return createdForm;
   } else {
     // Default routing form

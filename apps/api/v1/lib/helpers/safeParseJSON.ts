@@ -1,8 +1,10 @@
+import pino from 'pino'
+const logger = pino()
 export default function parseJSONSafely(str: string) {
   try {
     return JSON.parse(str);
   } catch (e) {
-    console.error((e as Error).message);
+    logger.error((e as Error).message);
     if ((e as Error).message.includes("Unexpected token")) {
       return {
         success: false,

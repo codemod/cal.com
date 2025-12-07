@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 const { execSync } = require("child_process");
 
 const CLIENT_FILES_PATH = ".next/static/chunks";
@@ -7,7 +9,7 @@ try {
   const requiredEnvVars = ["SENTRY_AUTH_TOKEN", "SENTRY_ORG", "SENTRY_PROJECT"];
   const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
   if (missingEnvVars.length > 0) {
-    console.log(
+    logger.info(
       `Skipping release creation as required environment variables are not set: ${missingEnvVars.join(", ")}`
     );
     process.exit(0);
@@ -38,6 +40,6 @@ try {
   // Finalize the release
   execSync(`sentry-cli releases finalize ${release}`, { stdio: "inherit" });
 } catch (err) {
-  console.error("Sentry cli execution failed:", err);
+  logger.error("Sentry cli execution failed:", err);
   process.exit(1);
 }

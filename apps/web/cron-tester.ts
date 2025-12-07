@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { CronJob } from "cron";
 import dotEnv from "dotenv";
+const logger = pino()
 
 dotEnv.config({ path: "../../.env" });
 
@@ -13,11 +15,11 @@ async function fetchCron(endpoint: string) {
     },
   });
   const json = await res.json();
-  console.log(endpoint, json);
+  logger.info(endpoint, json);
 }
 
 try {
-  console.log("⏳ Running cron endpoints");
+  logger.info("⏳ Running cron endpoints");
   new CronJob(
     // Each 5 seconds
     "*/5 * * * * *",
@@ -34,6 +36,6 @@ try {
     "America/Los_Angeles"
   );
 } catch (_err) {
-  console.error("❌ ❌ ❌ Something went wrong ❌ ❌ ❌");
+  logger.error("❌ ❌ ❌ Something went wrong ❌ ❌ ❌");
   process.exit(1);
 }

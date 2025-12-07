@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
@@ -79,7 +81,7 @@ function log(...args: unknown[]) {
     args.unshift("CAL:");
     logQueue.push(args);
     if (searchParams.get("debug")) {
-      console.log("Child:", ...args);
+      logger.info("Child:", ...args);
     }
   }
 }
@@ -353,7 +355,7 @@ export const methods = {
     const stylesConfig = uiConfig.styles;
 
     if (stylesConfig) {
-      console.warn(
+      logger.warn(
         "Cal.com Embed: `styles` prop is deprecated. Use `cssVarsPerTheme` instead to achieve the same effect. Here is a list of CSS variables that are supported. https://github.com/calcom/cal.com/blob/main/packages/config/tailwind-preset.js#L19"
       );
     }

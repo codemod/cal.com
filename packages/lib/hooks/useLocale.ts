@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { createInstance } from "i18next";
 import type { TFunction, i18n } from "i18next";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
+const logger = pino()
 
 import { useAtomsContext } from "@calcom/atoms/hooks/useAtomsContext";
 import { AppRouterI18nContext } from "@calcom/web/app/AppRouterI18nProvider";
@@ -62,7 +64,7 @@ export const useLocale = (): useLocaleReturnType => {
     return serverI18nInstances.get(instanceKey);
   }
 
-  console.warn(
+  logger.warn(
     "useLocale hook is being used outside of App Router - hence this hook will use a global, client-side i18n which can cause a small flicker"
   );
   return {

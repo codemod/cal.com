@@ -1,9 +1,11 @@
+import pino from 'pino'
 import { BaseStrategy } from "@/lib/passport/strategies/types";
 import { ApiAuthGuardRequest } from "@/modules/auth/strategies/api-auth/api-auth.strategy";
 import { UsersService } from "@/modules/users/services/users.service";
 import { UsersRepository } from "@/modules/users/users.repository";
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
+const logger = pino()
 
 @Injectable()
 export class ApiAuthMockStrategy extends PassportStrategy(BaseStrategy, "api-auth") {
@@ -27,7 +29,7 @@ export class ApiAuthMockStrategy extends PassportStrategy(BaseStrategy, "api-aut
 
       return this.success(user);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       if (error instanceof Error) return this.error(error);
     }
   }

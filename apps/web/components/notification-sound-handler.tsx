@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -26,7 +28,7 @@ export function NotificationSoundHandler() {
 
       return true;
     } catch (error) {
-      console.error("Failed to initialize audio system:", error);
+      logger.error("Failed to initialize audio system:", error);
       return false;
     }
   };
@@ -70,7 +72,7 @@ export function NotificationSoundHandler() {
         }
       }, 7000);
     } catch (error) {
-      console.error("Error playing sound:", error);
+      logger.error("Error playing sound:", error);
       // Try to reinitialize on error
       audioContextRef.current = null;
       audioBufferRef.current = null;
@@ -99,7 +101,7 @@ export function NotificationSoundHandler() {
 
   useEffect(() => {
     if (!("serviceWorker" in navigator)) {
-      console.warn("ServiceWorker not available");
+      logger.warn("ServiceWorker not available");
       return;
     }
 

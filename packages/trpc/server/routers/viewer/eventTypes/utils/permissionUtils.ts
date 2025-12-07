@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { Resource } from "@calcom/features/pbac/domain/types/permission-registry";
 import { getResourcePermissions } from "@calcom/features/pbac/lib/resource-permissions";
 import { MembershipRole } from "@calcom/prisma/enums";
+const logger = pino()
 
 export interface TeamPermissions {
   canCreate: boolean;
@@ -65,7 +67,7 @@ export async function getTeamPermissions(
       canRead: permissions.canRead,
     };
   } catch (error) {
-    console.warn(
+    logger.warn(
       `PBAC check failed for user ${userId} on team ${teamId}, falling back to role check:`,
       error
     );

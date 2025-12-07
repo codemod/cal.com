@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { lookup } from "dns";
+const logger = pino()
 
 import { getOrgFullOrigin } from "@calcom/ee/organizations/lib/orgDomains";
 import { isNotACompanyEmail } from "@calcom/ee/organizations/lib/server/orgCreationUtils";
@@ -164,7 +166,7 @@ export const createHandler = async ({ input, ctx }: CreateOptions) => {
         t: loggedInUserTranslation,
       });
     } else {
-      console.warn("Organization created: subdomain not configured and couldn't notify adminnistrators");
+      logger.warn("Organization created: subdomain not configured and couldn't notify adminnistrators");
     }
   }
 

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import prismock from "../../../../../tests/libs/__mocks__/prisma";
 import oAuthManagerMock, {
+const logger = pino()
   defaultMockOAuthManager,
   setFullMockOAuthManagerRequest,
 } from "../../../tests/__mocks__/OAuthManager";
@@ -762,7 +764,7 @@ describe.skip("Calendar Cache", () => {
     expect(calendarCachesBefore).toHaveLength(0);
     await calendarService.fetchAvailabilityAndSetCache(selectedCalendars);
     const calendarCachesAfter = await prismock.calendarCache.findMany();
-    console.log({ calendarCachesAfter });
+    logger.info({ calendarCachesAfter });
     expect(calendarCachesAfter).toHaveLength(1);
     const datesForWhichCachedAvailabilityIsUsed = [
       {
@@ -781,7 +783,7 @@ describe.skip("Calendar Cache", () => {
         expect(result).toEqual(mockedBusyTimes);
       }
     } catch (error) {
-      console.log({ error });
+      logger.info({ error });
       throw "Looks like cache was not used";
     }
 

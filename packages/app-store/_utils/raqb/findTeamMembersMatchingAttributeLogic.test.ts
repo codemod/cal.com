@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { BaseWidget } from "react-awesome-query-builder";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+const logger = pino()
 
 import {
   findTeamMembersMatchingAttributeLogic,
@@ -1132,7 +1134,7 @@ describe("findTeamMembersMatchingAttributeLogic", () => {
           throw new Error("Looks like performance testing is not enabled");
         }
         const totalTimeTaken = Object.values(timeTaken).reduce((sum, time) => (sum ?? 0) + (time ?? 0), 0);
-        console.log("Total time taken", totalTimeTaken, {
+        logger.info("Total time taken", totalTimeTaken, {
           timeTaken,
         });
         expect(totalTimeTaken).toBeLessThan(1000);

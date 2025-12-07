@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useSession } from "next-auth/react";
@@ -26,7 +28,7 @@ const LicenseRequired = ({ children, as = "", ...rest }: LicenseRequiredProps) =
   useEffect(() => {
     if (process.env.NODE_ENV === "development" && hasValidLicense === false) {
       // Very few people will see this, so we don't need to translate it
-      console.info(
+      logger.info(
         `You're using a feature that requires a valid license. Please go to ${WEBAPP_URL}/auth/setup to enter a license key.`
       );
     }

@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { NextApiRequest } from "next";
+const logger = pino()
 
 import { symmetricEncrypt } from "@calcom/lib/crypto";
 
@@ -61,7 +63,7 @@ export default async function handler(req: NextApiRequest, res) {
       return res.status(400).json({ error: await clonedResult.text() });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return res.status(400).json({ message: "Internal Server Error", error: error.message });
   }
 }

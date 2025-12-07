@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { CalendarsRepository } from "@/ee/calendars/calendars.repository";
 import { CalendarsCacheService } from "@/ee/calendars/services/calendars-cache.service";
 import { AppsRepository } from "@/modules/apps/apps.repository";
 import {
+const logger = pino()
   CredentialsRepository,
   CredentialsWithUserEmail,
 } from "@/modules/credentials/credentials.repository";
@@ -75,7 +77,7 @@ export class CalendarsService {
       eventTypeId: null,
       prisma: this.dbWrite.prisma as unknown as PrismaClient,
     });
-    console.log("saving cache", JSON.stringify(result));
+    logger.info("saving cache", JSON.stringify(result));
     await this.calendarsCacheService.setConnectedAndDestinationCalendarsCache(userId, result);
 
     return result;

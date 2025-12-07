@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { getDate } from "../../utils/bookingScenario/bookingScenario";
+const logger = pino()
 
 import { vi } from "vitest";
 
@@ -11,6 +13,6 @@ export function timeTravelToTheBeginningOfToday({ utcOffsetInHours = 0 }: { utcO
   const minutesString = minutes < 10 ? `0${minutes}` : `${minutes}`;
 
   const { dateString: yesterdayDateString } = getDate({ dateIncrement: -1 });
-  console.log({ yesterdayDateString, hours, minutes });
+  logger.info({ yesterdayDateString, hours, minutes });
   vi.setSystemTime(`${yesterdayDateString}T${hoursString}:${minutesString}:00.000Z`);
 }

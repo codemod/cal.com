@@ -1,6 +1,8 @@
+import pino from 'pino'
 import jackson from "@calcom/features/ee/sso/lib/jackson";
 import type { SSOConnection } from "@calcom/features/ee/sso/lib/saml";
 import {
+const logger = pino()
   canAccessOrganization,
   oidcPath,
   samlProductID,
@@ -57,7 +59,7 @@ export const getHandler = async ({ ctx, input }: GetOptions): Promise<SSOConnect
       callbackUrl: type === "oidc" ? `${process.env.NEXT_PUBLIC_WEBAPP_URL}${oidcPath}` : null,
     };
   } catch (err) {
-    console.error("Error getting SSO connection", err);
+    logger.error("Error getting SSO connection", err);
     throw new TRPCError({ code: "BAD_REQUEST", message: "Fetching SSO connection failed." });
   }
 };

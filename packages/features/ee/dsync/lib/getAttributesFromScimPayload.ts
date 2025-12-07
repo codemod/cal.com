@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { DirectorySyncEvent } from "@boxyhq/saml-jackson";
+const logger = pino()
 
 import { DIRECTORY_IDS_TO_LOG } from "@calcom/lib/constants";
 import logger from "@calcom/lib/logger";
@@ -114,7 +116,7 @@ function getAttributesFromScimPayload({
 
   const shouldLog = DIRECTORY_IDS_TO_LOG.includes(directoryId);
   if (shouldLog) {
-    console.log("Collected Attributes:", `${safeStringify(scimUserAttributes)}`);
+    logger.info("Collected Attributes:", `${safeStringify(scimUserAttributes)}`);
   }
 
   return scimUserAttributes;

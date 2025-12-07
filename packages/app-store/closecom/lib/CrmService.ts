@@ -1,4 +1,6 @@
+import pino from 'pino'
 import z from "zod";
+const logger = pino()
 
 import type { CloseComFieldOptions } from "@calcom/lib/CloseCom";
 import CloseCom from "@calcom/lib/CloseCom";
@@ -203,10 +205,10 @@ export default class CloseComCRMService implements CRM {
   }
 
   getAppOptions() {
-    console.log("No options implemented");
+    logger.info("No options implemented");
   }
 
   async handleAttendeeNoShow() {
-    console.log("Not implemented");
+    logger.info("Not implemented");
   }
 }

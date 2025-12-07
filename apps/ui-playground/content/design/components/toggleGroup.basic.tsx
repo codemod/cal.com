@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
@@ -11,7 +13,7 @@ export const BasicExample = () => (
       defaultValue="month"
       onValueChange={(value) => {
         if (!value) return;
-        console.log("Selected:", value);
+        logger.info("Selected:", value);
       }}
       options={[
         { value: "day", label: "Day" },
@@ -28,7 +30,7 @@ export const WithIconsExample = () => (
       defaultValue="grid"
       onValueChange={(value) => {
         if (!value) return;
-        console.log("Selected view:", value);
+        logger.info("Selected view:", value);
       }}
       options={[
         {
@@ -52,7 +54,7 @@ export const DisabledExample = () => (
       defaultValue="active"
       onValueChange={(value) => {
         if (!value) return;
-        console.log("Selected status:", value);
+        logger.info("Selected status:", value);
       }}
       options={[
         { value: "active", label: "Active" },
@@ -70,7 +72,7 @@ export const FullWidthExample = () => (
       defaultValue="all"
       onValueChange={(value) => {
         if (!value) return;
-        console.log("Selected filter:", value);
+        logger.info("Selected filter:", value);
       }}
       options={[
         { value: "all", label: "All" },
@@ -88,7 +90,7 @@ export const VerticalExample = () => (
       defaultValue="inbox"
       onValueChange={(value) => {
         if (!value) return;
-        console.log("Selected mailbox:", value);
+        logger.info("Selected mailbox:", value);
       }}
       options={[
         {
@@ -119,7 +121,7 @@ export const IconOnlyExample = () => (
         defaultValue="list"
         onValueChange={(value) => {
           if (!value) return;
-          console.log("Selected view:", value);
+          logger.info("Selected view:", value);
         }}
         options={[
           {
@@ -146,7 +148,7 @@ export const IconOnlyExample = () => (
         defaultValue="edit"
         onValueChange={(value) => {
           if (!value) return;
-          console.log("Selected tool:", value);
+          logger.info("Selected tool:", value);
         }}
         options={[
           {

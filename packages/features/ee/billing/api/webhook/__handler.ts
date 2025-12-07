@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /// <reference types="stripe-event-types" />
 import { buffer } from "micro";
 import type { NextApiRequest } from "next";
@@ -55,7 +57,7 @@ export const stripeWebhookHandler = (handlers: SWHandlers) => async (req: NextAp
   ) as Stripe.DiscriminatedEvent;
   const handlerGetter = handlers[event.type];
   if (!handlerGetter) {
-    console.log("Unhandled Stripe Webhook event type", event.type);
+    logger.info("Unhandled Stripe Webhook event type", event.type);
     return {
       success: false,
       message: `Unhandled Stripe Webhook event type ${event.type}`,
@@ -64,7 +66,7 @@ export const stripeWebhookHandler = (handlers: SWHandlers) => async (req: NextAp
   const handler = (await handlerGetter())?.default;
   // auto catch unsupported Stripe events.
   if (!handler) {
-    console.log("Unhandled Stripe Webhook event type", event.type);
+    logger.info("Unhandled Stripe Webhook event type", event.type);
     return {
       success: false,
       message: `Unhandled Stripe Webhook event type ${event.type}`,

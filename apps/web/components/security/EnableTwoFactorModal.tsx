@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { BaseSyntheticEvent } from "react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+const logger = pino()
 
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
@@ -93,7 +95,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel }: EnableTwoFactorModalProps)
       }
     } catch (e) {
       setErrorMessage(t("something_went_wrong"));
-      console.error(t("error_enabling_2fa"), e);
+      logger.error(t("error_enabling_2fa"), e);
     } finally {
       setIsSubmitting(false);
     }
@@ -125,7 +127,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel }: EnableTwoFactorModalProps)
       }
     } catch (e) {
       setErrorMessage(t("something_went_wrong"));
-      console.error(t("error_enabling_2fa"), e);
+      logger.error(t("error_enabling_2fa"), e);
     } finally {
       setIsSubmitting(false);
     }

@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { TeamPermissions, Permission } from "../models/Permission";
 import { CrudAction, CustomAction, Resource, PERMISSION_REGISTRY } from "../types/permission-registry";
 import type { PermissionString, PermissionRegistry } from "../types/permission-registry";
+const logger = pino()
 
 export type ResourceActions<R extends Resource> = keyof PermissionRegistry[R];
 
@@ -104,7 +106,7 @@ export class PermissionMapper {
           }
         }
       } catch (error) {
-        console.error(`Invalid permission string: ${permString}`);
+        logger.error(`Invalid permission string: ${permString}`);
       }
     });
 

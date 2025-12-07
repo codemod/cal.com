@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import React, { useState, useMemo } from "react";
@@ -181,7 +183,7 @@ export const IconGrid: React.FC<IconGridProps> = ({ className }) => {
       await navigator.clipboard.writeText(value);
       showToast(`Copied ${value}`, "success");
     } catch (error) {
-      console.error("Failed to copy:", error);
+      logger.error("Failed to copy:", error);
       showToast("Failed to copy", "error");
     }
   };

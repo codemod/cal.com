@@ -1,9 +1,11 @@
+import pino from 'pino'
 import DOMPurify from "dompurify";
+const logger = pino()
 
 import { md } from "@calcom/lib/markdownIt";
 
 if (typeof window == "undefined") {
-  console.warn(
+  logger.warn(
     "`markdownToSafeHTMLClient` should not be used on the server side. use markdownToSafeHTML instead"
   );
 }

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+const logger = pino()
 
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { PermissionCheckService } from "@calcom/features/pbac/services/permission-check.service";
@@ -130,7 +132,7 @@ const Page = async ({ searchParams }: PageProps) => {
       throw error;
     }
 
-    console.error("Failed to create Cal AI workflow:", error);
+    logger.error("Failed to create Cal AI workflow:", error);
     redirect("/workflows?error=failed-to-create-workflow");
   }
 };

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { uuid } from "short-uuid";
 import type z from "zod";
+const logger = pino()
 
 import dailyMeta from "@calcom/app-store/dailyvideo/_metadata";
 import googleMeetMeta from "@calcom/app-store/googlevideo/_metadata";
@@ -111,7 +113,7 @@ const createTeam = async (team: Prisma.TeamCreateInput) => {
     });
   } catch (_err) {
     if (_err instanceof Error && _err.message.indexOf("Unique constraint failed on the fields") !== -1) {
-      console.log(`Team '${team.name}' already exists, skipping.`);
+      logger.info(`Team '${team.name}' already exists, skipping.`);
       return;
     }
     throw _err;
@@ -159,7 +161,7 @@ async function createPlatformAndSetupUser({
 
   const platformUser = await setupPlatformUser(user);
 
-  console.log(
+  logger.info(
     `👤 Upserted '${user.username}' with email "${user.email}" & password "${user.password}". Booking page 👉 ${process.env.NEXT_PUBLIC_WEBAPP_URL}/${user.username}`
   );
 
@@ -196,7 +198,7 @@ async function createPlatformAndSetupUser({
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWNtZSAiLCJwZXJtaXNzaW9ucyI6MTAyMywicmVkaXJlY3RVcmlzIjpbImh0dHA6Ly9sb2NhbGhvc3Q6NDMyMSJdLCJib29raW5nUmVkaXJlY3RVcmkiOiIiLCJib29raW5nQ2FuY2VsUmVkaXJlY3RVcmkiOiIiLCJib29raW5nUmVzY2hlZHVsZVJlZGlyZWN0VXJpIjoiIiwiYXJlRW1haWxzRW5hYmxlZCI6dHJ1ZSwiaWF0IjoxNzE5NTk1ODA4fQ.L5_jSS14fcKLCD_9_DAOgtGd6lUSZlU5CEpCPaPt41I",
       },
     });
-    console.log(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${membershipRole}'`);
+    logger.info(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${membershipRole}'`);
   }
 }
 
@@ -230,7 +232,7 @@ async function createTeamAndAddUsers(
       });
     } catch (_err) {
       if (_err instanceof Error && _err.message.indexOf("Unique constraint failed on the fields") !== -1) {
-        console.log(`Team '${team.name}' already exists, skipping.`);
+        logger.info(`Team '${team.name}' already exists, skipping.`);
         return;
       }
       throw _err;
@@ -242,7 +244,7 @@ async function createTeamAndAddUsers(
     return;
   }
 
-  console.log(
+  logger.info(
     `🏢 Created team '${teamInput.name}' - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`
   );
 
@@ -257,7 +259,7 @@ async function createTeamAndAddUsers(
         accepted: true,
       },
     });
-    console.log(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${role}'`);
+    logger.info(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${role}'`);
   }
 
   return team;
@@ -291,7 +293,7 @@ async function createOrganizationAndAddMembersAndTeams({
     email: string;
   }[];
 }) {
-  console.log(`\n🏢 Creating organization "${orgData.name}"`);
+  logger.info(`\n🏢 Creating organization "${orgData.name}"`);
 
   const existingTeam = await prisma.team.findFirst({
     where: {
@@ -301,7 +303,7 @@ async function createOrganizationAndAddMembersAndTeams({
   });
 
   if (existingTeam) {
-    console.log(`Organization with slug '${orgData.slug}' already exists, skipping.`);
+    logger.info(`Organization with slug '${orgData.slug}' already exists, skipping.`);
     return;
   }
 
@@ -383,11 +385,11 @@ async function createOrganizationAndAddMembersAndTeams({
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        console.log(`One of the organization members already exists, skipping the entire seeding`);
+        logger.info(`One of the organization members already exists, skipping the entire seeding`);
         return;
       }
     }
-    console.error(e);
+    logger.error(e);
   }
 
   await Promise.all([
@@ -557,7 +559,7 @@ async function createOrganizationAndAddMembersAndTeams({
 
     const ownerForEvent = orgMembersInDBWithProfileId[0];
     if (!ownerForEvent) {
-      console.log(
+      logger.info(
         `Warning: No organization members with profiles found for creating team event, skipping event creation for team ${team.teamData.slug}`
       );
       continue;
@@ -1382,7 +1384,7 @@ async function main() {
     },
   });
   if (form) {
-    console.log(`Skipping Routing Form - Form Seed, "Seeded Form - Pro" already exists`);
+    logger.info(`Skipping Routing Form - Form Seed, "Seeded Form - Pro" already exists`);
   } else {
     const proUser = await prisma.user.findFirst({
       where: {
@@ -1391,7 +1393,7 @@ async function main() {
     });
 
     if (!proUser) {
-      console.log(`Skipping Routing Form - Seeding - Pro User not found`);
+      logger.info(`Skipping Routing Form - Seeding - Pro User not found`);
     } else {
       const multiSelectLegacyFieldId = "d2292635-9f12-17b1-9153-c3a854649182";
       await prisma.app_RoutingForms_Form.create({
@@ -1543,7 +1545,7 @@ async function runSeed() {
 
 runSeed()
   .catch((e) => {
-    console.error(e);
+    logger.error(e);
     process.exit(1);
   })
   .finally(async () => {

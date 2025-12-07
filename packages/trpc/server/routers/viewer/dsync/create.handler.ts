@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { DirectoryType } from "@boxyhq/saml-jackson";
+const logger = pino()
 
 import jackson from "@calcom/features/ee/sso/lib/jackson";
 import { canAccessOrganization, samlProductID, samlTenantID } from "@calcom/features/ee/sso/lib/saml";
@@ -42,7 +44,7 @@ export const createHandler = async ({ ctx, input }: Options) => {
   });
 
   if (error || !data) {
-    console.error("Error creating directory sync connection", error);
+    logger.error("Error creating directory sync connection", error);
     throw new TRPCError({ code: "BAD_REQUEST", message: error.message });
   }
 

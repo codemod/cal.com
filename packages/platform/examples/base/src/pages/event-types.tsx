@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { Navbar } from "@/components/Navbar";
 import { Inter } from "next/font/google";
+const logger = pino()
 // eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
 import { useRouter } from "next/router";
 import { useState, useRef, useCallback } from "react";
@@ -22,22 +24,22 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
   const eventTypeRef = useRef<EventSettingsFromRef>(null);
 
   const handleFormStateChange = useCallback((formState: unknown) => {
-    console.log(formState, "formStateeeeee");
+    logger.info(formState, "formStateeeeee");
   }, []);
 
   const handleValidate = async () => {
     const result = await eventTypeRef.current?.validateForm();
-    console.log("Validation result:", result);
+    logger.info("Validation result:", result);
   };
 
   const handleSubmit = () => {
     eventTypeRef.current?.handleFormSubmit({
       onSuccess: () => {
-        console.log("Event type updated successfully");
+        logger.info("Event type updated successfully");
         // Additional success handling logic here
       },
       onError: (error) => {
-        console.error("Error updating event type:", error);
+        logger.error("Error updating event type:", error);
         // Additional error handling logic here
       },
     });
@@ -757,8 +759,8 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                 refetchTeamEvents();
               }}
               onError={(eventType, error) => {
-                console.log(eventType);
-                console.error(error);
+                logger.info(eventType);
+                logger.error(error);
               }}
               onDeleteSuccess={() => {
                 refetch();
@@ -814,7 +816,7 @@ export default function Bookings(props: { calUsername: string; calEmail: string 
                   }}
                   teamId={teams?.[0]?.id}
                   onCancel={() => {
-                    console.log("cancel team event type creation");
+                    logger.info("cancel team event type creation");
                   }}
                   onSuccess={() => {
                     refetchTeamEvents();

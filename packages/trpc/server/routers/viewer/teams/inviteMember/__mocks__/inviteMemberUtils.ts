@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { beforeEach, vi, expect } from "vitest";
 import { mockReset, mockDeep } from "vitest-mock-extended";
+const logger = pino()
 
 import type { MembershipRole } from "@calcom/prisma/enums";
 
@@ -35,7 +37,7 @@ export const inviteMemberutilsScenarios = {
         if (forInput.teamId === teamId) {
           return fakedVal;
         }
-        console.log("Mock Error: Unhandled input", { teamId });
+        logger.info("Mock Error: Unhandled input", { teamId });
         throw new Error(`Mock Error: Unhandled input. teamId: ${teamId}`);
       });
       return fakedVal;

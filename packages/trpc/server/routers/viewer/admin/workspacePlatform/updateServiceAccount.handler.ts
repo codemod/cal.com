@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { z } from "zod";
+const logger = pino()
 
 import { WorkspacePlatformRepository } from "@calcom/lib/server/repository/workspacePlatform";
 
@@ -21,7 +23,7 @@ export default async function updateServiceAccountHandler({
     });
     return ensureNoServiceAccountKey(updatedWorkspacePlatform);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to update service account" });
   }
 }

@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { TFunction } from "i18next";
 import { default as cloneDeep } from "lodash/cloneDeep";
 import type { z } from "zod";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import type BaseEmail from "@calcom/emails/templates/_base-email";
@@ -90,7 +92,7 @@ const sendEmail = (prepare: () => BaseEmail) => {
       const email = prepare();
       resolve(email.sendEmail());
     } catch (e) {
-      reject(console.error(`${prepare.constructor.name}.sendEmail failed`, e));
+      reject(logger.error(`${prepare.constructor.name}.sendEmail failed`, e));
     }
   });
 };

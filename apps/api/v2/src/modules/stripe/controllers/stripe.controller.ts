@@ -1,8 +1,10 @@
+import pino from 'pino'
 import { API_VERSIONS_VALUES } from "@/lib/api-versions";
 import { API_KEY_OR_ACCESS_TOKEN_HEADER } from "@/lib/docs/headers";
 import { GetUser } from "@/modules/auth/decorators/get-user/get-user.decorator";
 import { ApiAuthGuard } from "@/modules/auth/guards/api-auth/api-auth.guard";
 import {
+const logger = pino()
   StripConnectOutputDto,
   StripConnectOutputResponseDto,
   StripCredentialsCheckOutputResponseDto,
@@ -139,7 +141,7 @@ export class StripeController {
       return await this.stripeService.saveStripeAccount(decodedCallbackState, code, userId);
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        logger.error(error.message);
       }
       return {
         url: decodedCallbackState.onErrorReturnTo ?? "",

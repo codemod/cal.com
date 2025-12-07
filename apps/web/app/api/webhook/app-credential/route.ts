@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import z from "zod";
+const logger = pino()
 
 import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
 import { CREDENTIAL_SYNC_SECRET, CREDENTIAL_SYNC_SECRET_HEADER_NAME } from "@calcom/lib/constants";
@@ -98,7 +100,7 @@ async function postHandler(request: NextRequest) {
       return NextResponse.json({ message: `Credentials created for userId: ${reqBody.userId}` });
     }
   } catch (error) {
-    console.error("Error processing app credential webhook:", error);
+    logger.error("Error processing app credential webhook:", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { EventStatus } from "ics";
 import { v4 as uuidv4 } from "uuid";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import generateIcsString from "@calcom/emails/lib/generateIcsString";
@@ -402,7 +404,7 @@ export const deleteScheduledEmailReminder = async (reminderId: number) => {
   });
 
   if (!workflowReminder) {
-    console.error("Workflow reminder not found");
+    logger.error("Workflow reminder not found");
     return;
   }
 

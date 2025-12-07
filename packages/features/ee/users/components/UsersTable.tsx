@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { keepPreviousData } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+const logger = pino()
 
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { WEBAPP_URL } from "@calcom/lib/constants";
@@ -61,7 +63,7 @@ function UsersTableBare() {
       });
     },
     onError: (err) => {
-      console.error(err.message);
+      logger.error(err.message);
       showToast("There has been an error deleting this user.", "error");
     },
     onSettled: () => {

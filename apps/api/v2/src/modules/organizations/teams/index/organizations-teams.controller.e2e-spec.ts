@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { bootstrap } from "@/app";
 import { AppModule } from "@/app.module";
 import { CreateOrgTeamDto } from "@/modules/organizations/teams/index/inputs/create-organization-team.input";
@@ -16,6 +17,7 @@ import { TeamRepositoryFixture } from "test/fixtures/repository/team.repository.
 import { UserRepositoryFixture } from "test/fixtures/repository/users.repository.fixture";
 import { randomString } from "test/utils/randomString";
 import { withApiAuth } from "test/utils/withApiAuth";
+const logger = pino()
 
 import { SUCCESS_STATUS, X_CAL_CLIENT_ID, X_CAL_SECRET_KEY } from "@calcom/platform-constants";
 import type { ApiSuccessResponse } from "@calcom/platform-types";
@@ -113,7 +115,7 @@ describe("Organizations Team Endpoints", () => {
         .then((response) => {
           const responseBody: ApiSuccessResponse<Team[]> = response.body;
           expect(responseBody.status).toEqual(SUCCESS_STATUS);
-          console.log("WOOOW", responseBody.data);
+          logger.info("WOOOW", responseBody.data);
           expect([team2.id, team.id]).toContain(responseBody.data[0].id);
           expect([team2.id]);
         });

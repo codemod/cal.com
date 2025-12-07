@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { bootstrap } from "@/app";
 import { AppModule } from "@/app.module";
 import { CreateEventTypeInput_2024_04_15 } from "@/ee/event-types/event-types_2024_04_15/inputs/create-event-type.input";
@@ -21,6 +22,7 @@ import { TeamRepositoryFixture } from "test/fixtures/repository/team.repository.
 import { UserRepositoryFixture } from "test/fixtures/repository/users.repository.fixture";
 import { randomString } from "test/utils/randomString";
 import { withApiAuth } from "test/utils/withApiAuth";
+const logger = pino()
 
 
 
@@ -1609,23 +1611,23 @@ describe("Event types Endpoints", () => {
       try {
         await eventTypesRepositoryFixture.delete(eventType.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       try {
         await userRepositoryFixture.delete(user.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       try {
         await userRepositoryFixture.delete(falseTestUser.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
 
       try {
         await userRepositoryFixture.delete(orgUser.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       await app.close();
     });
@@ -2588,12 +2590,12 @@ describe("Event types Endpoints", () => {
         await eventTypesRepositoryFixture.delete(legacyEventTypeId1);
         await eventTypesRepositoryFixture.delete(legacyEventTypeId2);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       try {
         await userRepositoryFixture.delete(user.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       await app.close();
     });
@@ -2783,12 +2785,12 @@ describe("Event types Endpoints", () => {
       try {
         await eventTypesRepositoryFixture.delete(legacyEventTypeId1);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       try {
         await userRepositoryFixture.delete(user.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       await app.close();
     });

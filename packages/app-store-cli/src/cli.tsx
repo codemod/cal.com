@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+import pino from 'pino'
 import { render } from "ink";
 import meow from "meow";
 import React from "react";
+const logger = pino()
 
 import App from "./App";
 import { SupportedCommands } from "./types";
@@ -65,7 +67,7 @@ if (
 ) {
   slug = cli.flags.slug;
   if (!slug) {
-    console.log("--slug is required");
+    logger.info("--slug is required");
     cli.showHelp(0);
   }
 }

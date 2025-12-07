@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { OAuth2Client } from "googleapis-common";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import getAppKeysFromSlug from "@calcom/app-store/_utils/getAppKeysFromSlug";
 import { WEBAPP_URL } from "@calcom/lib/constants";
@@ -38,7 +40,7 @@ async function getHandler(request: NextRequest) {
 
     return NextResponse.json({ url: authUrl });
   } catch (error) {
-    console.error("Error generating Google Workspace auth URL:", error);
+    logger.error("Error generating Google Workspace auth URL:", error);
     return NextResponse.json(
       { message: error instanceof Error ? error.message : "An unexpected error occurred" },
       { status: 500 }

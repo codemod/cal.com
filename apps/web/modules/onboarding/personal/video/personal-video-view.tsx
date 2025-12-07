@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -60,7 +62,7 @@ export const PersonalVideoView = ({ userEmail }: PersonalVideoViewProps) => {
     },
     onError: (error) => {
       showToast(t("something_went_wrong"), "error");
-      console.error(error);
+      logger.error(error);
     },
   });
 
@@ -84,7 +86,7 @@ export const PersonalVideoView = ({ userEmail }: PersonalVideoViewProps) => {
           );
         }
       } catch (error) {
-        console.error(error);
+        logger.error(error);
       }
 
       await utils.viewer.me.get.refetch();

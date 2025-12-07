@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+const logger = pino()
 
 import { useBookerStore } from "@calcom/features/bookings/Booker/store";
 import { useDebounce } from "@calcom/lib/hooks/useDebounce";
@@ -75,7 +77,7 @@ export const useVerifyEmail = ({
       setEmailVerificationModalVisible(true);
     },
     onError: (err) => {
-      console.error("Failed to send verification email:", err);
+      logger.error("Failed to send verification email:", err);
     },
   });
 

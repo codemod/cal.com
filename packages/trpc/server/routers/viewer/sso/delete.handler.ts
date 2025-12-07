@@ -1,5 +1,7 @@
+import pino from 'pino'
 import jackson from "@calcom/features/ee/sso/lib/jackson";
 import {
+const logger = pino()
   canAccessOrganization,
   samlProductID,
   samlTenantID,
@@ -38,7 +40,7 @@ export const deleteHandler = async ({ ctx, input }: DeleteOptions) => {
       product: samlProductID,
     });
   } catch (err) {
-    console.error("Error deleting SAML connection", err);
+    logger.error("Error deleting SAML connection", err);
     throw new TRPCError({ code: "BAD_REQUEST", message: "Deleting SAML Connection failed." });
   }
 };

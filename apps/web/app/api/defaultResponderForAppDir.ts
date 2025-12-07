@@ -1,7 +1,9 @@
+import pino from 'pino'
 import type { Params } from "app/_types";
 import { ApiError } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import { HttpError } from "@calcom/lib/http-error";
 import { getServerErrorFromUnknown } from "@calcom/lib/server/getServerErrorFromUnknown";
@@ -56,7 +58,7 @@ export const defaultResponderForAppDir = <T extends NextResponse | Response = Ne
 
       // Don't report 400-499 errors to Sentry/console
       if (!(serverError.statusCode >= 400 && serverError.statusCode < 500)) {
-        console.error(serverError);
+        logger.error(serverError);
         const { captureException } = await import("@sentry/nextjs");
         captureException(error);
       }

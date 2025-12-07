@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { KnownConfig, PrefillAndIframeAttrsConfig } from "../types";
+const logger = pino()
 
 export const getErrorString = ({
   errorCode,
@@ -87,7 +89,7 @@ function listKnownConfigProps() {
 export function getConfigProp<TProp extends keyof KnownConfig>(config: KnownConfig, prop: TProp) {
   const knownConfigProps = listKnownConfigProps();
   if (!knownConfigProps.includes(prop)) {
-    console.warn(`Not reading unknown config prop: ${prop}`);
+    logger.warn(`Not reading unknown config prop: ${prop}`);
     return null;
   }
   return config[prop] ?? null;
@@ -98,7 +100,7 @@ export function getQueryParamProvidedByConfig<TProp extends keyof KnownConfig>(
 ): NonNullable<KnownConfig[TProp]> | null {
   const knownConfigProps = listKnownConfigProps();
   if (!knownConfigProps.includes(queryParam)) {
-    console.warn(`Not reading unknown config prop from query: ${queryParam}`);
+    logger.warn(`Not reading unknown config prop from query: ${queryParam}`);
     return null;
   }
   const url = new URL(document.URL);
@@ -168,7 +170,7 @@ export async function submitResponseAndGetRoutingResult({
     if (!result.data.message) {
       throw new Error("No `message` in response");
     }
-    console.warn("Error submitting response and getting routing result", result);
+    logger.warn("Error submitting response and getting routing result", result);
     return { error: result.data.message } as { error: string };
   }
 }

@@ -1,8 +1,10 @@
+import pino from 'pino'
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import { describe, expect, it, beforeAll } from "vitest";
 import { ZodError } from "zod";
+const logger = pino()
 
 import { prisma } from "@calcom/prisma";
 
@@ -399,7 +401,7 @@ describe("GET /api/bookings", async () => {
           .filter(([_, count]) => count > 1)
           .map(([id]) => id);
 
-        console.log(`Found duplicate booking IDs: ${duplicates.join(", ")}`);
+        logger.info(`Found duplicate booking IDs: ${duplicates.join(", ")}`);
       }
     });
   });

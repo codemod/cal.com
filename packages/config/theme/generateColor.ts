@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { Color, HSL, Shade } from "./interfaces";
+const logger = pino()
 
 // Yeah i stole this...
 const hexToHSL = (hex: string): HSL => {
@@ -38,7 +40,7 @@ const hexToHSL = (hex: string): HSL => {
     HSL.l = Math.round(l * 100);
     return HSL;
   } catch (error) {
-    console.log(hex);
+    logger.info(hex);
     return { h: 0, s: 0, l: 0 };
   }
 };

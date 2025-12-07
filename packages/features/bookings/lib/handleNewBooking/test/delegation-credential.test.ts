@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * These tests are integration tests that test the flow from receiving a api/book/event request and then verifying
  * - database entries created in In-MEMORY DB using prismock
@@ -646,7 +648,7 @@ describe("handleNewBooking", () => {
           })
         );
 
-        console.log("createdBooking", createdBooking);
+        logger.info("createdBooking", createdBooking);
 
         await expectBookingToBeInDatabase({
           description: "",

@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as hubspot from "@hubspot/api-client";
 import type { BatchInputPublicAssociation } from "@hubspot/api-client/lib/codegen/crm/associations";
@@ -291,10 +293,10 @@ export default class HubspotCalendarService implements CRM {
   }
 
   getAppOptions() {
-    console.log("No options implemented");
+    logger.info("No options implemented");
   }
 
   async handleAttendeeNoShow() {
-    console.log("Not implemented");
+    logger.info("Not implemented");
   }
 }

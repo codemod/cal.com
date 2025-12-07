@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
+const logger = pino()
 
 import { ensureOrganizationIsReviewed } from "@calcom/ee/organizations/lib/ensureOrganizationIsReviewed";
 import { getOrgFullOrigin, subdomainSuffix } from "@calcom/ee/organizations/lib/orgDomains";
@@ -190,7 +192,7 @@ export async function checkPBACImpersonationPermission({
     // Fallback to role-based check if no team/org context
     return userRole === MembershipRole.ADMIN || userRole === MembershipRole.OWNER;
   } catch (error) {
-    console.error("Error checking PBAC impersonation permission:", error);
+    logger.error("Error checking PBAC impersonation permission:", error);
     // Fallback to role-based check on error
     return userRole === MembershipRole.ADMIN || userRole === MembershipRole.OWNER;
   }

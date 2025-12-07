@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // It's ensured that this file does not import any client-side code
 import type BaseEmail from "@calcom/emails/templates/_base-email";
 import { formatCalEvent } from "@calcom/lib/formatCalendarEvent";
@@ -14,7 +16,7 @@ const sendEmail = (prepare: () => BaseEmail) => {
       const email = prepare();
       resolve(email.sendEmail());
     } catch (e) {
-      reject(console.error(`${prepare.constructor.name}.sendEmail failed`, e));
+      reject(logger.error(`${prepare.constructor.name}.sendEmail failed`, e));
     }
   });
 };

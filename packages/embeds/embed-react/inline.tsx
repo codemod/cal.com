@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * @fileoverview This file is an example file and tells how to use the Cal component in a React application. This is also used by playwright e2e
  */
@@ -21,7 +23,7 @@ function App() {
     setTimeout(setLoaded.bind(true), 1000);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const callback = (event: any) => {
-      console.log(event.detail);
+      logger.info(event.detail);
     };
     api.then((api) => {
       api("on", {
@@ -52,7 +54,7 @@ function App() {
 
         const availabilityLoadedCallback = (e: EmbedEvent<"availabilityLoaded">) => {
           const data = e.detail.data;
-          console.log("availabilityLoaded", {
+          logger.info("availabilityLoaded", {
             eventId: data.eventId,
             eventSlug: data.eventSlug,
           });
@@ -71,7 +73,7 @@ function App() {
         // Also, validates the type of e.detail.data as TS runs on this file
         const bookingSuccessfulV2Callback = (e: EmbedEvent<"bookingSuccessfulV2">) => {
           const data = e.detail.data;
-          console.log("bookingSuccessfulV2", {
+          logger.info("bookingSuccessfulV2", {
             endTime: data.endTime,
             startTime: data.startTime,
             title: data.title,

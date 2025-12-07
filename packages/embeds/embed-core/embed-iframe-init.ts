@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { EmbedThemeConfig } from "./src/types";
+const logger = pino()
 
 export default function EmbedInitIframe() {
   if (typeof window === "undefined" || window.isEmbed) {
@@ -60,7 +62,7 @@ export default function EmbedInitIframe() {
 
     const existingStyleEl = document.head.querySelector("#embed-css-vars") as HTMLStyleElement;
     if (existingStyleEl) {
-      console.warn("Existing embed CSS Vars are being reset");
+      logger.warn("Existing embed CSS Vars are being reset");
       existingStyleEl.innerText = cssVarsStyle.join("\n");
       return;
     }

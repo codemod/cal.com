@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
+const logger = pino()
 
 import { throwIfNotHaveAdminAccessToTeam } from "@calcom/app-store/_utils/throwIfNotHaveAdminAccessToTeam";
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
@@ -74,7 +76,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!res.writableEnded) res.status(200);
     return;
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     if (error instanceof HttpError) {
       return res.status(error.statusCode).json({ message: error.message });
     }

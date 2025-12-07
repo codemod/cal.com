@@ -1,4 +1,6 @@
+import pino from 'pino'
 import * as cache from "memory-cache";
+const logger = pino()
 
 import {
   getDeploymentKey,
@@ -99,7 +101,7 @@ class LicenseKeyService implements ILicenseKeyService {
       });
       return await response.json();
     } catch (error) {
-      console.error("Incrementing usage failed:", error);
+      logger.error("Incrementing usage failed:", error);
       throw error;
     }
   }
@@ -117,7 +119,7 @@ class LicenseKeyService implements ILicenseKeyService {
       cache.put(url, data.status, this.CACHING_TIME);
       return data.status;
     } catch (error) {
-      console.error("Check license failed:", error);
+      logger.error("Check license failed:", error);
       return false;
     }
   }

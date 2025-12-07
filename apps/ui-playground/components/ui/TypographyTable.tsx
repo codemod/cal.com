@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import React from "react";
@@ -62,7 +64,7 @@ export const TypographyTable: React.FC<TypographyTableProps> = ({ sections }) =>
       await navigator.clipboard.writeText(value);
       showToast(`Copied to clipboard`, "success");
     } catch (error) {
-      console.error("Failed to copy:", error);
+      logger.error("Failed to copy:", error);
       showToast("Failed to copy", "error");
     }
   };

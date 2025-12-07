@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { execSync } from "child_process";
+const logger = pino()
 
 type Err = {
   stdout: string;
@@ -13,14 +15,14 @@ const files = diff
   .filter(Boolean)
   .filter((file) => file.endsWith(".ts") || file.endsWith(".tsx"));
 
-console.log("ℹ️ Changed files:");
-console.log(files.map((str) => `  - ${str}`).join("\n"));
+logger.info("ℹ️ Changed files:");
+logger.info(files.map((str) => `  - ${str}`).join("\n"));
 
 try {
-  console.log("⏳ Checking type errors..");
+  logger.info("⏳ Checking type errors..");
   execSync("yarn tsc --noEmit", {});
 
-  console.log("😻 No errors!");
+  logger.info("😻 No errors!");
 } catch (_err) {
   const err = _err as Err;
 
@@ -29,12 +31,12 @@ try {
   const filesWithTypeErrors = files.filter((file) => output.includes(file));
 
   if (!filesWithTypeErrors.length) {
-    console.log(`🎉 You haven't introduced any new type errors!`);
+    logger.info(`🎉 You haven't introduced any new type errors!`);
     process.exit(0);
   }
-  console.log("❌ ❌ ❌ You seem to have touched files that have type errors ❌ ❌ ❌");
-  console.log("🙏 Please inspect the following files:");
-  console.log(filesWithTypeErrors.map((str) => `  - ${str}`).join("\n"));
+  logger.info("❌ ❌ ❌ You seem to have touched files that have type errors ❌ ❌ ❌");
+  logger.info("🙏 Please inspect the following files:");
+  logger.info(filesWithTypeErrors.map((str) => `  - ${str}`).join("\n"));
 
   process.exit(1);
 }

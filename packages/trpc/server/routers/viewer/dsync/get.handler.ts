@@ -1,6 +1,8 @@
+import pino from 'pino'
 import jackson from "@calcom/features/ee/sso/lib/jackson";
 import { canAccessOrganization } from "@calcom/features/ee/sso/lib/saml";
 import prisma from "@calcom/prisma";
+const logger = pino()
 
 import { TRPCError } from "@trpc/server";
 
@@ -46,7 +48,7 @@ export const getHandler = async ({ ctx, input }: Options) => {
   const { data, error } = await dsyncController.directories.get(dsyncData.directoryId);
 
   if (error) {
-    console.error("Error fetching directory sync connection", error);
+    logger.error("Error fetching directory sync connection", error);
     throw new TRPCError({ code: "BAD_REQUEST", message: error.message });
   }
 

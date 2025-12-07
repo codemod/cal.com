@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { CollectOpts, EventHandler } from "next-collect";
+const logger = pino()
 // Importing types so we're not directly importing next/server
 import type { NextRequest, NextResponse } from "next/server";
 
@@ -46,7 +48,7 @@ const reportUsage: EventHandler = async (event, { fetch }) => {
     try {
       return fetch(url, { method: "POST", mode: "cors" });
     } catch (e) {
-      console.error(`Error reporting booking for key: '${key}'`, e);
+      logger.error(`Error reporting booking for key: '${key}'`, e);
       return Promise.resolve();
     }
   } else {

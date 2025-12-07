@@ -1,7 +1,9 @@
+import pino from 'pino'
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
 import { z } from "zod";
+const logger = pino()
 
 import { getAppWithMetadata } from "@calcom/app-store/_appRegistry";
 import { getAppAssetFullPath } from "@calcom/app-store/getAppAssetFullPath";
@@ -61,7 +63,7 @@ export const getStaticProps = async (slug: string) => {
     source = source.replace(/{DESCRIPTION}/g, appMeta.description);
   } catch (error) {
     /* If the app doesn't have a README we fallback to the package description */
-    console.log(`No DESCRIPTION.md provided for: ${appDirname}`);
+    logger.info(`No DESCRIPTION.md provided for: ${appDirname}`);
     source = appMeta.description;
   }
 

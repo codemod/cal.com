@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { CredentialForCalendarService } from "@calcom/types/Credential";
+const logger = pino()
 
 import { tasker } from "../../../tasker";
 
@@ -40,6 +42,6 @@ export const handleAnalyticsEvents = async ({
       },
     });
   } catch (err) {
-    console.error("Error sending dub lead: ", err);
+    logger.error("Error sending dub lead: ", err);
   }
 };

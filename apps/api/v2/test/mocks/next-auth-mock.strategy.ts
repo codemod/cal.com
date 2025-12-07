@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { NextAuthPassportStrategy } from "@/lib/passport/strategies/types";
 import { UsersRepository } from "@/modules/users/users.repository";
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
+const logger = pino()
 
 @Injectable()
 export class NextAuthMockStrategy extends PassportStrategy(NextAuthPassportStrategy, "next-auth") {
@@ -17,7 +19,7 @@ export class NextAuthMockStrategy extends PassportStrategy(NextAuthPassportStrat
 
       return this.success(user);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       if (error instanceof Error) return this.error(error);
     }
   }

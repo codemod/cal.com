@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { sendTeamInviteEmail } from "@calcom/emails";
 import { UserRepository } from "@calcom/features/users/repositories/UserRepository";
 import { OnboardingPathService } from "@calcom/features/onboarding/lib/onboarding-path.service";
@@ -6,6 +7,7 @@ import { getTranslation } from "@calcom/lib/server/i18n";
 import { VerificationTokenRepository } from "@calcom/lib/server/repository/verificationToken";
 import { prisma } from "@calcom/prisma";
 import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+const logger = pino()
 
 import { ensureAtleastAdminPermissions, getTeamOrThrow } from "./inviteMember/utils";
 import type { TResendInvitationInputSchema } from "./resendInvitation.schema";
@@ -36,7 +38,7 @@ export const resendInvitationHandler = async ({ ctx, input }: InviteMemberOption
       expiresInDays: 7,
     });
   } catch (error) {
-    console.error("[resendInvitationHandler] Error updating verification token: ", error);
+    logger.error("[resendInvitationHandler] Error updating verification token: ", error);
   }
 
   const inviteTeamOptions = {
@@ -57,7 +59,7 @@ export const resendInvitationHandler = async ({ ctx, input }: InviteMemberOption
         inviteTeamOptions.isCalcomMember = false;
       }
     } catch (error) {
-      console.error("[resendInvitationHandler] Error fetching user: ", error);
+      logger.error("[resendInvitationHandler] Error fetching user: ", error);
     }
   }
 

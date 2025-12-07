@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
+const logger = pino()
 
 import findValidApiKey from "@calcom/features/ee/api-keys/lib/findValidApiKey";
 import prisma from "@calcom/prisma";
@@ -37,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
       return res.status(201).json(user);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       return res.status(500).json({ message: "Unable to get User." });
     }
   }

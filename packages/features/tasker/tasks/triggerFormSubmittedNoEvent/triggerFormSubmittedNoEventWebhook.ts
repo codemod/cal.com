@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import type { FORM_SUBMITTED_WEBHOOK_RESPONSES } from "@calcom/app-store/routing-forms/lib/formSubmissionUtils";
 import incompleteBookingActionFunctions from "@calcom/app-store/routing-forms/lib/incompleteBooking/actionFunctions";
@@ -65,7 +67,7 @@ export async function triggerFormSubmittedNoEventWebhook(payload: string): Promi
       responses,
     },
   }).catch((e) => {
-    console.error(`Error executing FORM_SUBMITTED_NO_EVENT webhook`, webhook, e);
+    logger.error(`Error executing FORM_SUBMITTED_NO_EVENT webhook`, webhook, e);
   });
 
   // See if there are other incomplete booking actions

@@ -1,8 +1,10 @@
+import pino from 'pino'
 import { API_VERSIONS_VALUES } from "@/lib/api-versions";
 import { TeamsEventTypesRepository } from "@/modules/teams/event-types/teams-event-types.repository";
 import { Controller, Req, NotFoundException, Param, Post, Body } from "@nestjs/common";
 import { ApiTags as DocsTags, ApiExcludeController as DocsExcludeController } from "@nestjs/swagger";
 import { Request } from "express";
+const logger = pino()
 
 import {
   getRoutedUrl,
@@ -60,7 +62,7 @@ export class RouterController {
     ) {
       return this.handleRedirectWithContactOwner(routingUrl, routingSearchParams);
     }
-    console.log("handleRedirect Regular called", { destination });
+    logger.info("handleRedirect Regular called", { destination });
 
     return { status: "success", data: destination, redirect: true };
   }
@@ -69,7 +71,7 @@ export class RouterController {
     routingUrl: URL,
     routingSearchParams: URLSearchParams
   ): Promise<ApiResponse<unknown> & { redirect: boolean }> {
-    console.log("handleRedirectWithContactOwner called", { routingUrl, routingSearchParams });
+    logger.info("handleRedirectWithContactOwner called", { routingUrl, routingSearchParams });
     const pathNameParams = routingUrl.pathname.split("/");
     const eventTypeSlug = pathNameParams[pathNameParams.length - 1];
     const teamId = Number(routingSearchParams.get("cal.teamId"));

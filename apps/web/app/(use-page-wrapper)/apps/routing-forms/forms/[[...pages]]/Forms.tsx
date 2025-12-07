@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -65,7 +67,7 @@ export default function RoutingForms({ appUrl }: { appUrl: string }) {
 
   const mutation = trpc.viewer.loggedInViewerRouter.routingFormOrder.useMutation({
     onError: async (err) => {
-      console.error(err.message);
+      logger.error(err.message);
       await utils.viewer.appRoutingForms.forms.cancel();
       await utils.viewer.appRoutingForms.invalidate();
     },

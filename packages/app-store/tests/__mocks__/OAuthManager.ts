@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { beforeEach, vi } from "vitest";
 import { mockClear, mockDeep } from "vitest-mock-extended";
+const logger = pino()
 
 import type * as OAuthManager from "../../_utils/oauth/OAuthManager";
 
@@ -39,10 +41,10 @@ const defaultMockOAuthManager = vi.fn().mockImplementation(() => {
     }),
     request: vi.fn().mockImplementation((fn) => {
       if (useFullMockOAuthManagerRequest) {
-        console.log("OAuthManager.request full mock being used");
+        logger.info("OAuthManager.request full mock being used");
         return oAuthManagerRequestFullMock(fn);
       }
-      console.log("OAuthManager.request default mock being used");
+      logger.info("OAuthManager.request default mock being used");
       return {
         json: {
           calendars: [],

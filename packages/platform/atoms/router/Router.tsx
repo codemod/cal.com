@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { ReactElement } from "react";
 import React, { useState } from "react";
+const logger = pino()
 
 import { BookerEmbed } from "../booker-embed";
 import type { BookerPlatformWrapperAtomPropsForTeam } from "../booker/types";
@@ -96,7 +98,7 @@ export const Router = React.memo(
             }
           })
           .catch((err) => {
-            console.error(err);
+            logger.error(err);
             setIsError(true);
           })
           .finally(() => {

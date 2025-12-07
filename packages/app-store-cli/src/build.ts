@@ -1,5 +1,7 @@
+import pino from 'pino'
 import chokidar from "chokidar";
 import fs from "fs";
+const logger = pino()
 // eslint-disable-next-line no-restricted-imports
 import { debounce } from "lodash";
 import path from "path";
@@ -496,7 +498,7 @@ function generateFiles() {
   filesToGenerate.forEach(([fileName, output]) => {
     fs.writeFileSync(`${APP_STORE_PATH}/${fileName}`, formatOutput(`${banner}${output.join("\n")}`));
   });
-  console.log(`Generated ${filesToGenerate.map(([fileName]) => fileName).join(", ")}`);
+  logger.info(`Generated ${filesToGenerate.map(([fileName]) => fileName).join(", ")}`);
 }
 
 const debouncedGenerateFiles = debounce(generateFiles);
@@ -507,20 +509,20 @@ if (isInWatchMode) {
     .on("addDir", (dirPath) => {
       const appName = getAppName(dirPath);
       if (appName) {
-        console.log(`Added ${appName}`);
+        logger.info(`Added ${appName}`);
         debouncedGenerateFiles();
       }
     })
     .on("change", (filePath) => {
       if (filePath.endsWith("config.json")) {
-        console.log("Config file changed");
+        logger.info("Config file changed");
         debouncedGenerateFiles();
       }
     })
     .on("unlinkDir", (dirPath) => {
       const appName = getAppName(dirPath);
       if (appName) {
-        console.log(`Removed ${appName}`);
+        logger.info(`Removed ${appName}`);
         debouncedGenerateFiles();
       }
     });

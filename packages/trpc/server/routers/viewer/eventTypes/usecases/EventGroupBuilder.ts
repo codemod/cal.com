@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { MembershipRepository } from "@calcom/features/membership/repositories/MembershipRepository";
 import type { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
 import { teamMetadataSchema } from "@calcom/prisma/zod-utils";
+const logger = pino()
 
 import type { TeamAccessUseCase } from "../teamAccessUseCase";
 import {
@@ -122,7 +124,7 @@ export class EventGroupBuilder {
     );
 
     if (failedTeams.length > 0) {
-      console.warn(`Failed to process ${failedTeams.length} teams:`, failedTeams);
+      logger.warn(`Failed to process ${failedTeams.length} teams:`, failedTeams);
     }
 
     eventTypeGroups.push(...teamGroups);

@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { PaymentServiceMap } from "@calcom/app-store/payment.services.generated";
 import type { EventTypeAppsList } from "@calcom/app-store/utils";
 import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
@@ -7,6 +8,7 @@ import { convertToSmallestCurrencyUnit } from "@calcom/lib/currencyConversions";
 import type { AppCategories, Prisma, EventType } from "@calcom/prisma/client";
 import type { CalendarEvent } from "@calcom/types/Calendar";
 import type { IAbstractPaymentService } from "@calcom/types/PaymentService";
+const logger = pino()
 
 const isPaymentService = (x: unknown): x is { PaymentService: any } =>
   !!x && typeof x === "object" && "PaymentService" in x && typeof x.PaymentService === "function";
@@ -52,13 +54,13 @@ const handlePayment = async ({
 
   const paymentAppImportFn = PaymentServiceMap[key as keyof typeof PaymentServiceMap];
   if (!paymentAppImportFn) {
-    console.warn(`payment app not implemented for key: ${key}`);
+    logger.warn(`payment app not implemented for key: ${key}`);
     return null;
   }
 
   const paymentAppModule = await paymentAppImportFn;
   if (!isPaymentService(paymentAppModule)) {
-    console.warn(`payment App service not found for key: ${key}`);
+    logger.warn(`payment App service not found for key: ${key}`);
     return null;
   }
   const PaymentService = paymentAppModule.PaymentService;
@@ -186,13 +188,13 @@ const handlePayment = async ({
   }
 
   if (!paymentData) {
-    console.error("Payment data is null");
+    logger.error("Payment data is null");
     throw new Error("Payment data is null");
   }
   try {
     await paymentInstance.afterPayment(evt, booking, paymentData, selectedEventType?.metadata);
   } catch (e) {
-    console.error(e);
+    logger.error(e);
   }
   return paymentData;
 };

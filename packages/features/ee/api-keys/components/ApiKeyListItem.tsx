@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { useState } from "react";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -44,7 +46,7 @@ const ApiKeyListItem = ({
       showToast(t("api_key_deleted"), "success");
     },
     onError(err) {
-      console.error(err);
+      logger.error(err);
       showToast(t("something_went_wrong"), "error");
     },
   });

@@ -1,7 +1,9 @@
+import pino from 'pino'
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import type { RetellWebClient } from "retell-client-js-sdk";
+const logger = pino()
 
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -68,7 +70,7 @@ export function WebCallDialog({
       try {
         await startWebCall(data.accessToken);
       } catch (error) {
-        console.error("Failed to start web call:", error);
+        logger.error("Failed to start web call:", error);
         setCallStatus("error");
         setError(t("failed_to_start_web_call_try_again"));
       }
@@ -100,24 +102,24 @@ export function WebCallDialog({
       });
 
       retellWebClient.on("agent_start_talking", () => {
-        console.log("Agent started talking");
+        logger.info("Agent started talking");
       });
 
       retellWebClient.on("agent_stop_talking", () => {
-        console.log("Agent stopped talking");
+        logger.info("Agent stopped talking");
       });
 
       retellWebClient.on("update", (update: { transcript?: Array<{ role: string; content: string }> }) => {
-        console.log("📝 Received update event:", update);
+        logger.info("📝 Received update event:", update);
 
         if (update.transcript && Array.isArray(update.transcript)) {
-          console.log("📜 Transcript array received:", update.transcript);
+          logger.info("📜 Transcript array received:", update.transcript);
 
           try {
             const newEntries: TranscriptEntry[] = update.transcript
               .map((entry) => {
                 if (!entry.role || !entry.content) {
-                  console.warn("⚠️ Invalid transcript entry:", entry);
+                  logger.warn("⚠️ Invalid transcript entry:", entry);
                   return null;
                 }
                 const mappedEntry = {
@@ -125,20 +127,20 @@ export function WebCallDialog({
                   text: entry.content,
                   timestamp: new Date(),
                 };
-                console.log("✅ Mapped transcript entry:", mappedEntry);
+                logger.info("✅ Mapped transcript entry:", mappedEntry);
                 return mappedEntry;
               })
               .filter(Boolean) as TranscriptEntry[];
 
-            console.log("🔄 Setting transcript with entries:", newEntries.length, "entries");
-            console.log("📋 Current transcript state has:", transcript.length, "entries");
+            logger.info("🔄 Setting transcript with entries:", newEntries.length, "entries");
+            logger.info("📋 Current transcript state has:", transcript.length, "entries");
 
             setTranscript(newEntries);
           } catch (error) {
-            console.error("❌ Error processing transcript update:", error);
+            logger.error("❌ Error processing transcript update:", error);
           }
         } else {
-          console.log(
+          logger.info(
             "🚫 No transcript data in update or transcript is not an array:",
             typeof update.transcript
           );
@@ -146,7 +148,7 @@ export function WebCallDialog({
       });
 
       retellWebClient.on("error", (error: Error | { message?: string }) => {
-        console.error("Web call error:", error);
+        logger.error("Web call error:", error);
         setCallStatus("error");
         setError(t("call_encountered_error_try_again"));
         stopDurationTimer();
@@ -159,7 +161,7 @@ export function WebCallDialog({
         emitRawAudioSamples: false,
       });
     } catch (error) {
-      console.error("Error starting web call:", error);
+      logger.error("Error starting web call:", error);
       setCallStatus("error");
       setError(t("failed_initialize_web_call_microphone_permissions"));
     }
@@ -220,7 +222,7 @@ export function WebCallDialog({
         setCallStatus("ended");
         stopDurationTimer();
       } catch (error) {
-        console.error("Error ending call:", error);
+        logger.error("Error ending call:", error);
       }
     }
   };
@@ -235,7 +237,7 @@ export function WebCallDialog({
         }
         setIsMuted(!isMuted);
       } catch (error) {
-        console.error("Error toggling mute:", error);
+        logger.error("Error toggling mute:", error);
       }
     }
   };
@@ -290,7 +292,7 @@ export function WebCallDialog({
         try {
           retellWebClientRef.current.stopCall();
         } catch (error) {
-          console.error("Error stopping call during cleanup:", error);
+          logger.error("Error stopping call during cleanup:", error);
         }
       }
     };
@@ -331,7 +333,7 @@ export function WebCallDialog({
             try {
               retellWebClientRef.current.stopCall();
             } catch (e) {
-              console.error("Error stopping call on close:", e);
+              logger.error("Error stopping call on close:", e);
             }
           }
           resetDialogState();

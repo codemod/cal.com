@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // Basic ISO format validation using string checks
 // Without RegExp check, to keep it fast and simple
 export const isValidISOFormat = (dateStr: string) => {
@@ -26,7 +28,7 @@ export const isSlotEquivalent = ({
   }
 
   if (!isValidISOFormat(slotTimeInIso) || !isValidISOFormat(slotToCheckInIso)) {
-    console.log("Invalid ISO string format detected", { slotTimeInIso, slotToCheckInIso });
+    logger.info("Invalid ISO string format detected", { slotTimeInIso, slotToCheckInIso });
     // Consider slots equivalent
     return true;
   }

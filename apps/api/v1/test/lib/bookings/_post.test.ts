@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // TODO: Fix tests (These test were never running due to the vitest workspace config)
 import prismaMock from "../../../../../../tests/libs/__mocks__/prismaMock";
 
@@ -385,7 +387,7 @@ describe("POST /api/bookings", () => {
       });
 
       await handler(req, res);
-      console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+      logger.info({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
 
       expect(res._getStatusCode()).toBe(400);
       expect(JSON.parse(res._getData())).toEqual(
@@ -453,7 +455,7 @@ describe("POST /api/bookings", () => {
         });
 
         await handler(req, res);
-        console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+        logger.info({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
         createdBooking = JSON.parse(res._getData());
         expect(prismaMock.booking.create).toHaveBeenCalledTimes(1);
       });
@@ -530,7 +532,7 @@ describe("POST /api/bookings", () => {
         });
 
         await handler(req, res);
-        console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+        logger.info({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
         const rescheduledBooking = JSON.parse(res._getData()) as Booking;
         expect(prismaMock.booking.create).toHaveBeenCalledTimes(1);
         expect(rescheduledBooking.fromReschedule).toEqual("original-booking-uid");

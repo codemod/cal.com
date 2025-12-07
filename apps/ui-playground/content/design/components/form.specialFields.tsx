@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
@@ -20,7 +22,7 @@ export const SpecialFieldsExample: React.FC = () => {
   });
 
   const onSubmit = (data: FormValues) => {
-    console.log("Form submitted:", data);
+    logger.info("Form submitted:", data);
   };
 
   return (

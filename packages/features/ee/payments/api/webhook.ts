@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { buffer } from "micro";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type Stripe from "stripe";
+const logger = pino()
 
 import { handlePaymentSuccess } from "@calcom/app-store/_utils/payments/handlePaymentSuccess";
 import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
@@ -181,7 +183,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } catch (_err) {
     const err = getErrorFromUnknown(_err);
-    console.error(`Webhook Error: ${err.message}`);
+    logger.error(`Webhook Error: ${err.message}`);
     res.status(err.statusCode ?? 500).send({
       message: err.message,
       stack: IS_PRODUCTION ? undefined : err.stack,

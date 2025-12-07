@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * @deprecated use smtp with tasker instead
  */
@@ -18,7 +20,7 @@ function assertSendgrid() {
     sgMail.setApiKey(sendgridAPIKey);
     client.setApiKey(sendgridAPIKey);
   } else {
-    console.error("Sendgrid credentials are missing from the .env file");
+    logger.error("Sendgrid credentials are missing from the .env file");
   }
 }
 
@@ -28,7 +30,7 @@ export async function getBatchId() {
   }
   assertSendgrid();
   if (!process.env.SENDGRID_API_KEY) {
-    console.info("No sendgrid API key provided, returning DUMMY_BATCH_ID");
+    logger.info("No sendgrid API key provided, returning DUMMY_BATCH_ID");
     return "DUMMY_BATCH_ID";
   }
   const batchIdResponse = await client.request({
@@ -55,7 +57,7 @@ export function sendSendgridMail(
         html: mailData.html || "",
       });
     }
-    console.log(
+    logger.info(
       "Skipped Sending Email as process.env.NEXT_PUBLIC_IS_E2E or process.env.INTEGRATION_TEST_MODE is set. Emails are available in globalThis.testEmails"
     );
 
@@ -63,7 +65,7 @@ export function sendSendgridMail(
   }
 
   if (!process.env.SENDGRID_API_KEY) {
-    console.info("No sendgrid API key provided, skipping email");
+    logger.info("No sendgrid API key provided, skipping email");
     return Promise.resolve();
   }
 
@@ -84,7 +86,7 @@ export function sendSendgridMail(
 
 export function cancelScheduledEmail(referenceId: string | null) {
   if (!referenceId) {
-    console.info("No referenceId provided, skip canceling email");
+    logger.info("No referenceId provided, skip canceling email");
     return Promise.resolve();
   }
 
@@ -102,7 +104,7 @@ export function cancelScheduledEmail(referenceId: string | null) {
 
 export function deleteScheduledSend(referenceId: string | null) {
   if (!referenceId) {
-    console.info("No referenceId provided, skip deleting scheduledSend");
+    logger.info("No referenceId provided, skip deleting scheduledSend");
     return Promise.resolve();
   }
 

@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="../../../types/ical.d.ts"/>
 import ICAL from "ical.js";
@@ -48,7 +50,7 @@ export default class ICSFeedCalendarService implements Calendar {
   }
 
   createEvent(_event: CalendarEvent, _credentialId: number): Promise<NewCalendarEventType> {
-    console.warn("createEvent called on ICS (read-only) feed");
+    logger.warn("createEvent called on ICS (read-only) feed");
     return Promise.resolve({
       uid: _event.uid || "",
       type: this.integrationName,
@@ -60,7 +62,7 @@ export default class ICSFeedCalendarService implements Calendar {
   }
 
   deleteEvent(_uid: string, _event: CalendarEvent, _externalCalendarId?: string): Promise<unknown> {
-    console.warn("deleteEvent called on ICS (read-only) feed");
+    logger.warn("deleteEvent called on ICS (read-only) feed");
     return Promise.resolve();
   }
 
@@ -69,7 +71,7 @@ export default class ICSFeedCalendarService implements Calendar {
     _event: CalendarEvent,
     _externalCalendarId?: string
   ): Promise<NewCalendarEventType | NewCalendarEventType[]> {
-    console.warn("updateEvent called on ICS (read-only) feed");
+    logger.warn("updateEvent called on ICS (read-only) feed");
     return Promise.resolve({
       uid: _event.uid || "",
       type: this.integrationName,
@@ -95,7 +97,7 @@ export default class ICSFeedCalendarService implements Calendar {
             vcalendar: new ICAL.Component(jcalData),
           };
         } catch (e) {
-          console.error("Error parsing calendar object: ", e);
+          logger.error("Error parsing calendar object: ", e);
           return null;
         }
       })
@@ -192,10 +194,10 @@ export default class ICSFeedCalendarService implements Calendar {
               vcalendar.addSubcomponent(timezoneComp);
             } catch (e) {
               // Adds try-catch to ensure the code proceeds when Apple Calendar provides non-standard TZIDs
-              console.log("error in adding vtimezone", e);
+              logger.info("error in adding vtimezone", e);
             }
           } else {
-            console.error("No timezone found");
+            logger.error("No timezone found");
           }
         }
 
@@ -215,7 +217,7 @@ export default class ICSFeedCalendarService implements Calendar {
         if (event.isRecurring()) {
           let maxIterations = 365;
           if (["HOURLY", "SECONDLY", "MINUTELY"].includes(event.getRecurrenceTypes())) {
-            console.error(`Won't handle [${event.getRecurrenceTypes()}] recurrence`);
+            logger.error(`Won't handle [${event.getRecurrenceTypes()}] recurrence`);
             return;
           }
 
@@ -267,7 +269,7 @@ export default class ICSFeedCalendarService implements Calendar {
             }
           }
           if (maxIterations <= 0) {
-            console.warn("could not find any occurrence for recurring event in 365 iterations");
+            logger.warn("could not find any occurrence for recurring event in 365 iterations");
           }
           return;
         }

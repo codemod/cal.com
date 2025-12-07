@@ -1,3 +1,4 @@
+import pino from 'pino'
 import type { Data } from "@/pages/api/get-managed-users";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
@@ -6,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Select from "react-select";
+const logger = pino()
 
 import { CalProvider, BookerEmbed, Router } from "@calcom/atoms";
 import "@calcom/atoms/globals.min.css";
@@ -135,7 +137,7 @@ export default function App({ Component, pageProps }: AppProps) {
             formId="a63e6fce-899a-404e-8c38-e069710589c5"
             formResponsesURLParams={new URLSearchParams({ isBookingDryRun: "true", Territory: "Europe" })}
             onDisplayBookerEmbed={() => {
-              console.log("render booker embed");
+              logger.info("render booker embed");
             }}
             bannerUrl="https://i0.wp.com/mahala.co.uk/wp-content/uploads/2014/12/img_banner-thin_mountains.jpg?fit=800%2C258&ssl=1"
             bookerCustomClassNames={{

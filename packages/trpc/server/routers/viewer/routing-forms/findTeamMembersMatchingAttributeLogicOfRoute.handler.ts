@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * This route is used only by "Test Preview" button and Virtual Queues
  * Also, it is applicable only for sub-teams. Regular teams and user Routing Forms don't hit this endpoint.
@@ -303,11 +305,11 @@ export const findTeamMembersMatchingAttributeLogicOfRouteHandler = async ({
   const timeAfterGetOrderedLuckyUsers = performance.now();
   timeTaken.getOrderedLuckyUsers = timeAfterGetOrderedLuckyUsers - timeBeforeGetOrderedLuckyUsers;
 
-  console.log("_enablePerf, _concurrency", _enablePerf, _concurrency);
+  logger.info("_enablePerf, _concurrency", _enablePerf, _concurrency);
   if (_enablePerf) {
     const serverTimingHeader = getServerTimingHeader(timeTaken);
     ctx.res?.setHeader("Server-Timing", serverTimingHeader);
-    console.log("Server-Timing", serverTimingHeader);
+    logger.info("Server-Timing", serverTimingHeader);
   }
 
   return {

@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /// <reference types="../env" />
 import { FloatingButton } from "./FloatingButton/FloatingButton";
 import { Inline } from "./Inline/inline";
@@ -910,7 +912,7 @@ class CalApi {
 
     // If someone re-executes inline embed instruction, we want to ensure that duplicate inlineEl isn't added to the page per namespace
     if (this.cal.inlineEl && document.body.contains(this.cal.inlineEl)) {
-      console.warn("Inline embed already exists. Ignoring this call");
+      logger.warn("Inline embed already exists. Ignoring this call");
       return;
     }
 
@@ -1369,7 +1371,7 @@ class CalApi {
           ...(pageType ? { config: { "cal.embed.pageType": pageType } } : {}),
         });
       } else {
-        console.warn("Ignoring - full preload for inline embed and instead preloading assets only");
+        logger.warn("Ignoring - full preload for inline embed and instead preloading assets only");
         preloadAssetsForCalLink({ calLink, config });
       }
     } else {
@@ -1640,10 +1642,10 @@ function log(...args: unknown[]) {
   globalCal.__logQueue = globalCal.__logQueue || [];
   globalCal.__logQueue.push(args);
   if (searchString.includes("cal.embed.logging=1") || process.env.INTEGRATION_TEST_MODE === "true") {
-    console.log("Parent:", ...args);
+    logger.info("Parent:", ...args);
   }
 }
 
 function error(...args: unknown[]) {
-  console.error(...args);
+  logger.error(...args);
 }

@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { handleNoShowFee } from "@calcom/features/bookings/lib/payment/handleNoShowFee";
 import { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
 import type { PrismaClient } from "@calcom/prisma";
+const logger = pino()
 
 import { TRPCError } from "@trpc/server";
 
@@ -34,7 +36,7 @@ export const chargeCardHandler = async ({ ctx, input }: ChargeCardHandlerOptions
       payment: booking.payment[0],
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: `Failed to charge no show fee for ${booking.id}`,

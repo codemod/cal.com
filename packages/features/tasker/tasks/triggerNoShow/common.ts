@@ -1,3 +1,4 @@
+import pino from 'pino'
 import dayjs from "@calcom/dayjs";
 import { sendGenericWebhookPayload } from "@calcom/features/webhooks/lib/sendPayload";
 import logger from "@calcom/lib/logger";
@@ -5,6 +6,7 @@ import { safeStringify } from "@calcom/lib/safeStringify";
 import prisma from "@calcom/prisma";
 import type { TimeUnit } from "@calcom/prisma/enums";
 import { BookingStatus, WebhookTriggerEvents } from "@calcom/prisma/enums";
+const logger = pino()
 
 import { getBooking } from "./getBooking";
 import { getMeetingSessionsFromRoomName } from "./getMeetingSessionsFromRoomName";
@@ -95,7 +97,7 @@ export function sendWebhookPayload(
           : `Host with email ${hostEmail} didn't join the call or didn't join before ${maxStartTimeHumanReadable}`,
     },
   }).catch((e) => {
-    console.error(
+    logger.error(
       `Error executing webhook for event: ${triggerEvent}, URL: ${webhook.subscriberUrl}`,
       webhook,
       e

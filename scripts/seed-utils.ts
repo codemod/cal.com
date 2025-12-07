@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { faker } from "@faker-js/faker";
 import { randomUUID } from "crypto";
 import { uuid } from "short-uuid";
 import type z from "zod";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import { hashPassword } from "@calcom/lib/auth/hashPassword";
@@ -81,7 +83,7 @@ export async function createUserAndEventType({
     },
   });
 
-  console.log(
+  logger.info(
     `👤 Upserted '${user.username}' with email "${user.email}" & password "${user.password}". Booking page 👉 ${process.env.NEXT_PUBLIC_WEBAPP_URL}/${user.username}`
   );
 
@@ -124,7 +126,7 @@ export async function createUserAndEventType({
     });
 
     if (eventType) {
-      console.log(
+      logger.info(
         `\t📆 Event type ${eventTypeData.slug} already seems seeded - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/${user.username}/${eventTypeData.slug}`
       );
       continue;
@@ -133,7 +135,7 @@ export async function createUserAndEventType({
       data: eventTypeData,
     });
 
-    console.log(
+    logger.info(
       `\t📆 Event type ${eventTypeData.slug} with id ${id}, length ${eventTypeData.length}min - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/${user.username}/${eventTypeData.slug}`
     );
 
@@ -162,14 +164,14 @@ export async function createUserAndEventType({
           iCalUID: "",
         },
       });
-      console.log(
+      logger.info(
         `\t\t☎️ Created booking ${bookingInput.title} at ${new Date(
           bookingInput.startTime
         ).toLocaleDateString()}`
       );
     }
   }
-  console.log("👤 User with it's event-types and bookings created", theUser.email);
+  logger.info("👤 User with it's event-types and bookings created", theUser.email);
 
   if (credentials) {
     for (const credential of credentials) {
@@ -181,7 +183,7 @@ export async function createUserAndEventType({
           },
         });
 
-        console.log(`🔑 ${credential.type} credentials created for ${theUser.email}`);
+        logger.info(`🔑 ${credential.type} credentials created for ${theUser.email}`);
       }
     }
   }
@@ -221,7 +223,7 @@ export async function createTeamAndAddUsers(
       });
     } catch (_err) {
       if (_err instanceof Error && _err.message.indexOf("Unique constraint failed on the fields") !== -1) {
-        console.log(`Team '${team.name}' already exists, skipping.`);
+        logger.info(`Team '${team.name}' already exists, skipping.`);
         return;
       }
       throw _err;
@@ -233,7 +235,7 @@ export async function createTeamAndAddUsers(
     return;
   }
 
-  console.log(
+  logger.info(
     `🏢 Created team '${teamInput.name}' - ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`
   );
 
@@ -261,7 +263,7 @@ export async function createTeamAndAddUsers(
         accepted: true,
       },
     });
-    console.log(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${role}'`);
+    logger.info(`\t👤 Added '${teamInput.name}' membership for '${username}' with role '${role}'`);
   }
 
   return team;
@@ -304,7 +306,7 @@ export async function seedAttributes(teamId: number) {
   });
 
   if (existingAttributes.length > 0) {
-    console.log(`Skipping attributes seed, attributes already exist`);
+    logger.info(`Skipping attributes seed, attributes already exist`);
     return;
   }
 
@@ -319,7 +321,7 @@ export async function seedAttributes(teamId: number) {
     },
   });
 
-  console.log(`🎯 Creating attributes for team ${teamId}`);
+  logger.info(`🎯 Creating attributes for team ${teamId}`);
 
   const attributeRaw: { id: string; options: { id: string; value: string }[] }[] = [];
 
@@ -353,7 +355,7 @@ export async function seedAttributes(teamId: number) {
       })),
     });
 
-    console.log(`\t📝 Created attribute: ${attr.name}`);
+    logger.info(`\t📝 Created attribute: ${attr.name}`);
 
     // Assign random values/options to members
     for (const member of memberships) {
@@ -418,7 +420,7 @@ export async function seedAttributes(teamId: number) {
       }
     }
 
-    console.log(`\t✅ Assigned ${attr.name} values to ${memberships.length} members`);
+    logger.info(`\t✅ Assigned ${attr.name} values to ${memberships.length} members`);
   }
   return attributeRaw;
 }
@@ -468,7 +470,7 @@ export async function seedRoutingForms(
     },
   });
   if (form) {
-    console.log(`Skipping Routing Form - Form Seed, ${seededForm.name} already exists`);
+    logger.info(`Skipping Routing Form - Form Seed, ${seededForm.name} already exists`);
     return;
   }
 
@@ -688,7 +690,7 @@ export async function seedRoutingFormResponses(
   });
 
   if (bookings.length === 0) {
-    console.log("No bookings found for team - skipping routing form responses");
+    logger.info("No bookings found for team - skipping routing form responses");
     return;
   }
 
@@ -783,5 +785,5 @@ export async function seedRoutingFormResponses(
     });
   }
 
-  console.log(`Created ${bookings.length} routing form responses`);
+  logger.info(`Created ${bookings.length} routing form responses`);
 }

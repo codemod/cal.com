@@ -1,4 +1,6 @@
+import pino from 'pino'
 import {
+const logger = pino()
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   GOOGLE_REFRESH_TOKEN,
@@ -39,14 +41,14 @@ export async function generateGoogleCalendarAccessToken() {
 
     const json = await response.json();
     if (json.access_token) {
-      console.log("Access Token:", json.access_token);
+      logger.info("Access Token:", json.access_token);
       return json.access_token;
     } else {
-      console.error("Failed to retrieve access token:", json);
+      logger.error("Failed to retrieve access token:", json);
       return null;
     }
   } catch (error) {
-    console.error("Error fetching access token:", error);
+    logger.error("Error fetching access token:", error);
     return null;
   }
 }
@@ -75,15 +77,15 @@ export async function generateZoomAccessToken() {
 
     const json = await response.json();
     if (json.access_token) {
-      console.log("New Access Token:", json.access_token);
-      console.log("New Refresh Token:", json.refresh_token); // Save this refresh token securely
+      logger.info("New Access Token:", json.access_token);
+      logger.info("New Refresh Token:", json.refresh_token); // Save this refresh token securely
       return json.access_token; // You might also want to return the new refresh token if applicable
     } else {
-      console.error("Failed to refresh access token:", json);
+      logger.error("Failed to refresh access token:", json);
       return null;
     }
   } catch (error) {
-    console.error("Error refreshing access token:", error);
+    logger.error("Error refreshing access token:", error);
     return null;
   }
 }

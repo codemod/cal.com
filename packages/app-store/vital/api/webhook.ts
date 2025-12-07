@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
 import queue from "queue";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import { IS_PRODUCTION } from "@calcom/lib/constants";
@@ -156,7 +158,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ body: req.body });
   } catch (_err) {
     const err = getErrorFromUnknown(_err);
-    console.error(`Webhook Error: ${err.message}`);
+    logger.error(`Webhook Error: ${err.message}`);
     res.status(err.statusCode ?? 500).send({
       message: err.message,
       stack: IS_PRODUCTION ? undefined : err.stack,

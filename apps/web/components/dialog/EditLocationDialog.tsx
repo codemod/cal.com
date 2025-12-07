@@ -1,9 +1,11 @@
+import pino from 'pino'
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isValidPhoneNumber } from "libphonenumber-js/max";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch, useFormContext } from "react-hook-form";
 import { z } from "zod";
+const logger = pino()
 
 import type { EventLocationType, LocationObject } from "@calcom/app-store/locations";
 import {
@@ -186,7 +188,7 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
   const SelectedLocationInput = (() => {
     if (eventLocationType && eventLocationType.organizerInputType && LocationInput) {
       if (!eventLocationType.variable) {
-        console.error("eventLocationType.variable can't be undefined");
+        logger.error("eventLocationType.variable can't be undefined");
         return null;
       }
 

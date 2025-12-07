@@ -1,3 +1,4 @@
+import pino from 'pino'
 import dayjs from "@calcom/dayjs";
 import { WorkflowService } from "@calcom/features/ee/workflows/lib/service/WorkflowService";
 import type { Tasker } from "@calcom/features/tasker/tasker";
@@ -13,6 +14,7 @@ import type { App_RoutingForms_Form, User } from "@calcom/prisma/client";
 import { WebhookTriggerEvents } from "@calcom/prisma/enums";
 import { RoutingFormSettings } from "@calcom/prisma/zod-utils";
 import type { Ensure } from "@calcom/types/utils";
+const logger = pino()
 
 import type { FormResponse, SerializableForm, SerializableField, OrderedResponses } from "../types/types";
 import getFieldIdentifier from "./getFieldIdentifier";
@@ -187,7 +189,7 @@ export async function _onFormSubmission(
         }, {} as Record<string, FormResponse[keyof FormResponse]["value"]>),
       },
     }).catch((e) => {
-      console.error(`Error executing routing form webhook`, webhook, e);
+      logger.error(`Error executing routing form webhook`, webhook, e);
     });
   });
 

@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { uuid } from "short-uuid";
+const logger = pino()
 
 import { hashPassword } from "@calcom/lib/auth/hashPassword";
 import { DEFAULT_SCHEDULE, getAvailabilityFromSchedule } from "@calcom/lib/availability";
@@ -10,7 +12,7 @@ import { MembershipRole, RoleType } from "@calcom/prisma/enums";
  * This demonstrates how to set up fine-grained permissions for team members
  */
 export async function createPBACOrganization() {
-  console.log("🏢 Creating PBAC-enabled organization with custom roles...");
+  logger.info("🏢 Creating PBAC-enabled organization with custom roles...");
 
   // Check if organization already exists
   const existingOrg = await prisma.team.findFirst({
@@ -21,7 +23,7 @@ export async function createPBACOrganization() {
   });
 
   if (existingOrg) {
-    console.log("⚠️  PBAC Demo Organization already exists, skipping creation");
+    logger.info("⚠️  PBAC Demo Organization already exists, skipping creation");
     return {
       organization: existingOrg,
       customRoles: {},
@@ -60,7 +62,7 @@ export async function createPBACOrganization() {
     },
   });
 
-  console.log(`✅ Created organization: ${organization.name} (ID: ${organization.id})`);
+  logger.info(`✅ Created organization: ${organization.name} (ID: ${organization.id})`);
 
   // Create custom roles with specific permissions
   const customRoles = await createCustomRoles(organization.id);
@@ -71,32 +73,32 @@ export async function createPBACOrganization() {
   // Create a team within the organization
   const team = await createTeamWithCustomRoles(organization.id, users, customRoles);
 
-  console.log("🎉 PBAC organization setup complete!");
-  console.log(`Organization URL: ${process.env.NEXT_PUBLIC_WEBAPP_URL}/org/${organization.slug}`);
+  logger.info("🎉 PBAC organization setup complete!");
+  logger.info(`Organization URL: ${process.env.NEXT_PUBLIC_WEBAPP_URL}/org/${organization.slug}`);
 
   // Display created users with their credentials and permissions
-  console.log("\n📋 Created Users - Login Credentials & Permissions:");
-  console.log("=".repeat(80));
+  logger.info("\n📋 Created Users - Login Credentials & Permissions:");
+  logger.info("=".repeat(80));
   users.forEach(({ user, role, customRole }) => {
     const password = getPasswordForUser(user.email);
     const permissions = getPermissionsForRole(user.email, customRoles);
 
-    console.log(`👤 ${user.name}`);
-    console.log(`   📧 Email: ${user.email}`);
-    console.log(`   🔑 Password: ${password}`);
-    console.log(`   👔 Role: ${role}${customRole ? ` (${customRole})` : ""}`);
+    logger.info(`👤 ${user.name}`);
+    logger.info(`   📧 Email: ${user.email}`);
+    logger.info(`   🔑 Password: ${password}`);
+    logger.info(`   👔 Role: ${role}${customRole ? ` (${customRole})` : ""}`);
 
     if (permissions.length > 0) {
-      console.log(`   🔐 Permissions:`);
+      logger.info(`   🔐 Permissions:`);
       permissions.forEach((permission) => {
-        console.log(`      • ${permission.resource}:${permission.action}`);
+        logger.info(`      • ${permission.resource}:${permission.action}`);
       });
     } else {
-      console.log(`   🔐 Permissions: Full access (Owner role)`);
+      logger.info(`   🔐 Permissions: Full access (Owner role)`);
     }
-    console.log("");
+    logger.info("");
   });
-  console.log("=".repeat(80));
+  logger.info("=".repeat(80));
 
   return {
     organization,
@@ -110,7 +112,7 @@ export async function createPBACOrganization() {
  * Creates custom roles with specific permissions for the organization
  */
 async function createCustomRoles(organizationId: number) {
-  console.log("🔐 Creating custom roles with PBAC permissions...");
+  logger.info("🔐 Creating custom roles with PBAC permissions...");
 
   // Check if roles already exist
   const existingRoles = await prisma.role.findMany({
@@ -118,7 +120,7 @@ async function createCustomRoles(organizationId: number) {
   });
 
   if (existingRoles.length > 0) {
-    console.log("⚠️  Custom roles already exist for this organization, skipping creation");
+    logger.info("⚠️  Custom roles already exist for this organization, skipping creation");
     return {
       eventManager: existingRoles.find((r) => r.name === "Event Manager"),
       analytics: existingRoles.find((r) => r.name === "Analytics Specialist"),
@@ -271,11 +273,11 @@ async function createCustomRoles(organizationId: number) {
       permissions: true,
     },
   });
-  console.log("✅ Created custom roles:");
-  console.log(`  - Event Manager (${eventManagerRole.permissions.length} permissions)`);
-  console.log(`  - Analytics Specialist (${analyticsRole.permissions.length} permissions)`);
-  console.log(`  - Team Coordinator (${teamCoordinatorRole.permissions.length} permissions)`);
-  console.log(`  - Support Agent (${supportAgentRole.permissions.length} permissions)`);
+  logger.info("✅ Created custom roles:");
+  logger.info(`  - Event Manager (${eventManagerRole.permissions.length} permissions)`);
+  logger.info(`  - Analytics Specialist (${analyticsRole.permissions.length} permissions)`);
+  logger.info(`  - Team Coordinator (${teamCoordinatorRole.permissions.length} permissions)`);
+  logger.info(`  - Support Agent (${supportAgentRole.permissions.length} permissions)`);
 
   return {
     eventManager: eventManagerRole,
@@ -289,7 +291,7 @@ async function createCustomRoles(organizationId: number) {
  * Creates users with different roles in the organization
  */
 async function createUsersWithRoles(organizationId: number, customRoles: any) {
-  console.log("👥 Creating users with custom roles...");
+  logger.info("👥 Creating users with custom roles...");
 
   const users: Array<{
     user: any;
@@ -313,7 +315,7 @@ async function createUsersWithRoles(organizationId: number, customRoles: any) {
   });
 
   if (existingUsers.length > 0) {
-    console.log("⚠️  Some PBAC users already exist, skipping user creation");
+    logger.info("⚠️  Some PBAC users already exist, skipping user creation");
     return existingUsers.map((user) => ({
       user,
       role: MembershipRole.MEMBER,
@@ -436,9 +438,9 @@ async function createUsersWithRoles(organizationId: number, customRoles: any) {
 
   users.push({ user: support, role: MembershipRole.MEMBER, customRole: "Support Agent" });
 
-  console.log("✅ Created users with roles:");
+  logger.info("✅ Created users with roles:");
   users.forEach(({ user, role, customRole }) => {
-    console.log(`  - ${user.name} (${user.email}) - ${role}${customRole ? ` + ${customRole}` : ""}`);
+    logger.info(`  - ${user.name} (${user.email}) - ${role}${customRole ? ` + ${customRole}` : ""}`);
   });
 
   return users;
@@ -448,7 +450,7 @@ async function createUsersWithRoles(organizationId: number, customRoles: any) {
  * Creates a team within the organization with custom role assignments
  */
 async function createTeamWithCustomRoles(organizationId: number, users: any[], customRoles: any) {
-  console.log("🏢 Creating team with custom role assignments...");
+  logger.info("🏢 Creating team with custom role assignments...");
 
   const team = await prisma.team.create({
     data: {
@@ -514,8 +516,8 @@ async function createTeamWithCustomRoles(organizationId: number, users: any[], c
     },
   });
 
-  console.log(`✅ Created team: ${team.name} with ${users.length} members`);
-  console.log(`Team URL: ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`);
+  logger.info(`✅ Created team: ${team.name} with ${users.length} members`);
+  logger.info(`Team URL: ${process.env.NEXT_PUBLIC_WEBAPP_URL}/team/${team.slug}`);
 
   return team;
 }
@@ -692,11 +694,11 @@ function getPermissionsForRole(email: string, customRoles: any): Array<{ resourc
 if (require.main === module) {
   createPBACOrganization()
     .then(() => {
-      console.log("✅ PBAC organization created successfully!");
+      logger.info("✅ PBAC organization created successfully!");
       process.exit(0);
     })
     .catch((error) => {
-      console.error("❌ Error creating PBAC organization:", error);
+      logger.error("❌ Error creating PBAC organization:", error);
       process.exit(1);
     })
     .finally(async () => {

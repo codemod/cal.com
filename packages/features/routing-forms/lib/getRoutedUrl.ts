@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // !IMPORTANT! changes to this file requires publishing new version of platform libraries in order for the changes to be applied to APIV2
 import { createHash } from "crypto";
 import type { GetServerSidePropsContext } from "next";
@@ -187,7 +189,7 @@ const _getRoutedUrl = async (context: Pick<GetServerSidePropsContext, "query" | 
   }
 
   // TODO: To be done using sentry tracing
-  console.log("Server-Timing", getServerTimingHeader(timeTaken));
+  logger.info("Server-Timing", getServerTimingHeader(timeTaken));
 
   //TODO: Maybe take action after successful mutation
   if (decidedAction.type === "customPageMessage") {

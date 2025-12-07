@@ -1,7 +1,9 @@
+import pino from 'pino'
 import type { TFunction } from "i18next";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { FieldError } from "react-hook-form";
+const logger = pino()
 
 import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
 import { useIsPlatformBookerEmbed } from "@calcom/atoms/hooks/useIsPlatformBookerEmbed";
@@ -108,7 +110,7 @@ export const BookEventForm = ({
     );
 
   if (!eventType) {
-    console.warn("No event type found for event", extraOptions);
+    logger.warn("No event type found for event", extraOptions);
     return <Alert severity="warning" message={t("error_booking_event")} />;
   }
 

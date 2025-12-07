@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { parseRequestData } from "app/api/parseRequestData";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import { passwordResetRequest } from "@calcom/features/auth/lib/passwordResetRequest";
 import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
@@ -41,7 +43,7 @@ async function handler(req: NextRequest) {
     if (user) passwordResetRequest(user).catch(console.error);
     return NextResponse.json({ message: "password_reset_email_sent" }, { status: 201 });
   } catch (reason) {
-    console.error(reason);
+    logger.error(reason);
     return NextResponse.json({ message: "Unable to create password reset request" }, { status: 500 });
   }
 }

@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { expect } from "@playwright/test";
+const logger = pino()
 
 import { test } from "@calcom/web/playwright/lib/fixtures";
 
@@ -35,7 +37,7 @@ test.describe("Preview", () => {
 
     const failedRequestUrl = await new Promise<string>((resolve) =>
       page.on("requestfailed", (request) => {
-        console.log("request failed");
+        logger.info("request failed");
         resolve(request.url());
       })
     );

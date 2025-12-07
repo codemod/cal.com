@@ -1,6 +1,8 @@
+import pino from 'pino'
 import glob from "fast-glob";
 import fs from "fs-extra";
 import path from "node:path";
+const logger = pino()
 
 import { lucideIconList } from "../components/icon/icon-list.mjs";
 
@@ -21,9 +23,9 @@ export async function copyIcons() {
       const file = path.join(inputDir, icon);
       try {
         fs.copyFileSync(file, destinationFile);
-        console.log(`Copied icon: ${icon}`);
+        logger.info(`Copied icon: ${icon}`);
       } catch (err) {
-        console.error(`Error copying file: ${icon}`, err);
+        logger.error(`Error copying file: ${icon}`, err);
       }
     }
   }

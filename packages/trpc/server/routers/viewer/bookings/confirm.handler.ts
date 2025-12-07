@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { getUsersCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
 import type { LocationObject } from "@calcom/app-store/locations";
 import { getLocationValueForDB } from "@calcom/app-store/locations";
@@ -22,6 +23,7 @@ import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
 import { prisma } from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
 import {
+const logger = pino()
   BookingStatus,
   MembershipRole,
   WebhookTriggerEvents,
@@ -405,7 +407,7 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
       });
     } catch (error) {
       // Silently fail
-      console.error(
+      logger.error(
         "Error while scheduling workflow reminders for BOOKING_REJECTED:",
         error instanceof Error ? error.message : String(error)
       );

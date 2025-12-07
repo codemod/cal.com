@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
 import { stringify } from "querystring";
+const logger = pino()
 
 import type { Prisma } from "@calcom/prisma/client";
 
@@ -14,7 +16,7 @@ function getReturnToValueFromQueryState(req: NextApiRequest) {
   try {
     returnTo = JSON.parse(`${req.query.state}`).returnTo;
   } catch (error) {
-    console.info("No 'returnTo' in req.query.state");
+    logger.info("No 'returnTo' in req.query.state");
   }
   return returnTo;
 }

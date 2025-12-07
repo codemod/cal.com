@@ -1,6 +1,8 @@
+import pino from 'pino'
 import dayjs from "@calcom/dayjs";
 import logger from "@calcom/lib/logger";
 import type { PrismaClient } from "@calcom/prisma";
+const logger = pino()
 
 import { createWebhookSignature, jsonParse } from "./sendPayload";
 
@@ -65,7 +67,7 @@ export async function handleWebhookScheduledTriggers(prisma: PrismaClient) {
         body: job.payload,
         headers,
       }).catch((error) => {
-        console.error(`Webhook trigger for subscriber url ${job.subscriberUrl} failed with error: ${error}`);
+        logger.error(`Webhook trigger for subscriber url ${job.subscriberUrl} failed with error: ${error}`);
       })
     );
 

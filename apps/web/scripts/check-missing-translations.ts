@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { readFileSync, readdirSync, writeFileSync } from "fs";
 import { join } from "path";
+const logger = pino()
 
 const TEMPLATE_LANGUAGE = "en";
 const SPECIFIC_LOCALES = process.argv.slice(2) || [];
@@ -16,7 +18,7 @@ const missingTranslationLocales: string[] = [];
   if (locale === TEMPLATE_LANGUAGE) return;
   if (!ALL_LOCALES.includes(locale)) {
     missingTranslationLocales.push(locale);
-    console.log(`
+    logger.info(`
     ❌ ${locale} is not found in ${LOCALES_PATH}!
     If you want to create a new locale, Please create common.json under ${join(LOCALES_PATH, locale)}.
     `);
@@ -44,8 +46,8 @@ const missingTranslationLocales: string[] = [];
 });
 
 if (missingTranslationLocales.length) {
-  console.log("🌍 The following locales need to be translated: ");
-  console.log(`  ${missingTranslationLocales.join(", ")}`);
+  logger.info("🌍 The following locales need to be translated: ");
+  logger.info(`  ${missingTranslationLocales.join(", ")}`);
 } else {
-  console.log("💯 All the locales are completely translated!");
+  logger.info("💯 All the locales are completely translated!");
 }

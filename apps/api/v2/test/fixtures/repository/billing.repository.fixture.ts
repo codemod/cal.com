@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { PrismaReadService } from "@/modules/prisma/prisma-read.service";
 import { PrismaWriteService } from "@/modules/prisma/prisma-write.service";
 import { TestingModule } from "@nestjs/testing";
+const logger = pino()
 
 export class PlatformBillingRepositoryFixture {
   private prismaReadClient: PrismaReadService["prisma"];
@@ -53,7 +55,7 @@ export class PlatformBillingRepositoryFixture {
         },
       });
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     }
   }
 }

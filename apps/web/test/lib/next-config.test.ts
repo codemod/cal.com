@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { it, expect, describe, beforeAll } from "vitest";
+const logger = pino()
 
 import { getRegExpThatMatchesAllOrgDomains } from "../../getNextjsOrgRewriteConfig";
 
@@ -21,7 +23,7 @@ beforeAll(async () => {
   orgUserTypeRouteMatch = match(orgUserTypeRoutePath);
 
   orgUserRouteMatch = match(orgUserRoutePath);
-  console.log({
+  logger.info({
     regExps: {
       orgUserTypeRouteMatch: pathToRegexp(orgUserTypeRoutePath),
       orgUserRouteMatch: pathToRegexp(orgUserRoutePath),

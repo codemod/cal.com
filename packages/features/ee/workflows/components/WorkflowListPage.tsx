@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+const logger = pino()
 
 import type { WorkflowPermissions } from "@calcom/features/workflows/repositories/WorkflowPermissionsRepository";
 import { getPlaceholderAvatar } from "@calcom/lib/defaultAvatarImage";
@@ -70,7 +72,7 @@ export default function WorkflowListPage({ workflows }: Props) {
 
   const mutation = trpc.viewer.workflows.workflowOrder.useMutation({
     onError: async (err) => {
-      console.error(err.message);
+      logger.error(err.message);
       await utils.viewer.workflows.filteredList.cancel();
       await utils.viewer.workflows.filteredList.invalidate();
     },

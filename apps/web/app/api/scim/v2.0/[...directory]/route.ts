@@ -1,9 +1,11 @@
+import pino from 'pino'
 import type { DirectorySyncEvent, DirectorySyncRequest } from "@boxyhq/saml-jackson";
 import type { Params } from "app/_types";
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+const logger = pino()
 
 import handleGroupEvents from "@calcom/features/ee/dsync/lib/handleGroupEvents";
 import handleUserEvents from "@calcom/features/ee/dsync/lib/handleUserEvents";
@@ -92,7 +94,7 @@ async function handleScimRequest(request: NextRequest, method: string, params: P
   const searchParams = request.nextUrl.searchParams;
 
   if (shouldLog) {
-    console.log(
+    logger.info(
       "SCIM API request",
       safeStringify({
         method,
@@ -136,7 +138,7 @@ async function handleScimRequest(request: NextRequest, method: string, params: P
   const { status, data } = await dsyncController.requests.handle(scimRequest, handleEvents);
 
   if (shouldLog) {
-    console.log(
+    logger.info(
       "Response to SCIM",
       safeStringify({
         status,

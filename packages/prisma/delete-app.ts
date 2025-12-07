@@ -1,4 +1,6 @@
+import pino from 'pino'
 import prisma from ".";
+const logger = pino()
 
 // TODO: Put some restrictions here to run it on local DB only.
 // Production DB currently doesn't support app deletion
@@ -15,10 +17,10 @@ async function main() {
         appId: appId,
       },
     });
-    console.log(`Deleted app from DB: '${appId}'`);
+    logger.info(`Deleted app from DB: '${appId}'`);
   } catch (e) {
     if (e.code === "P2025") {
-      console.log(`App '${appId}' already deleted from DB`);
+      logger.info(`App '${appId}' already deleted from DB`);
       return;
     }
     throw e;
@@ -27,7 +29,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(e);
+    logger.error(e);
     process.exit(1);
   })
   .finally(async () => {

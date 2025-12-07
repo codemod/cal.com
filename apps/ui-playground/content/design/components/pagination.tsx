@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { RenderComponentWithSnippet } from "@/app/components/render";
@@ -52,11 +54,11 @@ export const WithCallbacksExample = () => {
   const totalItems = 100;
 
   const handleNext = () => {
-    console.log("Next page clicked");
+    logger.info("Next page clicked");
   };
 
   const handlePrevious = () => {
-    console.log("Previous page clicked");
+    logger.info("Previous page clicked");
   };
 
   return (

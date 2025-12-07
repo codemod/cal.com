@@ -1,4 +1,6 @@
+import pino from 'pino'
 import prismock from "../../../../../../tests/libs/__mocks__/prisma";
+const logger = pino()
 
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -60,7 +62,7 @@ describe("GET /api/slots", () => {
         });
         buildMockData();
         await handler(req, res);
-        console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+        logger.info({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
         const response = JSON.parse(res._getData());
         expect(response.slots).toEqual(expect.objectContaining({}));
       });
@@ -78,7 +80,7 @@ describe("GET /api/slots", () => {
         });
         buildMockData();
         await handler(req, res);
-        console.log({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
+        logger.info({ statusCode: res._getStatusCode(), data: JSON.parse(res._getData()) });
         const response = JSON.parse(res._getData());
         expect(response.slots).toEqual(expect.objectContaining({}));
       });

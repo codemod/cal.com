@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { JsonGroup, JsonItem, JsonRule, JsonTree } from "react-awesome-query-builder";
 import type { Config } from "react-awesome-query-builder";
 import { Utils as QbUtils } from "react-awesome-query-builder";
+const logger = pino()
 
 import { getQueryBuilderConfigForAttributes } from "@calcom/app-store/routing-forms/lib/getQueryBuilderConfig";
 import type { LocalRoute } from "@calcom/app-store/routing-forms/types/types";
@@ -111,7 +113,7 @@ export function getValueOfAttributeOption(
   ) {
     if (attributeOption.isGroup) {
       const subOptions = attributeOption.contains.map((option) => option.value);
-      console.log("A group option found. Using all its sub-options instead", safeStringify(subOptions));
+      logger.info("A group option found. Using all its sub-options instead", safeStringify(subOptions));
       return subOptions;
     }
     return attributeOption.value;

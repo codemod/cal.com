@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useState } from "react";
@@ -174,7 +176,7 @@ function CreateDelegationDialog({
         serviceAccountKey: validatedKey.data,
       });
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       form.setError("serviceAccountKey", { message: t("invalid_service_account_key") });
       return;
     }

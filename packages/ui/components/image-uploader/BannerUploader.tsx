@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useCallback, useState, useEffect } from "react";
@@ -112,7 +114,7 @@ export default function BannerUploader({
         );
         handleAvatarChange(croppedImage);
       } catch (e) {
-        console.error(e);
+        logger.error(e);
       }
     },
     [result, height, width, handleAvatarChange]

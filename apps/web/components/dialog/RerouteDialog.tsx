@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -5,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useEffect, useCallback } from "react";
 import type { z } from "zod";
+const logger = pino()
 
 import FormInputFields, {
   FormInputFieldsSkeleton,
@@ -227,7 +229,7 @@ const useEventListeners = ({ reroutingState }: { reroutingState: ReturnType<type
       const calEventData = event.data.data;
       showToast(t("rerouted_booking_successfully_redirecting_to_booking_page"), "success");
       if (!calEventData.uid) {
-        console.error("Booking UID is not there");
+        logger.error("Booking UID is not there");
         throw new Error(t("something_went_wrong"));
       }
       const newBookingId = calEventData.uid;
@@ -336,7 +338,7 @@ const NewRoutingManager = ({
     onSuccess: (booking) => {
       showToast(t("rerouted_booking_successfully_redirecting_to_booking_page"), "success");
       if (!booking.uid) {
-        console.error("Booking UID is not there");
+        logger.error("Booking UID is not there");
         throw new Error(t("something_went_wrong"));
       }
 
@@ -394,12 +396,12 @@ const NewRoutingManager = ({
     };
   }) {
     if (!chosenRoute) {
-      console.error("Chosen route must be there for rerouting");
+      logger.error("Chosen route must be there for rerouting");
       throw new Error(t("something_went_wrong"));
     }
 
     if (!eventTypeTeam?.slug) {
-      console.error("Event type team slug must be there for rerouting");
+      logger.error("Event type team slug must be there for rerouting");
       throw new Error(t("something_went_wrong"));
     }
 
@@ -504,7 +506,7 @@ const NewRoutingManager = ({
     }
     if (!chosenEventType) {
       // There are disabled/loading state on button to ensure that this function is not called if chosenEventType is not there
-      console.error("Chosen event type must be there for rerouting");
+      logger.error("Chosen event type must be there for rerouting");
       throw new Error(t("something_went_wrong"));
     }
 
@@ -515,7 +517,7 @@ const NewRoutingManager = ({
 
   function rescheduleSameEventInNewTab() {
     if (!chosenEventUrls?.eventBookingAbsoluteUrl) {
-      console.error("URL must be there for opening new tab");
+      logger.error("URL must be there for opening new tab");
       throw new Error(t("something_went_wrong"));
     }
 
@@ -532,7 +534,7 @@ const NewRoutingManager = ({
 
   function rescheduleDifferentEventInNewTab() {
     if (!chosenEventUrls?.eventBookingAbsoluteUrl) {
-      console.error("URL must be there for opening new tab");
+      logger.error("URL must be there for opening new tab");
       throw new Error(t("something_went_wrong"));
     }
     const reschedulerWindow = rescheduleInNewTab({
@@ -563,7 +565,7 @@ const NewRoutingManager = ({
         chosenRoute.action.type === RouteActionType.EventTypeRedirectUrl ? chosenRoute.action.value : null;
 
       if (!eventTypeSlugToRedirect) {
-        console.error("Event type slug to redirect must be there if action is EventTypeRedirectUrl");
+        logger.error("Event type slug to redirect must be there if action is EventTypeRedirectUrl");
         throw new Error(t("something_went_wrong"));
       }
       return (
@@ -874,18 +876,18 @@ export const RerouteDialog = ({ isOpenDialog, setIsOpenDialog, booking }: Rerout
   const bookingEventType = booking.eventType;
 
   if (!bookingEventType.team) {
-    console.error("Only team event can be re-routed");
+    logger.error("Only team event can be re-routed");
     throw new Error(t("something_went_wrong"));
   }
 
   if (!bookingEventType.team.slug) {
-    console.error("Team slug must be there for rerouting");
+    logger.error("Team slug must be there for rerouting");
     throw new Error(t("something_went_wrong"));
   }
 
   if (!booking.user) {
     // Not a hard requirement, but better to be strict with data.
-    console.error("Booking must have a user");
+    logger.error("Booking must have a user");
     throw new Error(t("something_went_wrong"));
   }
 

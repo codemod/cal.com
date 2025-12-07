@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { z } from "zod";
+const logger = pino()
 
 import { entityPrismaWhereClause } from "@calcom/features/pbac/lib/entityPermissionUtils.server";
 import logger from "@calcom/lib/logger";
@@ -142,7 +144,7 @@ export async function getSerializableForm<TForm extends App_RoutingForms_Form>({
         parsedRouter.fields?.forEach((field) => {
           if (!fieldsExistInForm[field.id]) {
             // Instead of throwing error, Log it instead of breaking entire routing forms feature
-            console.error(
+            logger.error(
               "This is an impossible state. A router field must always be present in the connected form."
             );
           } else {

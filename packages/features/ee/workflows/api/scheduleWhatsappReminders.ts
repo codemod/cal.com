@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /* Schedule any workflow reminder that falls within the next 2 hours for WHATSAPP */
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -153,7 +155,7 @@ export async function handler(req: NextRequest) {
         }
       }
     } catch (error) {
-      console.log(`Error scheduling WHATSAPP with error ${error}`);
+      logger.info(`Error scheduling WHATSAPP with error ${error}`);
     }
   }
 

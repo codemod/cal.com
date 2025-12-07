@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { safeStringify } from "@calcom/lib/safeStringify";
+const logger = pino()
 
 export interface Contact extends CreateContact {
   id: string;
@@ -71,7 +73,7 @@ export const intercom = {
         data: data[0],
       };
     } catch (err) {
-      console.error(`Unexpected error while fetching contact data from email: ${safeStringify(err)}`);
+      logger.error(`Unexpected error while fetching contact data from email: ${safeStringify(err)}`);
       return {
         error: "Unexpected error while fetching contact data from email",
       };
@@ -90,7 +92,7 @@ export const intercom = {
 
       if (!res.ok) {
         const data = await res.json();
-        console.error(`Error creating contact from email ${data.email}: `, safeStringify(data));
+        logger.error(`Error creating contact from email ${data.email}: `, safeStringify(data));
         return {
           error: data?.errors[0]?.message ?? "Error creating contact from email",
         };
@@ -101,7 +103,7 @@ export const intercom = {
         data: contact,
       };
     } catch (err) {
-      console.error(`Unexpected error while creating contact from email: ${safeStringify(err)}`);
+      logger.error(`Unexpected error while creating contact from email: ${safeStringify(err)}`);
       return {
         error: "Unexpected error while creating contact from email",
       };
@@ -123,7 +125,7 @@ export const intercom = {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Intercom API error:", safeStringify(errorData));
+        logger.error("Intercom API error:", safeStringify(errorData));
         return {
           error: `Intercom Err: ${errorData?.errors?.[0].message ?? "Error creating conversation"}`,
         };
@@ -133,7 +135,7 @@ export const intercom = {
         data: true,
       };
     } catch (err) {
-      console.error(`Unexpected error while creating conversation from email: ${safeStringify(err)}`);
+      logger.error(`Unexpected error while creating conversation from email: ${safeStringify(err)}`);
       return {
         error: "Unexpected error while creating contact from email",
       };

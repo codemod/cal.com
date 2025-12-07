@@ -1,9 +1,11 @@
+import pino from 'pino'
 import type { Frame, Page, Request as PlaywrightRequest } from "@playwright/test";
 import { expect } from "@playwright/test";
 import { createHash } from "crypto";
 import EventEmitter from "events";
 import type { IncomingMessage, ServerResponse } from "http";
 import { createServer } from "http";
+const logger = pino()
  
 import type { Messages } from "mailhog";
 import { totp } from "otplib";
@@ -288,7 +290,7 @@ export async function getEmailsReceivedByUser({
 
   const matchingEmails = await emails.search(userEmail, "to");
   if (!matchingEmails?.total) {
-    console.log(
+    logger.info(
       `No emails received by ${userEmail}. All emails sent to:`,
       (await emails.messages())?.items.map((e) => e.to)
     );
@@ -419,7 +421,7 @@ export function goToUrlWithErrorHandling({ page, url }: { page: Page; url: strin
   return new Promise<{ success: boolean; url: string }>(async (resolve) => {
     const onRequestFailed = (request: PlaywrightRequest) => {
       const failedToLoadUrl = request.url();
-      console.log("goToUrlWithErrorHandling: Failed to load URL:", failedToLoadUrl);
+      logger.info("goToUrlWithErrorHandling: Failed to load URL:", failedToLoadUrl);
       resolve({ success: false, url: failedToLoadUrl });
     };
     page.on("requestfailed", onRequestFailed);

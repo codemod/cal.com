@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { execSync } from "child_process";
+const logger = pino()
 
 function checkCommandExists(command: string): boolean {
   try {
@@ -18,18 +20,18 @@ try {
   // Try docker compose first (new syntax)
   try {
     execSync("docker compose version", { stdio: "ignore" });
-    console.log("Starting containers with docker compose...");
+    logger.info("Starting containers with docker compose...");
     execSync("docker compose up -d", { stdio: "inherit" });
   } catch (e) {
     // Fall back to docker-compose if the above fails
     if (checkCommandExists("docker-compose")) {
-      console.log("Starting containers with docker-compose...");
+      logger.info("Starting containers with docker-compose...");
       execSync("docker-compose up -d", { stdio: "inherit" });
     } else {
       throw new Error("Neither 'docker compose' nor 'docker-compose' command is available");
     }
   }
 } catch (error) {
-  console.error(`Error: ${error instanceof Error ? error.message : "Unknown error occurred"}`);
+  logger.error(`Error: ${error instanceof Error ? error.message : "Unknown error occurred"}`);
   process.exit(1);
 }

@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -59,7 +61,7 @@ export function useTypedQuery<T extends z.AnyZodObject>(schema: T) {
   }, [parsedQuerySchema, schema, router, pathname, unparsedQuery, parsedQuery]);
 
   if (parsedQuerySchema.success) parsedQuery = parsedQuerySchema.data;
-  else if (!parsedQuerySchema.success) console.error(parsedQuerySchema.error);
+  else if (!parsedQuerySchema.success) logger.error(parsedQuerySchema.error);
 
   // Set the query based on schema values
   const setQuery = useCallback(

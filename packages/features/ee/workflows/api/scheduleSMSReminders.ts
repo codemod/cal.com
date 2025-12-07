@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /* Schedule any workflow reminder that falls within the next 2 hours for SMS */
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -233,7 +235,7 @@ export async function handler(req: NextRequest) {
           retryCount: reminder.retryCount + 1,
         },
       });
-      console.log(`Error scheduling SMS with error ${error}`);
+      logger.info(`Error scheduling SMS with error ${error}`);
     }
   }
 

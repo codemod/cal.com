@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import { getPremiumMonthlyPlanPriceId } from "@calcom/app-store/stripepayment/lib/utils";
 import { getLocaleFromRequest } from "@calcom/features/auth/lib/getLocaleFromRequest";
@@ -221,7 +223,7 @@ const handler: CustomNextApiHandler = async (body, usernameStatus) => {
   }
 
   if (checkoutSessionId) {
-    console.log("Created user but missing payment", checkoutSessionId);
+    logger.info("Created user but missing payment", checkoutSessionId);
     return NextResponse.json(
       { message: "Created user but missing payment", checkoutSessionId },
       { status: 402 }

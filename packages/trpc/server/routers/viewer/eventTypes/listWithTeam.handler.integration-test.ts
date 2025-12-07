@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { describe, it, expect, afterAll, beforeAll } from "vitest";
+const logger = pino()
 
 import prisma from "@calcom/prisma";
 import type { User, Team, EventType } from "@calcom/prisma/client";
@@ -124,7 +126,7 @@ describe("listWithTeamHandler", () => {
         });
       }
     } catch (error) {
-      console.warn("Test cleanup failed:", error);
+      logger.warn("Test cleanup failed:", error);
     }
   });
 

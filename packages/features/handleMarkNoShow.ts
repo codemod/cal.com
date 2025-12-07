@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { type TFunction } from "i18next";
+const logger = pino()
 
 import { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
 import { getBookerBaseUrl } from "@calcom/features/ee/organizations/lib/getBookerUrlServer";
@@ -48,7 +50,7 @@ const logFailedResults = (results: PromiseSettledResult<any>[]) => {
   const failed = results.filter((x) => x.status === "rejected") as PromiseRejectedResult[];
   if (failed.length < 1) return;
   const failedMessage = failed.map((r) => r.reason);
-  console.error("Failed to update no-show status", failedMessage.join(","));
+  logger.error("Failed to update no-show status", failedMessage.join(","));
 };
 
 class ResponsePayload {

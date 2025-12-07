@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import sendPayload from "@calcom/features/webhooks/lib/sendPayload";
 
@@ -23,7 +25,7 @@ export async function sendWebhook(payload: string): Promise<void> {
     await sendPayload(secretKey, triggerEvent, createdAt, webhook, data);
   } catch (error) {
     // ... handle error
-    console.error(error);
+    logger.error(error);
     throw error;
   }
 }

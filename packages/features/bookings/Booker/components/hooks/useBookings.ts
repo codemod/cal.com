@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
@@ -280,7 +282,7 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, isBookin
 
       if ("isShortCircuitedBooking" in booking && booking.isShortCircuitedBooking) {
         if (!booking.uid) {
-          console.error("Decoy booking missing uid");
+          logger.error("Decoy booking missing uid");
           return;
         }
 
@@ -369,7 +371,7 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, isBookin
       }
 
       if (!uid) {
-        console.error("No uid returned from createBookingMutation");
+        logger.error("No uid returned from createBookingMutation");
         return;
       }
 
@@ -429,7 +431,7 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, isBookin
       setExpiryTime(responseData.expires);
     },
     onError: (err) => {
-      console.error("Error creating instant booking", err);
+      logger.error("Error creating instant booking", err);
       if (bookerFormErrorRef?.current) {
         bookerFormErrorRef.current.scrollIntoView({ behavior: "smooth" });
       }
@@ -473,7 +475,7 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, isBookin
       const { uid } = booking;
 
       if (!uid) {
-        console.error("No uid returned from createRecurringBookingMutation");
+        logger.error("No uid returned from createRecurringBookingMutation");
         return;
       }
 

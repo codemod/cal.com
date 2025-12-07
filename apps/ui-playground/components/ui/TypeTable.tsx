@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { getColorFormats, copyToClipboard } from "@/lib/colorUtils";
@@ -66,7 +68,7 @@ export const TypeTable: React.FC<TypeTableProps> = ({ sections }) => {
       await copyToClipboard(colorValue);
       showToast(`Copied ${colorValue}`, "success");
     } catch (error) {
-      console.error("Failed to copy color:", error);
+      logger.error("Failed to copy color:", error);
       showToast("Failed to copy color", "error");
     }
   };

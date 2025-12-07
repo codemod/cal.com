@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // This script is used to delete recordings older than 6 months from Daily.co
 //
 // Commands to run:
@@ -30,7 +32,7 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
   const apiKey = process.env.DAILY_API_KEY;
 
   if (!apiKey) {
-    console.error("DAILY_API_KEY environment variable is required");
+    logger.error("DAILY_API_KEY environment variable is required");
     process.exit(1);
   }
 
@@ -44,7 +46,7 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
   cutoffDate.setUTCHours(0, 0, 0, 0);
   const cutoffTimestamp = Math.floor(cutoffDate.getTime() / 1000);
 
-  console.log(
+  logger.info(
     `Fetching all recordings older than 6 months (before ${
       cutoffDate.toISOString().split("T")[0]
     }, timestamp: ${cutoffTimestamp})...`
@@ -62,7 +64,7 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
 
     if (elapsedTime < expectedMinTime) {
       const delayTime = expectedMinTime - elapsedTime;
-      console.log(`Rate limiting: waiting ${delayTime}ms before next request...`);
+      logger.info(`Rate limiting: waiting ${delayTime}ms before next request...`);
       await new Promise((resolve) => setTimeout(resolve, delayTime));
     }
 
@@ -79,7 +81,7 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
 
     while (retries <= maxRetries) {
       try {
-        console.log("url", url.toString());
+        logger.info("url", url.toString());
         response = await fetch(url.toString(), {
           headers: {
             Authorization: `Bearer ${apiKey}`,
@@ -92,14 +94,14 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
         }
 
         if (response.status === 404) {
-          console.log("No recordings found or endpoint not available");
+          logger.info("No recordings found or endpoint not available");
           return [];
         }
 
         if (response.status === 429) {
           if (retries < maxRetries) {
             const backoffDelay = Math.pow(2, retries) * 1000;
-            console.log(
+            logger.info(
               `Rate limit exceeded (429). Retrying in ${backoffDelay / 1000}s... (attempt ${retries + 1}/${
                 maxRetries + 1
               })`
@@ -116,7 +118,7 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
       } catch (error) {
         if (retries < maxRetries && (error as Error).message.includes("fetch")) {
           const backoffDelay = Math.pow(2, retries) * 1000;
-          console.log(
+          logger.info(
             `Network error. Retrying in ${backoffDelay / 1000}s... (attempt ${retries + 1}/${maxRetries + 1})`
           );
           await new Promise((resolve) => setTimeout(resolve, backoffDelay));
@@ -134,7 +136,7 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
     const data = (await response.json()) as RecordingsResponse;
 
     if (!data.data || data.data.length === 0) {
-      console.log("No more recordings available, ending pagination");
+      logger.info("No more recordings available, ending pagination");
       hasMoreRecordings = false;
       break;
     }
@@ -144,23 +146,23 @@ async function getAllRecordingsOlderThan6Months(): Promise<Recording[]> {
     });
 
     allRecordings.push(...filteredRecordings);
-    console.log(
+    logger.info(
       `Fetched ${data.data.length} recordings, ${filteredRecordings.length} older than 6 months (total: ${allRecordings.length})`
     );
 
     endingBefore = data.data[0].id;
-    console.log("endingBefore", endingBefore);
-    console.log("first recording in batch", data.data[0]);
-    console.log("last recording in batch", data.data[data.data.length - 1]);
+    logger.info("endingBefore", endingBefore);
+    logger.info("first recording in batch", data.data[0]);
+    logger.info("last recording in batch", data.data[data.data.length - 1]);
 
     if (data.data.length < limit) {
-      console.log("Received fewer results than limit, reached end of data");
+      logger.info("Received fewer results than limit, reached end of data");
       hasMoreRecordings = false;
       break;
     }
 
     if (filteredRecordings.length === 0 && data.data.every((r) => r.start_ts >= cutoffTimestamp)) {
-      console.log("Reached recordings newer than 6 months, stopping");
+      logger.info("Reached recordings newer than 6 months, stopping");
       hasMoreRecordings = false;
       break;
     }
@@ -191,14 +193,14 @@ async function saveRecordingsToJson(recordings: Recording[]): Promise<void> {
 
   try {
     await fs.writeFile(outputPath, JSON.stringify(simplifiedRecordings, null, 2), "utf-8");
-    console.log(`\nRecordings saved to: ${outputPath}`);
+    logger.info(`\nRecordings saved to: ${outputPath}`);
   } catch (error) {
-    console.error("Error saving recordings to JSON:", error);
+    logger.error("Error saving recordings to JSON:", error);
   }
 }
 
 async function main(): Promise<void> {
-  console.log("Fetching all recordings older than 6 months...");
+  logger.info("Fetching all recordings older than 6 months...");
 
   const recordings = await getAllRecordingsOlderThan6Months();
 
@@ -211,14 +213,14 @@ async function main(): Promise<void> {
   const remainingMinutes = Math.floor((totalDurationSeconds % 3600) / 60);
   const remainingSeconds = totalDurationSeconds % 60;
 
-  console.log(`\nFinal result: ${recordings.length} recordings found older than 6 months`);
-  console.log(
+  logger.info(`\nFinal result: ${recordings.length} recordings found older than 6 months`);
+  logger.info(
     `Total duration: ${totalDurationSeconds} seconds (${totalHours}h ${remainingMinutes}m ${remainingSeconds}s)`
   );
 
   await saveRecordingsToJson(recordings);
 
-  console.log("\nLast 10 recordings (oldest first):");
+  logger.info("\nLast 10 recordings (oldest first):");
 
   const lastTen = recordings.slice(-10);
   lastTen.forEach((recording: Recording, index: number) => {
@@ -226,7 +228,7 @@ async function main(): Promise<void> {
     const durationMinutes = Math.floor(recording.duration / 60);
     const durationSeconds = recording.duration % 60;
 
-    console.log(
+    logger.info(
       `${index + 1}. ${recording.room_name} (${
         recording.id
       }) - Started: ${startTime} - Duration: ${durationMinutes}m ${durationSeconds}s - Status: ${
@@ -236,7 +238,7 @@ async function main(): Promise<void> {
   });
 
   if (recordings.length > 10) {
-    console.log(`\n... and ${recordings.length - 10} more recordings before these`);
+    logger.info(`\n... and ${recordings.length - 10} more recordings before these`);
   }
 }
 
@@ -261,14 +263,14 @@ async function deleteRecording(recordingId: string, apiKey: string): Promise<boo
       }
 
       if (response.status === 404) {
-        console.log(`Recording ${recordingId} not found (may have been already deleted)`);
+        logger.info(`Recording ${recordingId} not found (may have been already deleted)`);
         return true;
       }
 
       if (response.status === 429) {
         if (retries < maxRetries) {
           const backoffDelay = Math.pow(2, retries) * 1000;
-          console.log(
+          logger.info(
             `Rate limit for ${recordingId}. Retrying in ${backoffDelay / 1000}s... (attempt ${retries + 1}/${
               maxRetries + 1
             })`
@@ -279,7 +281,7 @@ async function deleteRecording(recordingId: string, apiKey: string): Promise<boo
         }
       }
 
-      console.error(`Failed to delete recording ${recordingId}: HTTP ${response.status}`);
+      logger.error(`Failed to delete recording ${recordingId}: HTTP ${response.status}`);
       return false;
     } catch (error) {
       const errorMessage = (error as Error).message;
@@ -289,7 +291,7 @@ async function deleteRecording(recordingId: string, apiKey: string): Promise<boo
         (errorMessage.includes("fetch failed") || errorMessage.includes("TIMEOUT"))
       ) {
         const backoffDelay = Math.pow(2, retries) * 1000;
-        console.log(
+        logger.info(
           `Network error for ${recordingId}. Retrying in ${backoffDelay / 1000}s... (attempt ${retries + 1}/${
             maxRetries + 1
           })`
@@ -299,12 +301,12 @@ async function deleteRecording(recordingId: string, apiKey: string): Promise<boo
         continue;
       }
 
-      console.error(`Error deleting recording ${recordingId} after ${retries + 1} attempts:`, error);
+      logger.error(`Error deleting recording ${recordingId} after ${retries + 1} attempts:`, error);
       return false;
     }
   }
 
-  console.error(`Failed to delete recording ${recordingId} after ${maxRetries + 1} attempts`);
+  logger.error(`Failed to delete recording ${recordingId} after ${maxRetries + 1} attempts`);
   return false;
 }
 
@@ -312,7 +314,7 @@ async function deleteRecordingsFromJson(dryRun = false): Promise<void> {
   const apiKey = process.env.DAILY_API_KEY;
 
   if (!apiKey) {
-    console.error("DAILY_API_KEY environment variable is required");
+    logger.error("DAILY_API_KEY environment variable is required");
     process.exit(1);
   }
 
@@ -331,10 +333,10 @@ async function deleteRecordingsFromJson(dryRun = false): Promise<void> {
       status: string;
     }>;
 
-    console.log(`\nFound ${recordings.length} recordings to delete`);
+    logger.info(`\nFound ${recordings.length} recordings to delete`);
 
     if (recordings.length === 0) {
-      console.log("No recordings to delete");
+      logger.info("No recordings to delete");
       return;
     }
 
@@ -342,17 +344,17 @@ async function deleteRecordingsFromJson(dryRun = false): Promise<void> {
     const totalHours = Math.floor(totalDuration / 3600);
     const totalMinutes = Math.floor((totalDuration % 3600) / 60);
 
-    console.log(`Total duration: ${totalHours}h ${totalMinutes}m`);
-    console.log(`Date range: ${recordings[0].start_date} to ${recordings[recordings.length - 1].start_date}`);
+    logger.info(`Total duration: ${totalHours}h ${totalMinutes}m`);
+    logger.info(`Date range: ${recordings[0].start_date} to ${recordings[recordings.length - 1].start_date}`);
 
     if (dryRun) {
-      console.log("\n🔸 DRY RUN MODE - No recordings will be deleted");
-      console.log("First 5 recordings that would be deleted:");
+      logger.info("\n🔸 DRY RUN MODE - No recordings will be deleted");
+      logger.info("First 5 recordings that would be deleted:");
       recordings.slice(0, 5).forEach((rec, idx) => {
-        console.log(`  ${idx + 1}. ${rec.id} - ${rec.room_name} (${rec.start_date})`);
+        logger.info(`  ${idx + 1}. ${rec.id} - ${rec.room_name} (${rec.start_date})`);
       });
       if (recordings.length > 5) {
-        console.log(`  ... and ${recordings.length - 5} more`);
+        logger.info(`  ... and ${recordings.length - 5} more`);
       }
       return;
     }
@@ -384,7 +386,7 @@ async function deleteRecordingsFromJson(dryRun = false): Promise<void> {
 
           if ((successCount + failCount) % 10 === 0) {
             const progress = (((successCount + failCount) / recordings.length) * 100).toFixed(1);
-            console.log(
+            logger.info(
               `Progress: ${progress}% (${successCount + failCount}/${recordings.length}), recording-id:${
                 recording.id
               }`
@@ -400,16 +402,16 @@ async function deleteRecordingsFromJson(dryRun = false): Promise<void> {
       await Promise.all(batchPromises);
     }
 
-    console.log("\n✅ Deletion complete!");
-    console.log(`Successfully deleted: ${successCount}`);
-    console.log(`Failed to delete: ${failCount}`);
-    console.log(`Total processed: ${successCount + failCount}`);
+    logger.info("\n✅ Deletion complete!");
+    logger.info(`Successfully deleted: ${successCount}`);
+    logger.info(`Failed to delete: ${failCount}`);
+    logger.info(`Total processed: ${successCount + failCount}`);
 
     if (failCount > 0) {
-      console.log("\n⚠️  Some recordings failed to delete. Check the logs above for details.");
+      logger.info("\n⚠️  Some recordings failed to delete. Check the logs above for details.");
     }
   } catch (error) {
-    console.error("Error reading or processing recordings file:", error);
+    logger.error("Error reading or processing recordings file:", error);
     process.exit(1);
   }
 }
@@ -420,11 +422,11 @@ async function mainDelete(): Promise<void> {
     output: process.stdout,
   });
 
-  console.log("🗑️  Daily Video Recording Deletion Tool");
-  console.log("=====================================");
-  console.log("This tool will delete all recordings listed in recordings_older_than_6_months.json");
-  console.log("\n⚠️  WARNING: This action cannot be undone!");
-  console.log("Note: Recordings in custom S3 buckets will NOT be deleted from S3.\n");
+  logger.info("🗑️  Daily Video Recording Deletion Tool");
+  logger.info("=====================================");
+  logger.info("This tool will delete all recordings listed in recordings_older_than_6_months.json");
+  logger.info("\n⚠️  WARNING: This action cannot be undone!");
+  logger.info("Note: Recordings in custom S3 buckets will NOT be deleted from S3.\n");
 
   await deleteRecordingsFromJson(true);
 
@@ -434,10 +436,10 @@ async function mainDelete(): Promise<void> {
   const answer = await question("\nDo you want to proceed with deletion? (yes/no): ");
 
   if (answer.toLowerCase() === "yes") {
-    console.log("\nStarting deletion process...\n");
+    logger.info("\nStarting deletion process...\n");
     await deleteRecordingsFromJson(false);
   } else {
-    console.log("\nDeletion cancelled.");
+    logger.info("\nDeletion cancelled.");
   }
 
   readline.close();

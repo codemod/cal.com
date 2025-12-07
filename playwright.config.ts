@@ -1,8 +1,10 @@
+import pino from 'pino'
 import type { Frame, PlaywrightTestConfig } from "@playwright/test";
 import { devices, expect } from "@playwright/test";
 import dotEnv from "dotenv";
 import * as os from "os";
 import * as path from "path";
+const logger = pino()
 
 import { WEBAPP_URL } from "@calcom/lib/constants";
 
@@ -327,5 +329,5 @@ function ensureAppServerIsReadyToServeEmbed(webServer: { port?: number; url?: st
   // Only one of port or url can be specified, so remove port.
   delete webServer.port;
   webServer.url = `${process.env.NEXT_PUBLIC_WEBAPP_URL}/embed/embed.js`;
-  console.log("Ensuring that /embed/embed.js is 200 before starting tests");
+  logger.info("Ensuring that /embed/embed.js is 200 before starting tests");
 }

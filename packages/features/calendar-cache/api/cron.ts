@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { NextApiRequest } from "next";
+const logger = pino()
 
 import { HttpError } from "@calcom/lib/http-error";
 import logger from "@calcom/lib/logger";
@@ -21,7 +23,7 @@ const validateRequest = (req: NextApiRequest) => {
 
 function logRejected(result: PromiseSettledResult<unknown>) {
   if (result.status === "rejected") {
-    console.error(result.reason);
+    logger.error(result.reason);
   }
 }
 

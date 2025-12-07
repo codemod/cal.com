@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { captureException } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next";
+const logger = pino()
 
 import { HttpError } from "@calcom/lib/http-error";
 import { getServerErrorFromUnknown } from "@calcom/lib/server/getServerErrorFromUnknown";
@@ -25,6 +27,6 @@ export function onErrorHandler({ error }: OnErrorOptions) {
   // Log errors that aren't client errors (400s)
   if (httpError.statusCode >= 500) {
     captureException(error);
-    console.error("Something went wrong", error);
+    logger.error("Something went wrong", error);
   }
 }

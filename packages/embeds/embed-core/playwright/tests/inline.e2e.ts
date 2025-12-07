@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { expect } from "@playwright/test";
+const logger = pino()
 
 import { test, todo } from "@calcom/web/playwright/lib/fixtures";
 
@@ -37,7 +39,7 @@ test.describe("Inline Iframe", () => {
         const error = request.failure()?.errorText;
         // Identifies that the request is blocked by the browser due to COEP restrictions
         if (error?.includes("ERR_BLOCKED_BY_RESPONSE")) {
-          console.log("Request failed: ", request.url(), error);
+          logger.info("Request failed: ", request.url(), error);
           resolve(request.url().includes("/pro/embed"));
         }
       });

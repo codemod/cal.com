@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { safeStringify } from "@calcom/lib/safeStringify";
 import slugify from "@calcom/lib/slugify";
 import type { PrismaTransaction } from "@calcom/prisma";
 import type { AttributeType } from "@calcom/prisma/enums";
+const logger = pino()
 
 type SimpleAttributeInput = {
   id: string;
@@ -58,7 +60,7 @@ export const processUserAttributes = async (
 
   for (const attribute of attributes) {
     if (!attribute.type) {
-      console.log("Skipping attribute without type", safeStringify(attribute));
+      logger.info("Skipping attribute without type", safeStringify(attribute));
       continue;
     }
 

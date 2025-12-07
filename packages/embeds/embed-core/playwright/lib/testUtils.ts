@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { Page, Frame } from "@playwright/test";
 import { expect } from "@playwright/test";
+const logger = pino()
 
 import prisma from "@calcom/prisma";
 
@@ -91,7 +93,7 @@ export const getEmbedIframe = async ({
   if (u.pathname === `${pathname}/embed`) {
     return embedIframe;
   }
-  console.log(`Embed iframe url pathname match. Expected: "${pathname}/embed"`, `Actual: ${u.pathname}`);
+  logger.info(`Embed iframe url pathname match. Expected: "${pathname}/embed"`, `Actual: ${u.pathname}`);
   return null;
 };
 

@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import { getDownloadLinkOfCalVideoByRecordingId } from "@calcom/features/conferencing/lib/videoClient";
 import { verifyVideoToken } from "@calcom/lib/videoTokens";
@@ -23,7 +25,7 @@ export async function GET(request: Request) {
     }
     return NextResponse.redirect(recordingLink.download_link, { status: 302 });
   } catch (error) {
-    console.error("Failed to get recording:", error);
+    logger.error("Failed to get recording:", error);
     return new Response("Failed to get recording", { status: 500 });
   }
 }

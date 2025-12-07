@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { HttpError as HttpCode } from "@calcom/lib/http-error";
 import { prisma } from "@calcom/prisma";
 import type { Prisma } from "@calcom/prisma/client";
+const logger = pino()
 
 import stripe from "./server";
 
@@ -70,7 +72,7 @@ export async function deleteStripeCustomer(user: UserType): Promise<string | nul
   const customerId = await getStripeCustomerId(user);
 
   if (!customerId) {
-    console.warn(`No stripe customer found for user:${user.email}`);
+    logger.warn(`No stripe customer found for user:${user.email}`);
     return null;
   }
 

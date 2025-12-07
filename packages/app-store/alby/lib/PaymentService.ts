@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { LightningAddress } from "@getalby/lightning-tools";
 import { v4 as uuidv4 } from "uuid";
 import type z from "zod";
+const logger = pino()
 
 import { ErrorCode } from "@calcom/lib/errorCodes";
 import logger from "@calcom/lib/logger";
@@ -55,7 +57,7 @@ export class PaymentService implements IAbstractPaymentService {
           referenceId: uid,
         },
       });
-      console.log("Created invoice", invoice, uid);
+      logger.info("Created invoice", invoice, uid);
 
       const paymentData = await prisma.payment.create({
         data: {

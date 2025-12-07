@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 const isSingleOrgModeEnabled = !!process.env.NEXT_PUBLIC_SINGLE_ORG_SLUG;
 const orgSlugCaptureGroupName = "orgSlug";
 /**
@@ -27,7 +29,7 @@ const getRegExpNotMatchingLeftMostSubdomain = (url) => {
 // For app.cal.com, it will match all domains that are not starting with "app". Technically we would want to match domains like acme.cal.com, dunder.cal.com and not app.cal.com
 const getRegExpThatMatchesAllOrgDomains = (exports.getRegExpThatMatchesAllOrgDomains = ({ webAppUrl }) => {
   if (isSingleOrgModeEnabled) {
-    console.log("Single-Org-Mode enabled - Consider all domains to be org domains");
+    logger.info("Single-Org-Mode enabled - Consider all domains to be org domains");
     // It works in combination with next.config.js where in this case we use orgSlug=NEXT_PUBLIC_SINGLE_ORG_SLUG
     return `.*`;
   }

@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // TODO: Queries in this file are not optimized. Need to optimize them.
 import logger from "@calcom/lib/logger";
 import { safeStringify } from "@calcom/lib/safeStringify";
@@ -168,7 +170,7 @@ function _prepareAssignmentData({
         const allOptions = attributesOfTheOrg.find((_attribute) => _attribute.id === attribute.id)?.options;
         const option = allOptions?.find((option) => option.id === optionId);
         if (!option) {
-          console.error(
+          logger.error(
             `Enriching "contains" for attribute ${
               attribute.name
             }: Option with id ${optionId} not found. Looked up in ${JSON.stringify(allOptions)}`
@@ -232,7 +234,7 @@ async function _getOrgMembershipToUserIdForTeam({ orgId, teamId }: { orgId: numb
   teamMemberships.forEach((teamMembership) => {
     const orgMembership = orgMembershipsByUserId.get(teamMembership.userId);
     if (!orgMembership) {
-      console.error(
+      logger.error(
         `Org membership not found for userId ${teamMembership.userId} in the organization's memberships`
       );
       return;
@@ -333,7 +335,7 @@ function _buildAssignmentsForTeam({
       const orgMembershipId = attributeToUser.memberId;
       const userId = orgMembershipToUserIdForTeamMembers.get(orgMembershipId);
       if (!userId) {
-        console.error(`No org membership found for membership id ${orgMembershipId}`);
+        logger.error(`No org membership found for membership id ${orgMembershipId}`);
         return null;
       }
       const attribute = _getAttributeFromAttributeOption({
@@ -347,7 +349,7 @@ function _buildAssignmentsForTeam({
       });
 
       if (!attributeOption || !attribute) {
-        console.error(
+        logger.error(
           `Attribute option with id ${attributeToUser.attributeOptionId} not found in the organization's attributes`
         );
         return null;

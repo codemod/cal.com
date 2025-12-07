@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // this script is based on https://github.com/epicweb-dev/epic-stack/blob/main/other/build-icons.ts
 //
 import { $ } from "execa";
@@ -66,7 +68,7 @@ export type IconName =
   logVerbose(`Manifest saved to ${path.relative(cwd, typeOutputFilepath)}`);
 
   if (spriteChanged || typesChanged) {
-    console.log(`Generated ${files.length} icons`);
+    logger.info(`Generated ${files.length} icons`);
   }
 }
 

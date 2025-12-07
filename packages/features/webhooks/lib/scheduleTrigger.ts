@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { v4 } from "uuid";
+const logger = pino()
 
 import { DailyLocationType, getHumanReadableLocationValue } from "@calcom/app-store/locations";
 import { selectOOOEntries } from "@calcom/app-store/zapier/api/subscriptions/listOOOEntries";
@@ -314,7 +316,7 @@ export async function scheduleTrigger({
       },
     });
   } catch (error) {
-    console.error("Error cancelling scheduled jobs", error);
+    logger.error("Error cancelling scheduled jobs", error);
   }
 }
 
@@ -371,7 +373,7 @@ async function _deleteWebhookScheduledTriggers({
       }
     }
   } catch (error) {
-    console.error("Error deleting webhookScheduledTriggers ", error);
+    logger.error("Error deleting webhookScheduledTriggers ", error);
   }
 }
 

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+const logger = pino()
 
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
@@ -82,7 +84,7 @@ const DisableTwoFactorAuthModal = ({
       }
     } catch (e) {
       setErrorMessage(t("something_went_wrong"));
-      console.error(t("error_disabling_2fa"), e);
+      logger.error(t("error_disabling_2fa"), e);
     } finally {
       setIsDisabling(false);
     }

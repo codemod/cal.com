@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 vi.mock("../Section", () => {
   const BookerSection = ({
     children,
@@ -8,7 +10,7 @@ vi.mock("../Section", () => {
     className?: string;
     area?: string | { default: string; month_view: string };
   }) => {
-    console.log("BookerSection", { type: children.type, children, className, area });
+    logger.info("BookerSection", { type: children.type, children, className, area });
     return (
       <div
         data-testid="booker-section"

@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import * as React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it, vi } from "vitest";
+const logger = pino()
 
 import type { Host, TeamMember } from "../../lib/types";
 import type { AddMembersWithSwitchProps } from "../AddMembersWithSwitch";
@@ -69,7 +71,7 @@ const renderComponent = ({
       defaultValues: formDefaultValues,
     });
     const [assignAllTeamMembers, setAssignAllTeamMembers] = React.useState(false);
-    console.log(methods.getValues());
+    logger.info(methods.getValues());
     return (
       <FormProvider {...methods}>
         {React.cloneElement(children as React.ReactElement, {

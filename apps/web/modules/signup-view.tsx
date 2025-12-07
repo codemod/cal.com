@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { Analytics as DubAnalytics } from "@dub/analytics/react";
@@ -232,7 +234,7 @@ export default function Signup({
           const { error } = await stripe.redirectToCheckout({
             sessionId: err.checkoutSessionId,
           });
-          console.warn(error.message);
+          logger.warn(error.message);
         }
       } else {
         throw new Error(err.message);

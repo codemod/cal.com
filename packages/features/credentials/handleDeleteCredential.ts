@@ -1,4 +1,6 @@
+import pino from 'pino'
 import z from "zod";
+const logger = pino()
 
 import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
 import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
@@ -451,7 +453,7 @@ const handleDeleteCredential = async ({
         },
       });
     } catch (error) {
-      console.warn(
+      logger.warn(
         `Error deleting selected calendars for userId: ${userId} integration: ${credential.type}`,
         error
       );

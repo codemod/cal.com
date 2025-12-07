@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import {
   CalendarAppDelegationCredentialConfigurationError,
@@ -37,7 +39,7 @@ const getO365VideoAppKeys = async () => {
 };
 
 const TeamsVideoApiAdapter = (credential: CredentialForCalendarServiceWithTenantId): VideoApiAdapter => {
-  console.log("TeamsVideoApiAdapter--credential: ", credential);
+  logger.info("TeamsVideoApiAdapter--credential: ", credential);
   let azureUserId: string | null;
   const tokenResponse = oAuthManagerHelper.getTokenObjectFromCredential(credential);
 
@@ -216,11 +218,11 @@ const TeamsVideoApiAdapter = (credential: CredentialForCalendarServiceWithTenant
       return Promise.resolve([]);
     },
     createMeeting: async (event: CalendarEvent): Promise<VideoCallData> => {
-      console.log("=======>createMeeting: ");
+      logger.info("=======>createMeeting: ");
 
       const url = `${await getUserEndpoint()}/onlineMeetings`;
-      console.log("urllllllllllll: ", url);
-      console.log("translateEvent(event): ", translateEvent(event));
+      logger.info("urllllllllllll: ", url);
+      logger.info("translateEvent(event): ", translateEvent(event));
       const resultString = await auth
         .requestRaw({
           url,

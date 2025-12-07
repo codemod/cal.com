@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { useState } from "react";
+const logger = pino()
 
 import type { InstallAppButtonProps } from "../../types";
 
@@ -29,7 +31,7 @@ export default function InstallAppButton(props: InstallAppButtonProps) {
             })
             .catch((error) => {
               setLoading(false);
-              console.error(error);
+              logger.error(error);
             });
         },
         loading: loading,

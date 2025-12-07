@@ -1,11 +1,13 @@
+import pino from 'pino'
 import type { Frame } from "@playwright/test";
 import { expect } from "@playwright/test";
+const logger = pino()
 
 export async function expectHostsToBe({ hosts, frame }: { hosts: { email: string }[]; frame: Frame }) {
   try {
     await frame.waitForSelector(`[data-testid="booking-host-email"]`, { timeout: 5000 });
   } catch (error) {
-    console.error("Failed to find booking-host-email element:", error.message);
+    logger.error("Failed to find booking-host-email element:", error.message);
     throw new Error(`booking-host-email element not found. `);
   }
 

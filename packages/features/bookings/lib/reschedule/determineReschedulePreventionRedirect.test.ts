@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+const logger = pino()
 
 import * as constants from "@calcom/lib/constants";
 import { BookingStatus } from "@calcom/prisma/client";
@@ -85,7 +87,7 @@ const expectRedirectToEventBookingPageWithParams = ({
   eventUrl: string;
   params: Record<string, string>;
 }) => {
-  console.log("expectRedirectToEventBookingPageWithParams", { result, eventUrl, params });
+  logger.info("expectRedirectToEventBookingPageWithParams", { result, eventUrl, params });
   if (!result) {
     throw new Error("We expected a redirect result");
   }

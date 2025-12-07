@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { calendar_v3 } from "@googleapis/calendar";
 import type { GaxiosResponse } from "googleapis-common";
@@ -146,7 +148,7 @@ export default class GoogleCalendarService implements Calendar {
             },
           })
           .catch((err) => {
-            console.warn(JSON.stringify(err));
+            logger.warn(JSON.stringify(err));
           })
       )
     );
@@ -447,7 +449,7 @@ export default class GoogleCalendarService implements Calendar {
        *  404 is when the event is on a different calendar
        */
       if (err.code === 410) return;
-      console.error("There was an error contacting google calendar service: ", err);
+      logger.error("There was an error contacting google calendar service: ", err);
       if (err.code === 404) return;
       throw err;
     }

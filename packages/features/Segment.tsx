@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useCallback, useState } from "react";
@@ -194,7 +196,7 @@ export function Segment({
   const { t } = useLocale();
   if (isPending) return <span>Loading...</span>;
   if (!attributes) {
-    console.error("Error fetching attributes");
+    logger.error("Error fetching attributes");
     return <span>{t("something_went_wrong")}</span>;
   }
 

@@ -1,11 +1,13 @@
+import pino from 'pino'
 import type { EmbedEvent } from "../../sdk-action-manager";
+const logger = pino()
 
 export const getScrollByDistanceHandler =
   (cal: { inlineEl?: Element; scrollByDistance: (distance: number) => void }) =>
   (e: EmbedEvent<"__scrollByDistance">) => {
     if (!cal.inlineEl) {
       // Except inline, others use modalbox which has scroll on iframe itself and thus an attempt to scroll by the child would already be successful
-      console.warn("scrollBy event received but ignored as it isn't an inline embed");
+      logger.warn("scrollBy event received but ignored as it isn't an inline embed");
       return;
     }
     const distanceRelativeToIframe = e.detail.data.distance;

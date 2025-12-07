@@ -1,5 +1,7 @@
+import pino from 'pino'
 import * as fs from "fs-extra";
 import * as path from "path";
+const logger = pino()
 
 // First, copyNestSwagger is required to enable "@nestjs/swagger" in the "nest-cli.json",
 // because nest-cli.json is resolving "@nestjs/swagger" plugin from
@@ -20,7 +22,7 @@ async function copyNestSwagger() {
       await fs.ensureDir(nodeModulesNestjs);
       await fs.copy(sourceDir, targetDir);
     } catch (error) {
-      console.error("Failed to copy @nestjs/swagger:", error);
+      logger.error("Failed to copy @nestjs/swagger:", error);
     }
   }
 }

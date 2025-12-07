@@ -1,5 +1,7 @@
+import pino from 'pino'
 import db from "@calcom/prisma";
 import { Prisma } from "@calcom/prisma/client";
+const logger = pino()
 
 import { type TaskTypes } from "./tasker";
 import { scanWorkflowBodySchema } from "./tasks/scanWorkflowBody";
@@ -43,7 +45,7 @@ export class Task {
     options: { scheduledAt?: Date; maxAttempts?: number; referenceUid?: string } = {}
   ) {
     const { scheduledAt, maxAttempts, referenceUid } = options;
-    console.info("Creating task", { type, payload, scheduledAt, maxAttempts });
+    logger.info("Creating task", { type, payload, scheduledAt, maxAttempts });
     const newTask = await db.task.create({
       data: {
         payload,
@@ -57,7 +59,7 @@ export class Task {
   }
 
   static async getNextBatch() {
-    console.info("Getting next batch of tasks", makeWhereUpcomingTasks());
+    logger.info("Getting next batch of tasks", makeWhereUpcomingTasks());
     return db.task.findMany({
       where: makeWhereUpcomingTasks(),
       orderBy: {
@@ -167,7 +169,7 @@ export class Task {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
         // P2025 is the error code for "Record to delete does not exist"
-        console.warn(`Task with reference ${referenceUid} and type ${type} does not exist. No action taken.`);
+        logger.warn(`Task with reference ${referenceUid} and type ${type} does not exist. No action taken.`);
         return null;
       }
       throw error;

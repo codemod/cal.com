@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { cookies, headers } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { BillingPlanService } from "@calcom/features/ee/billing/domain/billing-plans";
@@ -123,7 +125,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: "Created conversation in Intercom" }, { status: 200 });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     log.error(`Error creating Intercom conversation:`, safeStringify(err));
     return NextResponse.json({ error: "Unexpected error occurred" }, { status: 500 });
   }

@@ -1,8 +1,10 @@
+import pino from 'pino'
 import detect from "detect-port";
 import type { Server } from "http";
 import { createServer } from "http";
 import next from "next";
 import { parse } from "url";
+const logger = pino()
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare let process: {
@@ -29,7 +31,7 @@ export const nextServer = async ({ port = 3000 } = { port: 3000 }) => {
     port,
     hostname: "localhost",
   });
-  console.log("Started Next Server", { dev, port });
+  logger.info("Started Next Server", { dev, port });
 
   await app.prepare();
   const handle = app.getRequestHandler();

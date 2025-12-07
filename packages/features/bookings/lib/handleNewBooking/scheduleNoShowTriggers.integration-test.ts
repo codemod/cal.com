@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
+const logger = pino()
 
 import { DailyLocationType } from "@calcom/app-store/constants";
 import { getMeetingSessionsFromRoomName } from "@calcom/features/tasker/tasks/triggerNoShow/getMeetingSessionsFromRoomName";
@@ -156,7 +158,7 @@ describe("scheduleNoShowTriggers Integration", () => {
     try {
       hostPayload = JSON.parse(hostTask?.payload ?? "");
     } catch (e) {
-      console.error("Failed to parse host task payload.");
+      logger.error("Failed to parse host task payload.");
       throw e;
     }
 
@@ -179,7 +181,7 @@ describe("scheduleNoShowTriggers Integration", () => {
     try {
       guestPayload = JSON.parse(guestTask?.payload ?? "");
     } catch (e) {
-      console.error("Failed to parse guest task payload.");
+      logger.error("Failed to parse guest task payload.");
       throw e;
     }
 

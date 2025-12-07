@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { bootstrap } from "@/app";
 import { AppModule } from "@/app.module";
 import { GetRoutingFormResponsesOutput } from "@/modules/organizations/teams/routing-forms/outputs/get-routing-form-responses.output";
@@ -17,6 +18,7 @@ import { RoutingFormsRepositoryFixture } from "test/fixtures/repository/routing-
 import { TeamRepositoryFixture } from "test/fixtures/repository/team.repository.fixture";
 import { UserRepositoryFixture } from "test/fixtures/repository/users.repository.fixture";
 import { randomString } from "test/utils/randomString";
+const logger = pino()
 
 import { SUCCESS_STATUS } from "@calcom/platform-constants";
 import type { User, Team } from "@calcom/prisma/client";
@@ -441,7 +443,7 @@ describe("Organizations Teams Routing Forms Responses", () => {
           const responseBody = response.body;
           expect(responseBody.status).toEqual(SUCCESS_STATUS);
           const data = responseBody.data;
-          console.log("responseBody", responseBody.data);
+          logger.info("responseBody", responseBody.data);
           expect(data.routing?.queuedResponseId).toBeDefined();
         });
     });

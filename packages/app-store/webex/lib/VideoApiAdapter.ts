@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import prisma from "@calcom/prisma";
@@ -148,8 +150,8 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
   const fetchWebexApi = async (endpoint: string, options?: RequestInit) => {
     const auth = webexAuth(credential);
     const accessToken = await auth.getToken();
-    console.log("result of accessToken in fetchWebexApi", accessToken);
-    console.log("createMeeting options in fetchWebexApi", options);
+    logger.info("result of accessToken in fetchWebexApi", accessToken);
+    logger.info("createMeeting options in fetchWebexApi", options);
     const response = await fetch(`https://webexapis.com/v1/${endpoint}`, {
       method: "GET",
       ...options,
@@ -173,7 +175,7 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
           end: meeting.end,
         }));
       } catch (err) {
-        console.error(err);
+        logger.error(err);
 
         return [];
       }
@@ -181,9 +183,9 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
     createMeeting: async (event: CalendarEvent): Promise<VideoCallData> => {
       /** @link https://developer.webex.com/docs/api/v1/meetings/create-a-meeting */
       try {
-        console.log("Creating meeting", event);
-        console.log("meting body", translateEvent(event));
-        console.log("request body in createMeeting", JSON.stringify(translateEvent(event)));
+        logger.info("Creating meeting", event);
+        logger.info("meting body", translateEvent(event));
+        logger.info("request body in createMeeting", JSON.stringify(translateEvent(event)));
         const response = await fetchWebexApi("meetings", {
           method: "POST",
           headers: {
@@ -191,7 +193,7 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
           },
           body: JSON.stringify(translateEvent(event)),
         });
-        console.log("Webex create meeting response", response);
+        logger.info("Webex create meeting response", response);
         if (response.error) {
           if (response.error === "invalid_grant") {
             await invalidateCredential(credential.id);
@@ -210,7 +212,7 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
         }
         throw new Error(`Failed to create meeting. Response is ${JSON.stringify(result)}`);
       } catch (err) {
-        console.error(err);
+        logger.error(err);
         throw new Error("Unexpected error");
       }
     },
@@ -220,7 +222,7 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
         const response = await fetchWebexApi(`meetings/${uid}`, {
           method: "DELETE",
         });
-        console.log("Webex delete meeting response", response);
+        logger.info("Webex delete meeting response", response);
         if (response.error) {
           if (response.error === "invalid_grant") {
             await invalidateCredential(credential.id);
@@ -260,7 +262,7 @@ const WebexVideoApiAdapter = (credential: CredentialPayload): VideoApiAdapter =>
         }
         throw new Error(`Failed to create meeting. Response is ${JSON.stringify(result)}`);
       } catch (err) {
-        console.error(err);
+        logger.error(err);
         throw new Error("Unexpected error");
       }
     },

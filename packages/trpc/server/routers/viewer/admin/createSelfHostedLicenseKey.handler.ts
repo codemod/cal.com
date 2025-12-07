@@ -1,5 +1,7 @@
+import pino from 'pino'
 import * as crypto from "crypto";
 import { z } from "zod";
+const logger = pino()
 
 import { CALCOM_PRIVATE_API_ROUTE } from "@calcom/lib/constants";
 
@@ -60,7 +62,7 @@ const createSelfHostedInstance = async ({ input, ctx }: GetOptions) => {
 
   // Ensure admin
   if (ctx.user.role !== "ADMIN") {
-    console.warn(`${ctx.user.username} just tried to create a license key without permission`);
+    logger.warn(`${ctx.user.username} just tried to create a license key without permission`);
     throw new Error("You do not have permission to do this.");
   }
 

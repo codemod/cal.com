@@ -1,4 +1,6 @@
+import pino from 'pino'
 import prismock from "../../../../tests/libs/__mocks__/prisma";
+const logger = pino()
 
 import { describe, expect, it, beforeEach, vi } from "vitest";
 
@@ -21,7 +23,7 @@ vi.mock("@calcom/lib/crypto", async (importOriginal) => {
   return {
     ...actual,
     symmetricEncrypt: vi.fn((serviceAccountKey) => {
-      console.log({ mockEncrypted: serviceAccountKey });
+      logger.info({ mockEncrypted: serviceAccountKey });
       return `encrypted(${serviceAccountKey})`;
     }),
     symmetricDecrypt: vi.fn((serviceAccountKey) => {

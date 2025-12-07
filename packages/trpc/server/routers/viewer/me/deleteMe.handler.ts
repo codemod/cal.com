@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
 import { verifyPassword } from "@calcom/features/auth/lib/verifyPassword";
 import { deleteUser } from "@calcom/features/users/lib/deleteUser";
@@ -7,6 +8,7 @@ import { totpAuthenticatorCheck } from "@calcom/lib/totp";
 import { prisma } from "@calcom/prisma";
 import { IdentityProvider } from "@calcom/prisma/enums";
 import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+const logger = pino()
 
 import type { TDeleteMeInputSchema } from "./deleteMe.schema";
 
@@ -58,18 +60,18 @@ export const deleteMeHandler = async ({ ctx, input }: DeleteMeOptions) => {
     }
 
     if (!user.twoFactorSecret) {
-      console.error(`Two factor is enabled for user ${user.id} but they have no secret`);
+      logger.error(`Two factor is enabled for user ${user.id} but they have no secret`);
       throw new Error(ErrorCode.InternalServerError);
     }
 
     if (!process.env.CALENDSO_ENCRYPTION_KEY) {
-      console.error(`"Missing encryption key; cannot proceed with two factor login."`);
+      logger.error(`"Missing encryption key; cannot proceed with two factor login."`);
       throw new Error(ErrorCode.InternalServerError);
     }
 
     const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
     if (secret.length !== 32) {
-      console.error(
+      logger.error(
         `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
       );
       throw new Error(ErrorCode.InternalServerError);

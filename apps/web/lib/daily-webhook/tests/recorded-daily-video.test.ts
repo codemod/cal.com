@@ -1,4 +1,6 @@
+import pino from 'pino'
 import {
+const logger = pino()
   createBookingScenario,
   getScenarioData,
   TestData,
@@ -276,7 +278,7 @@ describe("Handler: /api/recorded-daily-video", () => {
         // For App Router, we just need to check if the response exists
         expect(response).toBeDefined();
       } catch (error) {
-        console.error("Handler error:", error);
+        logger.error("Handler error:", error);
         throw error;
       }
 

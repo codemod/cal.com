@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { vi, beforeEach } from "vitest";
 import { mockReset, mockDeep } from "vitest-mock-extended";
+const logger = pino()
 
 import type * as organization from "@calcom/features/ee/organizations/repositories/OrganizationRepository";
 
@@ -23,7 +25,7 @@ export const organizationScenarios = {
               return org;
             }
             const errorMsg = "Mock Error-fakeReturnOrganization: Unhandled input";
-            console.log(errorMsg, { arg, forInput });
+            logger.info(errorMsg, { arg, forInput });
             throw new Error(errorMsg);
           }
         );

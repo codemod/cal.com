@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import { DelegationCredentialRepository } from "@calcom/features/delegation-credentials/repositories/DelegationCredentialRepository";
 import logger from "@calcom/lib/logger";
@@ -66,7 +68,7 @@ export function parseServiceAccountKey(serviceAccountKey: Prisma.JsonValue) {
   const parsedServiceAccountKey = schema.safeParse(serviceAccountKey);
 
   if (!parsedServiceAccountKey.success) {
-    console.error("Invalid service account key", parsedServiceAccountKey.error);
+    logger.error("Invalid service account key", parsedServiceAccountKey.error);
     throw new InvalidServiceAccountKeyError(
       "Service account key must contain private_key, client_email and client_id"
     );

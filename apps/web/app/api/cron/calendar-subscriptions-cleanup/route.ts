@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import { CalendarCacheEventRepository } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventRepository";
 import { CalendarCacheEventService } from "@calcom/features/calendar-subscription/lib/cache/CalendarCacheEventService";
@@ -31,7 +33,7 @@ async function getHandler(request: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    console.error(`[calendar-subscriptions-cleanup] ${message}:`, e);
+    logger.error(`[calendar-subscriptions-cleanup] ${message}:`, e);
     return NextResponse.json({ message }, { status: 500 });
   }
 }

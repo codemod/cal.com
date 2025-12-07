@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { getLocation } from "@calcom/lib/CalEventParser";
 import logger from "@calcom/lib/logger";
 import type {
+const logger = pino()
   CalendarEvent,
   EventBusyDate,
   IntegrationCalendar,
@@ -232,10 +234,10 @@ export default class PipedriveCrmService implements CRM {
   }
 
   getAppOptions() {
-    console.log("No options implemented");
+    logger.info("No options implemented");
   }
 
   async handleAttendeeNoShow() {
-    console.log("Not implemented");
+    logger.info("Not implemented");
   }
 }

@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -6,6 +7,7 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+const logger = pino()
 
 import ToolbarPlugin from "./ToolbarPlugin";
 
@@ -37,7 +39,7 @@ vi.mock("./AddVariablesDropdown", () => ({
 const initialConfig = {
   namespace: "MyEditor",
   theme: {},
-  onError: (error: Error) => console.error(error),
+  onError: (error: Error) => logger.error(error),
 };
 
 const TestWrapper = ({ children }: { children: string | JSX.Element }) => (

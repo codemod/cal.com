@@ -1,9 +1,11 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { OAuth2Client } from "googleapis-common";
 import { cookies, headers } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+const logger = pino()
 
 import getAppKeysFromSlug from "@calcom/app-store/_utils/getAppKeysFromSlug";
 import { throwIfNotHaveAdminAccessToTeam } from "@calcom/app-store/_utils/throwIfNotHaveAdminAccessToTeam";
@@ -79,7 +81,7 @@ async function getHandler(request: NextRequest) {
     const safeRedirectUrl = getSafeRedirectUrl(redirectUrl) ?? `${WEBAPP_URL}/teams`;
     return NextResponse.redirect(safeRedirectUrl);
   } catch (error) {
-    console.error("Error in Google Workspace callback:", error);
+    logger.error("Error in Google Workspace callback:", error);
 
     // Redirect to teams page on error
     return NextResponse.redirect(`${WEBAPP_URL}/teams`);

@@ -1,3 +1,4 @@
+import pino from 'pino'
 import dayjs from "@calcom/dayjs";
 import { getSenderId } from "@calcom/features/ee/workflows/lib/alphanumericSenderIdSupport";
 import { sendSmsOrFallbackEmail } from "@calcom/features/ee/workflows/lib/reminders/messageDispatcher";
@@ -8,6 +9,7 @@ import { piiHasher } from "@calcom/lib/server/PiiHasher";
 import { TimeFormat } from "@calcom/lib/timeFormat";
 import prisma from "@calcom/prisma";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
+const logger = pino()
 
 const handleSendingSMS = async ({
   reminderPhone,
@@ -49,7 +51,7 @@ const handleSendingSMS = async ({
 
     return smsOrFallbackEmail;
   } catch (e) {
-    console.error("sendSmsOrFallbackEmail failed", e);
+    logger.error("sendSmsOrFallbackEmail failed", e);
     throw e; // propagate the error
   }
 };

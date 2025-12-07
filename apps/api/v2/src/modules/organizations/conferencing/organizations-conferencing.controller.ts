@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { API_VERSIONS_VALUES } from "@/lib/api-versions";
 import { PlatformPlan } from "@/modules/auth/decorators/billing/platform-plan.decorator";
 import { GetUser } from "@/modules/auth/decorators/get-user/get-user.decorator";
@@ -9,6 +10,7 @@ import { IsOrgGuard } from "@/modules/auth/guards/organizations/is-org.guard";
 import { RolesGuard } from "@/modules/auth/guards/roles/roles.guard";
 import { IsTeamInOrg } from "@/modules/auth/guards/teams/is-team-in-org.guard";
 import {
+const logger = pino()
   ConferencingAppsOauthUrlOutputDto,
   GetConferencingAppsOauthUrlResponseDto,
 } from "@/modules/conferencing/outputs/get-conferencing-apps-oauth-url";
@@ -256,7 +258,7 @@ export class OrganizationsConferencingController {
       });
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        logger.error(error.message);
       }
       return {
         url: decodedCallbackState.onErrorReturnTo ?? "",

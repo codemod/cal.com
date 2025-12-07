@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { v4 as uuidv4 } from "uuid";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import { FeaturesRepository } from "@calcom/features/flags/features.repository";
@@ -290,7 +292,7 @@ const scheduleAIPhoneCallTask = async (args: ScheduleAIPhoneCallTaskArgs) => {
       }
     );
   } catch (error) {
-    console.error("Error creating AI phone call task:", error);
+    logger.error("Error creating AI phone call task:", error);
     throw error;
   }
 };

@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { calendar_v3 } from "@googleapis/calendar";
 import { waitUntil } from "@vercel/functions";
 import { OAuth2Client } from "googleapis-common";
@@ -8,6 +9,7 @@ import type { Provider } from "next-auth/providers";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
+const logger = pino()
 
 import { updateProfilePhotoGoogle } from "@calcom/app-store/_utils/oauth/updateProfilePhotoGoogle";
 import GoogleCalendarService from "@calcom/app-store/googlecalendar/lib/CalendarService";
@@ -147,7 +149,7 @@ const providers: Provider[] = [
     async authorize(credentials): Promise<User | null> {
       log.debug("CredentialsProvider:credentials:authorize", safeStringify({ credentials }));
       if (!credentials) {
-        console.error(`For some reason credentials are missing`);
+        logger.error(`For some reason credentials are missing`);
         throw new Error(ErrorCode.InternalServerError);
       }
 
@@ -188,7 +190,7 @@ const providers: Provider[] = [
 
       if (user.twoFactorEnabled && credentials.backupCode) {
         if (!process.env.CALENDSO_ENCRYPTION_KEY) {
-          console.error("Missing encryption key; cannot proceed with backup code login.");
+          logger.error("Missing encryption key; cannot proceed with backup code login.");
           throw new Error(ErrorCode.InternalServerError);
         }
 
@@ -218,18 +220,18 @@ const providers: Provider[] = [
         }
 
         if (!user.twoFactorSecret) {
-          console.error(`Two factor is enabled for user ${user.id} but they have no secret`);
+          logger.error(`Two factor is enabled for user ${user.id} but they have no secret`);
           throw new Error(ErrorCode.InternalServerError);
         }
 
         if (!process.env.CALENDSO_ENCRYPTION_KEY) {
-          console.error(`"Missing encryption key; cannot proceed with two factor login."`);
+          logger.error(`"Missing encryption key; cannot proceed with two factor login."`);
           throw new Error(ErrorCode.InternalServerError);
         }
 
         const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
         if (secret.length !== 32) {
-          console.error(
+          logger.error(
             `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
           );
           throw new Error(ErrorCode.InternalServerError);
@@ -254,7 +256,7 @@ const providers: Provider[] = [
         if (user.identityProvider !== IdentityProvider.CAL) return role;
 
         if (process.env.NEXT_PUBLIC_IS_E2E) {
-          console.warn("E2E testing is enabled, skipping password and 2FA requirements for Admin");
+          logger.warn("E2E testing is enabled, skipping password and 2FA requirements for Admin");
           return role;
         }
 

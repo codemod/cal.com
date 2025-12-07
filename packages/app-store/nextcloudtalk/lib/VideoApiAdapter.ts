@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { stringify } from "querystring";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
+const logger = pino()
 
 import logger from "@calcom/lib/logger";
 import { safeStringify } from "@calcom/lib/safeStringify";
@@ -170,7 +172,7 @@ const NextcloudTalkVideoApiAdapter = (credential: CredentialPayload): VideoApiAd
         }
         throw new Error(`Failed to create meeting. Response is ${JSON.stringify(result)}`);
       } catch (err) {
-        console.error(err);
+        logger.error(err);
         /* Prevents meeting creation failure when token is expired */
         throw new Error("Unexpected error");
       }

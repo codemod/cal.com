@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { describe, it, expect, beforeAll, afterAll, afterEach } from "vitest";
+const logger = pino()
 
 import handleDeleteCredential from "@calcom/features/credentials/handleDeleteCredential";
 import prisma from "@calcom/prisma";
@@ -101,7 +103,7 @@ describe("handleDeleteCredential Integration Tests - BookingReference Soft Delet
       });
     } catch (error) {
       // Credential already deleted by test
-      console.log("Credential deletion error:", error);
+      logger.info("Credential deletion error:", error);
     }
 
     await prisma.user.delete({

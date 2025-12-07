@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * TODO: Consolidate this file with BookingLocationService and add tests
  */
@@ -372,7 +374,7 @@ export const locationKeyToString = (location: LocationObject) => {
   }
   const defaultValueVariable = eventLocationType.defaultValueVariable;
   if (!defaultValueVariable) {
-    console.error(`defaultValueVariable not set for ${location.type}`);
+    logger.error(`defaultValueVariable not set for ${location.type}`);
     return "";
   }
   return location[defaultValueVariable] || eventLocationType.label;
@@ -429,12 +431,12 @@ export const getEventLocationValue = (eventLocations: LocationObject[], bookingL
   }
   const defaultValueVariable = eventLocationType.defaultValueVariable;
   if (!defaultValueVariable) {
-    console.error(`${defaultValueVariable} not set for ${bookingLocation.type}`);
+    logger.error(`${defaultValueVariable} not set for ${bookingLocation.type}`);
     return "";
   }
   const eventLocation = getEventLocationWithType(eventLocations, bookingLocation?.type);
   if (!eventLocation) {
-    console.error(`Could not find eventLocation for ${bookingLocation}`);
+    logger.error(`Could not find eventLocation for ${bookingLocation}`);
     return "";
   }
 

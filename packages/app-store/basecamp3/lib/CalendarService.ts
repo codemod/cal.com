@@ -1,6 +1,8 @@
+import pino from 'pino'
 import logger from "@calcom/lib/logger";
 import prisma from "@calcom/prisma";
 import type {
+const logger = pino()
   Calendar,
   CalendarEvent,
   EventBusyDate,
@@ -241,7 +243,7 @@ export default class BasecampCalendarService implements Calendar {
     const allowedExtensions = ["eml", "ics"];
     const urlExtension = getFileExtension(url);
     if (!allowedExtensions.includes(urlExtension)) {
-      console.error(`Unsupported calendar object format: ${urlExtension}`);
+      logger.error(`Unsupported calendar object format: ${urlExtension}`);
       return false;
     }
     return true;

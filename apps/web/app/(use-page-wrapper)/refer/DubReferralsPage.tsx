@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { DubEmbed } from "@dub/embed-react";
@@ -22,7 +24,7 @@ const fetchReferralsToken = async () => {
 
     return data.publicToken;
   } catch (error) {
-    console.error("Error fetching referrals token:", error);
+    logger.error("Error fetching referrals token:", error);
     return null;
   }
 };
@@ -40,7 +42,7 @@ export const DubReferralsPage = () => {
         const publicToken = await fetchReferralsToken();
         setToken(publicToken);
       } catch (err) {
-        console.error("Error fetching referrals token:", err);
+        logger.error("Error fetching referrals token:", err);
         showToast(t("unexpected_error_try_again"), "error");
       } finally {
         setLoading(false);

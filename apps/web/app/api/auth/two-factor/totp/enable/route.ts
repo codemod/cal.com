@@ -1,8 +1,10 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { parseRequestData } from "app/api/parseRequestData";
 import { cookies, headers } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+const logger = pino()
 
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
@@ -21,13 +23,13 @@ async function postHandler(req: NextRequest) {
   }
 
   if (!session.user?.id) {
-    console.error("Session is missing a user id.");
+    logger.error("Session is missing a user id.");
     return NextResponse.json({ error: ErrorCode.InternalServerError }, { status: 500 });
   }
 
   const user = await prisma.user.findUnique({ where: { id: session.user.id } });
   if (!user) {
-    console.error(`Session references user that no longer exists.`);
+    logger.error(`Session references user that no longer exists.`);
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
   }
 
@@ -40,13 +42,13 @@ async function postHandler(req: NextRequest) {
   }
 
   if (!process.env.CALENDSO_ENCRYPTION_KEY) {
-    console.error("Missing encryption key; cannot proceed with two factor setup.");
+    logger.error("Missing encryption key; cannot proceed with two factor setup.");
     return NextResponse.json({ error: ErrorCode.InternalServerError }, { status: 500 });
   }
 
   const secret = symmetricDecrypt(user.twoFactorSecret, process.env.CALENDSO_ENCRYPTION_KEY);
   if (secret.length !== 32) {
-    console.error(
+    logger.error(
       `Two factor secret decryption failed. Expected key with length 32 but got ${secret.length}`
     );
     return NextResponse.json({ error: ErrorCode.InternalServerError }, { status: 500 });

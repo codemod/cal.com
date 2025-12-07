@@ -1,8 +1,10 @@
+import pino from 'pino'
 import { PermissionCheckService } from "@calcom/features/pbac/services/permission-check.service";
 import { prisma } from "@calcom/prisma";
 import type { Prisma } from "@calcom/prisma/client";
 import { MembershipRole } from "@calcom/prisma/enums";
 import type { TrpcSessionUser } from "@calcom/trpc/server/types";
+const logger = pino()
 
 import type { TListInputSchema } from "./list.schema";
 
@@ -66,7 +68,7 @@ export const listHandler = async ({ ctx, input }: ListOptions) => {
         )
       ).filter((x): x is number => x !== null);
 
-      console.log("Allowed Team IDs:", allowedTeamIds);
+      logger.info("Allowed Team IDs:", allowedTeamIds);
 
       where.AND?.push({
         OR: [{ userId: ctx.user.id }, ...(allowedTeamIds.length ? [{ teamId: { in: allowedTeamIds } }] : [])],

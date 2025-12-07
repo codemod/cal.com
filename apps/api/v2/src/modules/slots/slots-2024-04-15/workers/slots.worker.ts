@@ -1,8 +1,10 @@
+import pino from 'pino'
 import { AvailableSlotsService } from "@/lib/services/available-slots.service";
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { IncomingMessage } from "http";
 import { parentPort, isMainThread } from "worker_threads";
+const logger = pino()
 
 import { SlotsWorkerModule } from "./slots.worker.module";
 
@@ -27,7 +29,7 @@ interface WorkerResult {
 
 async function bootstrapWorkerApp() {
   if (isMainThread) {
-    console.error("slots-worker-main.ts should only be run in a worker thread.");
+    logger.error("slots-worker-main.ts should only be run in a worker thread.");
     process.exit(1);
   }
 

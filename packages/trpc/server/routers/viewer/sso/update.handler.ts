@@ -1,5 +1,7 @@
+import pino from 'pino'
 import jackson from "@calcom/features/ee/sso/lib/jackson";
 import {
+const logger = pino()
   canAccessOrganization,
   samlProductID,
   samlTenantID,
@@ -41,7 +43,7 @@ export const updateHandler = async ({ ctx, input }: UpdateOptions) => {
       product: samlProductID,
     });
   } catch (err) {
-    console.error("Error updating SAML connection", err);
+    logger.error("Error updating SAML connection", err);
     throw new TRPCError({ code: "BAD_REQUEST", message: "Updating SAML Connection failed." });
   }
 };

@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { waitUntil } from "@vercel/functions";
+const logger = pino()
 
 import { UsageEvent, LicenseKeySingleton } from "@calcom/ee/common/server/LicenseKeyService";
 import type { IDeploymentRepository } from "@calcom/lib/server/repository/deployment.interface";
@@ -31,7 +33,7 @@ async function incrementUsage(prismaClient: PrismaClient, event?: UsageEvent) {
     const licenseKeyService = await LicenseKeySingleton.getInstance(deploymentRepo);
     await licenseKeyService.incrementUsage(event);
   } catch (e) {
-    console.log(e);
+    logger.info(e);
   }
 }
 

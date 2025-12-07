@@ -1,4 +1,6 @@
+import pino from 'pino'
 import getFloatingButtonHtml from "./FloatingButtonHtml";
+const logger = pino()
 
 type ModalTargetDatasetProps = {
   calLink: string;
@@ -83,7 +85,7 @@ export class FloatingButton extends HTMLElement {
       }
       buttonWrapperEl.style.display = off ? "none" : this.buttonWrapperStyleDisplay;
     } else {
-      console.log("Unknown attribute changed", name, oldValue, newValue);
+      logger.info("Unknown attribute changed", name, oldValue, newValue);
     }
   }
 

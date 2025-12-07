@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { prisma } from "@calcom/prisma";
+const logger = pino()
 
 const reassignAttributes = async () => {
   const orgId = 0;
@@ -22,7 +24,7 @@ const reassignAttributes = async () => {
     },
   });
 
-  console.log(`Found ${usersWithAttribute.length} users with attribute ${lookupAttributeId}`);
+  logger.info(`Found ${usersWithAttribute.length} users with attribute ${lookupAttributeId}`);
 
   // Assign the new attributes to these users
   for (const attributeId of attributeIdsToAssign) {
@@ -34,7 +36,7 @@ const reassignAttributes = async () => {
       skipDuplicates: true, // Skip if user already has this attribute
     });
 
-    console.log(`Assigned attribute ${attributeId} to ${results.count} users`);
+    logger.info(`Assigned attribute ${attributeId} to ${results.count} users`);
   }
 };
 

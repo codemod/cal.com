@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { useSession } from "next-auth/react";
 import type { FormEvent } from "react";
 import { useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+const logger = pino()
 
 import TeamInviteFromOrg from "@calcom/ee/organizations/components/TeamInviteFromOrg";
 import { checkAdminOrOwner } from "@calcom/features/auth/lib/checkAdminOrOwner";
@@ -432,7 +434,7 @@ export default function MemberInvitationModal(props: MemberInvitationModalProps)
                       }
                     } catch (e) {
                       showToast(t("something_went_wrong_on_our_end"), "error");
-                      console.error(e);
+                      logger.error(e);
                     }
                   }}
                   className={classNames("gap-2", props.token && "opacity-50")}

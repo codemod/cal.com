@@ -1,4 +1,6 @@
+import pino from 'pino'
 import fetch from "node-fetch";
+const logger = pino()
 
 import { uploadAvatar } from "@calcom/lib/server/avatar";
 import { resizeBase64Image } from "@calcom/lib/server/resizeBase64Image";
@@ -14,7 +16,7 @@ async function downloadImageDataFromUrl(url: string) {
     const response = await fetch(url);
 
     if (!response.ok) {
-      console.log("Error fetching image from: ", url);
+      logger.info("Error fetching image from: ", url);
       return null;
     }
 
@@ -23,7 +25,7 @@ async function downloadImageDataFromUrl(url: string) {
 
     return base64Image;
   } catch (error) {
-    console.log(error);
+    logger.info(error);
     return null;
   }
 }
@@ -56,7 +58,7 @@ export const prefillAvatar = async ({ email }: IPrefillAvatar) => {
 
 const getImageUrlAvatarAPI = async (email: string) => {
   if (!process.env.AVATARAPI_USERNAME || !process.env.AVATARAPI_PASSWORD) {
-    console.info("No avatar api credentials found");
+    logger.info("No avatar api credentials found");
     return null;
   }
 
@@ -86,15 +88,15 @@ const getImageUrlAvatarAPI = async (email: string) => {
         // Expected case: no avatar for this email
         return null;
       }
-      console.warn("Avatar API error:", info.Error);
+      logger.warn("Avatar API error:", info.Error);
       return null;
     }
     return info.Image as string;
   } catch (error: unknown) {
     if (error instanceof DOMException && error.name === "AbortError") {
-      console.warn("Avatar API request timed out");
+      logger.warn("Avatar API request timed out");
     } else {
-      console.error("Avatar API request failed:", error);
+      logger.error("Avatar API request failed:", error);
     }
     return null;
   }

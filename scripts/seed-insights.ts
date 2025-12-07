@@ -1,5 +1,7 @@
+import pino from 'pino'
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import { hashPassword } from "@calcom/lib/auth/hashPassword";
@@ -75,8 +77,8 @@ const shuffle = (
   }
 
   if (booking.userId === undefined || booking.userId === null) {
-    console.log({ randomEvent, usersIdsToPick });
-    console.log("This should not happen");
+    logger.info({ randomEvent, usersIdsToPick });
+    logger.info("This should not happen");
   }
 
   booking.rating = Math.floor(Math.random() * 5) + 1; // Generates a random rating from 1 to 5
@@ -369,7 +371,7 @@ async function main() {
 async function runMain() {
   await main()
     .catch(async (e) => {
-      console.error(e);
+      logger.error(e);
       await prisma.user.deleteMany({
         where: {
           email: {
@@ -440,7 +442,7 @@ async function createPerformanceData() {
 
   if (createExtraMembers) {
     if (insightsTeam === null) {
-      console.log("This should not happen");
+      logger.info("This should not happen");
       throw new Error("Insights team id is undefined or null");
     }
 
@@ -527,7 +529,7 @@ async function createPerformanceData() {
 async function runPerformanceData() {
   await createPerformanceData()
     .catch(async (e) => {
-      console.error(e);
+      logger.error(e);
       await prisma.user.deleteMany({
         where: {
           username: {
@@ -549,7 +551,7 @@ async function runEverything() {
 
 runEverything()
   .catch((e) => {
-    console.error(e);
+    logger.error(e);
     process.exit(1);
   })
   .finally(async () => {

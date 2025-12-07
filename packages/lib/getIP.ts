@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextApiRequest } from "next";
 import z from "zod";
+const logger = pino()
 
 export function parseIpFromHeaders(value: string | string[]) {
   return Array.isArray(value) ? value[0] : value.split(",")[0];
@@ -29,7 +31,7 @@ export function isIpInBanlist(request: Request | NextApiRequest) {
   const rawBanListJson = process.env.IP_BANLIST || "[]";
   const banList = banlistSchema.parse(JSON.parse(rawBanListJson));
   if (banList.includes(IP)) {
-    console.log(`Found banned IP: ${IP} in IP_BANLIST`);
+    logger.info(`Found banned IP: ${IP} in IP_BANLIST`);
     return true;
   }
   return false;
@@ -39,7 +41,7 @@ export function isIpInBanListString(identifer: string) {
   const rawBanListJson = process.env.IP_BANLIST || "[]";
   const banList = banlistSchema.parse(JSON.parse(rawBanListJson));
   if (banList.includes(identifer)) {
-    console.log(`Found banned IP: ${identifer} in IP_BANLIST`);
+    logger.info(`Found banned IP: ${identifer} in IP_BANLIST`);
     return true;
   }
   return false;

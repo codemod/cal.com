@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import type { TFunction } from "i18next";
@@ -55,7 +57,7 @@ function DownloadButton({ selectedPeriod, searchQuery }: DownloadButtonProps) {
 
       downloadAsCsv(result.data, result.filename || "routing-data.csv");
     } catch (error) {
-      console.error("Download failed:", error);
+      logger.error("Download failed:", error);
     } finally {
       setIsDownloading(false);
     }

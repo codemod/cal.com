@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /**
  * How to verify that rate limit is different for different impersonated users?
  * Open two terminals
@@ -22,13 +24,13 @@ async function sendRequest(calendar) {
   const response = await calendar.calendarList.list({
     fields: `items(id),nextPageToken`,
   });
-  console.log(response.data);
+  logger.info(response.data);
 }
 const args = process.argv.slice(2);
 const emailToImpersonate = args[0];
 const totalRequestsArg = args[1];
 (async function () {
-  console.log({ emailToImpersonate, totalRequestsArg });
+  logger.info({ emailToImpersonate, totalRequestsArg });
   const authClient = new JWT({
     email: serviceAccountClientEmail,
     key: serviceAccountPrivateKey,
@@ -45,9 +47,9 @@ const totalRequestsArg = args[1];
   const totalRequests = parseInt(totalRequestsArg) || 600;
   const promises = [];
   for (let i = 0; i < totalRequests; i++) {
-    console.log(`Queuing request ${i + 1}/${totalRequests}`);
+    logger.info(`Queuing request ${i + 1}/${totalRequests}`);
     promises.push(sendRequest(calendar));
   }
   await Promise.all(promises);
-  console.log("All requests completed");
+  logger.info("All requests completed");
 })();

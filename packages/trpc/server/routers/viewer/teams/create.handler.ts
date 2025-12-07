@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { generateTeamCheckoutSession } from "@calcom/features/ee/teams/lib/payments";
 import { ProfileRepository } from "@calcom/features/profile/repositories/ProfileRepository";
 import { IS_TEAM_BILLING_ENABLED, WEBAPP_URL } from "@calcom/lib/constants";
@@ -5,6 +6,7 @@ import { uploadLogo } from "@calcom/lib/server/avatar";
 import { resizeBase64Image } from "@calcom/lib/server/resizeBase64Image";
 import { prisma } from "@calcom/prisma";
 import { MembershipRole } from "@calcom/prisma/enums";
+const logger = pino()
 
 import { TRPCError } from "@trpc/server";
 
@@ -28,7 +30,7 @@ const generateCheckoutSession = async ({
   userId: number;
 }) => {
   if (!IS_TEAM_BILLING_ENABLED) {
-    console.info("Team billing is disabled, not generating a checkout session.");
+    logger.info("Team billing is disabled, not generating a checkout session.");
     return;
   }
 

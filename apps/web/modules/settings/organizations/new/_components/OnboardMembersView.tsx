@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useSession } from "next-auth/react";
@@ -213,7 +215,7 @@ export const AddNewTeamMembersForm = () => {
           onClick={() => {
             // Submit ALL data to intentToCreateOrg
             if (!name || !slug || !orgOwnerEmail) {
-              console.error("Required fields missing", { name, slug, orgOwnerEmail });
+              logger.error("Required fields missing", { name, slug, orgOwnerEmail });
               showToast(t("required_fields_missing"), "error");
               return;
             }

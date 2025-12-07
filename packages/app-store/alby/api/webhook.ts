@@ -1,6 +1,8 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
 import getRawBody from "raw-body";
 import { z } from "zod";
+const logger = pino()
 
 import { handlePaymentSuccess } from "@calcom/app-store/_utils/payments/handlePaymentSuccess";
 import { albyCredentialKeysSchema } from "@calcom/app-store/alby/lib";
@@ -28,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const parseHeaders = webhookHeadersSchema.safeParse(headers);
     if (!parseHeaders.success) {
-      console.error(parseHeaders.error);
+      logger.error(parseHeaders.error);
       throw new HttpCode({ statusCode: 400, message: "Bad Request" });
     }
 
@@ -36,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const parse = eventSchema.safeParse(JSON.parse(bodyAsString));
     if (!parse.success) {
-      console.error(parse.error);
+      logger.error(parse.error);
       throw new HttpCode({ statusCode: 400, message: "Bad Request" });
     }
 
@@ -76,7 +78,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const parseCredentials = albyCredentialKeysSchema.safeParse(key);
     if (!parseCredentials.success) {
-      console.error(parseCredentials.error);
+      logger.error(parseCredentials.error);
       throw new HttpCode({ statusCode: 500, message: "Credentials not valid" });
     }
 
@@ -91,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return await handlePaymentSuccess(payment.id, payment.bookingId);
   } catch (_err) {
     const err = getErrorFromUnknown(_err);
-    console.error(`Webhook Error: ${err.message}`);
+    logger.error(`Webhook Error: ${err.message}`);
     return res.status(err.statusCode || 500).send({
       message: err.message,
       stack: IS_PRODUCTION ? undefined : err.stack,

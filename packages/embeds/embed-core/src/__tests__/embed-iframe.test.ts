@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+const logger = pino()
 
 import { fakeCurrentDocumentUrl, nextTick } from "../embed-iframe/__tests__/test-utils";
 
@@ -26,7 +28,7 @@ describe("embedStore.router.ensureQueryParamsInUrl", async () => {
     vi.useFakeTimers();
     // Mock requestAnimationFrame and cancelAnimationFrame
     window.requestAnimationFrame = vi.fn((callback: FrameRequestCallback) => {
-      console.log("mockRequestAnimationFrame called");
+      logger.info("mockRequestAnimationFrame called");
       const timeoutId = setTimeout(() => {
         callback(performance.now());
       }, 100) as unknown as number;
@@ -262,7 +264,7 @@ describe("methods", async () => {
     isLinkReadyMock = vi.fn();
     isBookerReadyMock = vi.fn();
     ensureQueryParamsInUrlMock = vi.fn().mockImplementation(() => {
-      console.log("Fake ensureQueryParamsInUrl called");
+      logger.info("Fake ensureQueryParamsInUrl called");
       return {
         stopEnsuringQueryParamsInUrl: vi.fn(),
       };

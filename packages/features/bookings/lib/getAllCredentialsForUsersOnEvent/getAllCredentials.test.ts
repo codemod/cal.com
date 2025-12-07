@@ -1,4 +1,6 @@
+import pino from 'pino'
 import {
+const logger = pino()
   createCredentials,
   addTeamsToDb,
   addEventTypesToDb,
@@ -305,7 +307,7 @@ describe("getAllCredentialsIncludeServiceAccountKey", () => {
             },
           ]);
 
-          console.log(testEventType);
+          logger.info(testEventType);
 
           const credentials = await getAllCredentialsIncludeServiceAccountKey(
             {
@@ -632,7 +634,7 @@ describe("getAllCredentialsIncludeServiceAccountKey", () => {
             },
           ]);
 
-          console.log(testEventType);
+          logger.info(testEventType);
 
           const credentials = await getAllCredentialsIncludeServiceAccountKey(
             {

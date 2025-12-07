@@ -1,8 +1,10 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { z } from "zod";
+const logger = pino()
 
 import { Plan, SubscriptionStatus } from "@calcom/features/ee/billing/repository/IBillingRepository";
 import { StripeBillingService } from "@calcom/features/ee/billing/stripe-billing-service";
@@ -46,7 +48,7 @@ async function getHandler(req: NextRequest) {
   const parseCheckoutSessionMetadata = checkoutSessionMetadataSchema.safeParse(checkoutSession.metadata);
 
   if (!parseCheckoutSessionMetadata.success) {
-    console.error(
+    logger.error(
       "Team metadata not found in checkout session",
       parseCheckoutSessionMetadata.error,
       checkoutSession.id

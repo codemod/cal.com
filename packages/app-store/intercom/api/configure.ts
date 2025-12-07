@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { NextApiRequest, NextApiResponse } from "next";
+const logger = pino()
 
 import { handleButtonAndInvitationStep } from "../lib/configure/button";
 import { handleLinkStep } from "../lib/configure/link";
@@ -15,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json(linkStepResult);
   }
   const buttonAndInvitationStepResult = await handleButtonAndInvitationStep(req);
-  console.log(buttonAndInvitationStepResult);
+  logger.info(buttonAndInvitationStepResult);
   if (buttonAndInvitationStepResult) {
     return res.status(200).json(buttonAndInvitationStepResult);
   }

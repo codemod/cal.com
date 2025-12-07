@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -24,7 +26,7 @@ const UsersAddView = () => {
       }
     },
     onError: (err) => {
-      console.error(err.message);
+      logger.error(err.message);
       showToast("There has been an error adding this user.", "error");
     },
   });

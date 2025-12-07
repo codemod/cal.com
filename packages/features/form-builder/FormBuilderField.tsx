@@ -1,7 +1,9 @@
+import pino from 'pino'
 import { ErrorMessage } from "@hookform/error-message";
 import type { TFunction } from "i18next";
 import { Controller, useFormContext } from "react-hook-form";
 import type { z } from "zod";
+const logger = pino()
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
@@ -115,7 +117,7 @@ export const FormBuilderField = ({
                   message = message.replace(/\{[^}]+\}(.*)/, "$1").trim();
 
                   if (hidden) {
-                    console.error(`Error message for hidden field:${field.name} => ${message}`);
+                    logger.error(`Error message for hidden field:${field.name} => ${message}`);
                   }
 
                   return (

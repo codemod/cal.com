@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 const VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : "";
 const RAILWAY_STATIC_URL = process.env.RAILWAY_STATIC_URL ? `https://${process.env.RAILWAY_STATIC_URL}` : "";
 const HEROKU_URL = process.env.HEROKU_APP_NAME ? `https://${process.env.HEROKU_APP_NAME}.herokuapp.com` : "";
@@ -245,7 +247,7 @@ export const RETELL_AI_TEST_EVENT_TYPE_MAP = (() => {
   try {
     return JSON.parse(process.env.RETELL_AI_TEST_EVENT_TYPE_MAP);
   } catch (e) {
-    console.warn("Failed to parse RETELL_AI_TEST_EVENT_TYPE_MAP", e);
+    logger.warn("Failed to parse RETELL_AI_TEST_EVENT_TYPE_MAP", e);
     return null;
   }
 })();

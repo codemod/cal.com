@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import React from "react";
@@ -94,7 +96,7 @@ export const ShadowTable: React.FC<ShadowTableProps> = () => {
       await navigator.clipboard.writeText(value);
       showToast(`Copied ${value}`, "success");
     } catch (error) {
-      console.error("Failed to copy:", error);
+      logger.error("Failed to copy:", error);
       showToast("Failed to copy", "error");
     }
   };

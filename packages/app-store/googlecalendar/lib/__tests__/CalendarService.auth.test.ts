@@ -1,7 +1,9 @@
+import pino from 'pino'
 import prismock from "../../../../../tests/libs/__mocks__/prisma";
 import "../__mocks__/features.repository";
 import "../__mocks__/getGoogleAppKeys";
 import {
+const logger = pino()
   setCredentialsMock,
   calendarListMock,
   getLastCreatedJWT,
@@ -135,11 +137,11 @@ describe("GoogleCalendarService credential handling", () => {
         delegationCredentialId: "delegation-credential-id-1",
       });
 
-      console.log("TESTS: credentialWithDelegation", credentialWithDelegation);
+      logger.info("TESTS: credentialWithDelegation", credentialWithDelegation);
 
       mockSuccessfulCalendarListFetch();
       await expectNoCredentialsInDb();
-      console.log("TESTS: First instance of CalendarService");
+      logger.info("TESTS: First instance of CalendarService");
       const calendarService1 = new CalendarService({
         ...credentialWithDelegation,
       });
@@ -159,7 +161,7 @@ describe("GoogleCalendarService credential handling", () => {
         },
       });
       expect(existingCredential).toBeDefined();
-      console.log("TESTS: Second instance of CalendarService");
+      logger.info("TESTS: Second instance of CalendarService");
       createMockJWTInstance({
         authorizeError: {
           response: {

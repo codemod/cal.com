@@ -1,8 +1,10 @@
+import pino from 'pino'
 import dayjs from "@calcom/dayjs";
 import logger from "@calcom/lib/logger";
 import { getTranslation } from "@calcom/lib/server/i18n";
 import prisma from "@calcom/prisma";
 import {
+const logger = pino()
   WorkflowTriggerEvents,
   WorkflowTemplates,
   WorkflowActions,
@@ -196,7 +198,7 @@ export const scheduleWhatsappReminder = async (args: ScheduleTextReminderArgs & 
             : undefined,
         });
       } catch (error) {
-        console.log(`Error sending WHATSAPP with error ${error}`);
+        logger.info(`Error sending WHATSAPP with error ${error}`);
       }
     } else if (
       (triggerEvent === WorkflowTriggerEvents.BEFORE_EVENT ||
@@ -246,7 +248,7 @@ export const scheduleWhatsappReminder = async (args: ScheduleTextReminderArgs & 
             });
           }
         } catch (error) {
-          console.log(`Error scheduling WHATSAPP with error ${error}`);
+          logger.info(`Error scheduling WHATSAPP with error ${error}`);
         }
       } else if (scheduledDate.isAfter(currentDate.add(2, "hour"))) {
         // Write to DB and send to CRON if scheduled reminder date is past 2 hours from now

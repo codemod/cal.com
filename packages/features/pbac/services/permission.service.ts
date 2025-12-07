@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { PermissionMapper } from "../domain/mappers/PermissionMapper";
 import type { Permission, PermissionPattern, PermissionValidationResult } from "../domain/models/Permission";
 import type {
+const logger = pino()
   PermissionString,
   Resource,
   CrudAction,
@@ -27,7 +29,7 @@ export class PermissionService {
         error: isValid ? null : `Invalid permission: ${permission}`,
       };
     } catch (error) {
-      console.debug(`[DEBUG] Error validating permission ${permission}:`, error);
+      logger.debug(`[DEBUG] Error validating permission ${permission}:`, error);
       if (error instanceof Error) {
         return {
           isValid: false,

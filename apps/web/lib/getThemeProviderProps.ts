@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import { z } from "zod";
+const logger = pino()
 
 import { EmbedTheme } from "@calcom/features/embed/lib/constants";
 
@@ -119,7 +121,7 @@ export function getThemeProviderProps({
   const themeBasis = pathname ? getUniqueIdentifierForBookingPage({ pathname }) : null;
   const isThemeBasisRequired = isBookingPageThemeSupportRequired || isEmbedMode;
   if (isThemeBasisRequired && !themeBasis) {
-    console.error("`themeBasis` is nullish. This should not happen.", {
+    logger.error("`themeBasis` is nullish. This should not happen.", {
       pathname,
     });
   }

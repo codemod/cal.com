@@ -1,5 +1,7 @@
+import pino from 'pino'
 import axios from "axios";
 import qs from "qs";
+const logger = pino()
 
 import { getLocation } from "@calcom/lib/CalEventParser";
 import { HttpError } from "@calcom/lib/http-error";
@@ -291,10 +293,10 @@ export default class ZohoCrmCrmService implements CRM {
   }
 
   getAppOptions() {
-    console.log("No options implemented");
+    logger.info("No options implemented");
   }
 
   async handleAttendeeNoShow() {
-    console.log("Not implemented");
+    logger.info("Not implemented");
   }
 }

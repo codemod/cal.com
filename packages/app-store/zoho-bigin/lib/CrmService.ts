@@ -1,5 +1,7 @@
+import pino from 'pino'
 import axios from "axios";
 import qs from "qs";
+const logger = pino()
 
 import { getLocation } from "@calcom/lib/CalEventParser";
 import logger from "@calcom/lib/logger";
@@ -291,11 +293,11 @@ export default class BiginCrmService implements CRM {
   }
 
   getAppOptions() {
-    console.log("No options implemented");
+    logger.info("No options implemented");
   }
 
   async handleAttendeeNoShow() {
-    console.log("Not implemented");
+    logger.info("Not implemented");
   }
 }
 

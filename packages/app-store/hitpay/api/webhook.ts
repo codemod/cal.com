@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { createHmac } from "crypto";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type z from "zod";
+const logger = pino()
 
 import { handlePaymentSuccess } from "@calcom/app-store/_utils/payments/handlePaymentSuccess";
 import { IS_PRODUCTION } from "@calcom/lib/constants";
@@ -105,7 +107,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return await handlePaymentSuccess(payment.id, payment.bookingId);
   } catch (_err) {
     const err = getErrorFromUnknown(_err);
-    console.error(`Webhook Error: ${err.message}`);
+    logger.error(`Webhook Error: ${err.message}`);
     return res.status(200).send({
       message: err.message,
       stack: IS_PRODUCTION ? undefined : err.stack,

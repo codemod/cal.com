@@ -1,4 +1,6 @@
+import pino from 'pino'
 import "dotenv/config";
+const logger = pino()
 
 import { bootstrap } from "../app";
 import { createNestApp } from "../main";
@@ -6,11 +8,11 @@ import { generateSwaggerForApp } from "../swagger/generate-swagger";
 
 generateSwagger()
   .then(() => {
-    console.log("✅ Swagger generation completed successfully");
+    logger.info("✅ Swagger generation completed successfully");
     process.exit(0);
   })
   .catch((error: Error) => {
-    console.error("❌ Failed to generate swagger", { error: error.stack });
+    logger.error("❌ Failed to generate swagger", { error: error.stack });
     process.exit(1);
   });
 
@@ -21,7 +23,7 @@ async function generateSwagger() {
     bootstrap(app);
     await generateSwaggerForApp(app);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw error;
   } finally {
     await app.close();

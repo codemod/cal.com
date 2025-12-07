@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import { getDailyAppKeys } from "@calcom/app-store/dailyvideo/lib/getDailyAppKeys";
 import { prisma } from "@calcom/prisma";
@@ -438,7 +440,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
         );
         return Promise.resolve(res);
       } catch (err) {
-        console.log("err", err);
+        logger.info("err", err);
         throw new Error("Something went wrong! Unable to get recording access link");
       }
     },
@@ -456,7 +458,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
 
         return Promise.resolve(accessLinks);
       } catch (err) {
-        console.log("err", err);
+        logger.info("err", err);
         throw new Error("Something went wrong! Unable to get transcription access link");
       }
     },
@@ -474,7 +476,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
 
         return Promise.resolve(accessLinks);
       } catch (err) {
-        console.log("err", err);
+        logger.info("err", err);
         throw new Error("Something went wrong! Unable to get transcription access link");
       }
     },
@@ -485,7 +487,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
         );
         return batchProcessorJob;
       } catch (err) {
-        console.log("err", err);
+        logger.info("err", err);
         throw new Error("Something went wrong! Unable to submit batch processor job");
       }
     },
@@ -510,7 +512,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
 
         return accessLinkRes.transcription;
       } catch (err) {
-        console.log("err", err);
+        logger.info("err", err);
         throw new Error("Something went wrong! can't get transcripts");
       }
     },
@@ -519,7 +521,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
         const recording = await fetcher(`/recordings/${recordingId}`).then(recordingItemSchema.parse);
         return recording.room_name === roomName;
       } catch (err) {
-        console.error("err", err);
+        logger.error("err", err);
         throw new Error(`Something went wrong! Unable to checkIfRoomNameMatchesInRecording. ${err}`);
       }
     },
@@ -530,7 +532,7 @@ const DailyVideoApiAdapter = (): VideoApiAdapter => {
         );
         return res;
       } catch (err) {
-        console.error("err", err);
+        logger.error("err", err);
         throw new Error("Something went wrong! Unable to get meeting information");
       }
     },

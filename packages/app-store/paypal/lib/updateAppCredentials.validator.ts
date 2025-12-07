@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import Paypal from "./Paypal";
 
@@ -33,7 +35,7 @@ const handlePaypalValidations = async ({ input }: { input: TUpdateAppCredentials
   const webhookId = await paypalClient.createWebhook();
   if (!webhookId) {
     // @TODO: make a button that tries to create the webhook again
-    console.error("Failed to create webhook", webhookId);
+    logger.error("Failed to create webhook", webhookId);
     throw new Error("Failed to create webhook");
   }
 

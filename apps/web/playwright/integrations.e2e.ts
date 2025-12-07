@@ -1,9 +1,11 @@
+import pino from 'pino'
 import type { Page, Route } from "@playwright/test";
 import { expect } from "@playwright/test";
 import type { DefaultBodyType } from "msw";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { v4 as uuidv4 } from "uuid";
+const logger = pino()
 
 import { prisma } from "@calcom/prisma";
 
@@ -16,7 +18,7 @@ declare let global: {
 
 const requestInterceptor = setupServer(
   rest.post("https://api.hubapi.com/oauth/v1/token", (req, res, ctx) => {
-    console.log(req.body);
+    logger.info(req.body);
     return res(ctx.status(200));
   })
 );

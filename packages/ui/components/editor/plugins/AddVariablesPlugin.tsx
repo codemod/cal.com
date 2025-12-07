@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -52,7 +54,7 @@ function $findAndTransformVariable(node: TextNode): null | TextNode {
 function useVariablesTransform(editor: LexicalEditor): void {
   useEffect(() => {
     if (!editor.hasNodes([VariableNode])) {
-      console.error("VariableNode is not registered in the editor");
+      logger.error("VariableNode is not registered in the editor");
       return;
     }
     return editor.registerNodeTransform(TextNode, (node) => {

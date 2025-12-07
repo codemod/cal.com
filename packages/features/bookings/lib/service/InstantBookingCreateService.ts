@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { randomBytes } from "crypto";
 import short from "short-uuid";
 import { v5 as uuidv5 } from "uuid";
+const logger = pino()
 
 import dayjs from "@calcom/dayjs";
 import type {
@@ -83,7 +85,7 @@ const handleInstantMeetingWebhookTrigger = async (args: {
         webhook: sub,
         data: webhookData,
       }).catch((e) => {
-        console.error(
+        logger.error(
           `Error executing webhook for event: ${eventTrigger}, URL: ${sub.subscriberUrl}`,
           sub,
           e
@@ -93,7 +95,7 @@ const handleInstantMeetingWebhookTrigger = async (args: {
 
     await Promise.all(promises);
   } catch (error) {
-    console.error("Error executing webhook", error);
+    logger.error("Error executing webhook", error);
     logger.error("Error while sending webhook", error);
   }
 };

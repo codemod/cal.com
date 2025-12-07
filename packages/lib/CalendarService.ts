@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="../types/ical.d.ts"/>
 import ICAL from "ical.js";
@@ -352,7 +354,7 @@ export default abstract class BaseCalendarService implements Calendar {
     const allowedExtensions = ["eml", "ics"];
     const urlExtension = getFileExtension(url);
     if (!allowedExtensions.includes(urlExtension)) {
-      console.error(`Unsupported calendar object format: ${urlExtension}`);
+      logger.error(`Unsupported calendar object format: ${urlExtension}`);
       return false;
     }
     return true;
@@ -383,7 +385,7 @@ export default abstract class BaseCalendarService implements Calendar {
         const jcalData = ICAL.parse(sanitizeCalendarObject(object));
         vcalendar = new ICAL.Component(jcalData);
       } catch (e) {
-        console.error("Error parsing calendar object: ", e);
+        logger.error("Error parsing calendar object: ", e);
         return;
       }
       const vevents = vcalendar.getAllSubcomponents("vevent");
@@ -424,10 +426,10 @@ export default abstract class BaseCalendarService implements Calendar {
               vcalendar.addSubcomponent(timezoneComp);
             } catch (e) {
               // Adds try-catch to ensure the code proceeds when Apple Calendar provides non-standard TZIDs
-              console.log("error in adding vtimezone", e);
+              logger.info("error in adding vtimezone", e);
             }
           } else {
-            console.error("No timezone found");
+            logger.error("No timezone found");
           }
         }
 
@@ -447,7 +449,7 @@ export default abstract class BaseCalendarService implements Calendar {
         if (event.isRecurring()) {
           let maxIterations = 365;
           if (["HOURLY", "SECONDLY", "MINUTELY"].includes(event.getRecurrenceTypes())) {
-            console.error(`Won't handle [${event.getRecurrenceTypes()}] recurrence`);
+            logger.error(`Won't handle [${event.getRecurrenceTypes()}] recurrence`);
             return;
           }
 
@@ -500,7 +502,7 @@ export default abstract class BaseCalendarService implements Calendar {
             }
           }
           if (maxIterations <= 0) {
-            console.warn("could not find any occurrence for recurring event in 365 iterations");
+            logger.warn("could not find any occurrence for recurring event in 365 iterations");
           }
           return;
         }
@@ -700,7 +702,7 @@ export default abstract class BaseCalendarService implements Calendar {
         });
       return events;
     } catch (reason) {
-      console.error(reason);
+      logger.error(reason);
       throw reason;
     }
   }

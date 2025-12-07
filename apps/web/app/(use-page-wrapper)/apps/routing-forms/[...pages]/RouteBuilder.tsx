@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -1407,7 +1409,7 @@ function Page({
   }
 
   if (!eventTypesByGroup) {
-    console.error("Events not available");
+    logger.error("Events not available");
     return <div>{t("something_went_wrong")}</div>;
   }
   return (

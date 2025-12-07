@@ -1,7 +1,9 @@
+import pino from 'pino'
 import type { TokenResponse, Connection, Field } from "@jsforce/jsforce-node";
 import jsforce from "@jsforce/jsforce-node";
 import { RRule } from "rrule";
 import { z } from "zod";
+const logger = pino()
 
 import { RoutingFormResponseDataFactory } from "@calcom/app-store/routing-forms/lib/RoutingFormResponseDataFactory";
 import { checkIfFreeEmailDomain } from "@calcom/features/watchlist/lib/freeEmailDomainCheck/checkIfFreeEmailDomain";
@@ -156,7 +158,7 @@ export default class SalesforceCRMService implements CRM {
         data: { key: { ...accessTokenParsed, refresh_token: credentialKey.refresh_token } },
       });
     } catch (err: unknown) {
-      console.error(err); // log but proceed
+      logger.error(err); // log but proceed
     }
 
     return new jsforce.Connection({

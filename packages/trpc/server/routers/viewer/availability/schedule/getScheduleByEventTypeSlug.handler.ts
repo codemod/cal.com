@@ -1,4 +1,6 @@
+import pino from 'pino'
 import type { PrismaClient } from "@calcom/prisma";
+const logger = pino()
 
 import type { TrpcSessionUser } from "../../../../types";
 import { getHandler } from "./get.handler";
@@ -57,7 +59,7 @@ export const getScheduleByEventSlugHandler = async ({ ctx, input }: GetOptions) 
       },
     });
   } catch (e) {
-    console.log(e);
+    logger.info(e);
     return {
       id: -1,
       name: "No schedules found",

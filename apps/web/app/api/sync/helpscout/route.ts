@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { defaultResponderForAppDir } from "app/api/defaultResponderForAppDir";
 import { createHmac } from "crypto";
 import { headers } from "next/headers";
@@ -6,6 +7,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import getRawBody from "raw-body";
 import z from "zod";
+const logger = pino()
 
 import { emailSchema } from "@calcom/lib/emailSchema";
 import { default as webPrisma } from "@calcom/prisma";
@@ -91,7 +93,7 @@ async function postHandler(request: NextRequest) {
       `,
     });
   } catch (error) {
-    console.error("Error processing HelpScout request:", error);
+    logger.error("Error processing HelpScout request:", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

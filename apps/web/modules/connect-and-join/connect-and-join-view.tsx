@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useSession } from "next-auth/react";
@@ -35,7 +37,7 @@ function ConnectAndJoin() {
       }
     },
     onError: (err) => {
-      console.log("err", err, err instanceof TRPCClientError);
+      logger.info("err", err, err instanceof TRPCClientError);
       if (err instanceof TRPCClientError) {
         setErrorMessage(t(err.message));
       } else {

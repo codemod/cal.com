@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { EMBED_DARK_THEME_CLASS } from "./constants";
+const logger = pino()
 
 export const addAppCssVars = () => {
   const calElements = ["cal-floating-button", "cal-modal-box", "cal-inline"];
@@ -255,6 +257,6 @@ export const addAppCssVars = () => {
     style.textContent = cssVarsStyle;
     document.head.appendChild(style);
   } catch (error) {
-    console.error("Error adding app css vars - Report this issue to support", error);
+    logger.error("Error adding app css vars - Report this issue to support", error);
   }
 };

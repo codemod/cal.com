@@ -1,7 +1,9 @@
+import pino from 'pino'
 import type { TFunction } from "i18next";
 import { createEvent } from "ics";
 import { RRule } from "rrule";
 import type { z } from "zod";
+const logger = pino()
 
 import type { Dayjs } from "@calcom/dayjs";
 import dayjs from "@calcom/dayjs";
@@ -226,7 +228,7 @@ export const getCalendarLinks = ({
       location: videoCallUrl ?? null,
     });
   } catch (error) {
-    console.error("Error generating ICS file", error);
+    logger.error("Error generating ICS file", error);
   }
 
   return [

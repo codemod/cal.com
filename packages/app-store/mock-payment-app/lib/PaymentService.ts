@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { v4 as uuidv4 } from "uuid";
+const logger = pino()
 
 import prisma from "@calcom/prisma";
 import type { Booking, Payment, Prisma, PaymentOption } from "@calcom/prisma/client";
@@ -26,7 +28,7 @@ export class PaymentService implements IAbstractPaymentService {
 
       const uid = uuidv4();
 
-      console.log("CREATE payment");
+      logger.info("CREATE payment");
 
       const paymentData = await prisma.payment.create({
         data: {
@@ -53,7 +55,7 @@ export class PaymentService implements IAbstractPaymentService {
 
       return paymentData;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       throw new Error("Payment could not be created");
     }
   }
@@ -115,7 +117,7 @@ export class PaymentService implements IAbstractPaymentService {
       }
       return paymentData;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       throw new Error("Payment could not be created");
     }
   }

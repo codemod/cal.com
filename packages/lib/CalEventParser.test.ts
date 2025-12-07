@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { TFunction } from "i18next";
 import { describe, expect, it } from "vitest";
+const logger = pino()
 
 import type { CalendarEvent } from "@calcom/types/Calendar";
 
@@ -35,8 +37,8 @@ describe("getRichDescription", () => {
   it("should format description without extra whitespace", () => {
     const description = getRichDescription(mockCalEvent, t);
 
-    console.log("Description:", description);
-    console.log(
+    logger.info("Description:", description);
+    logger.info(
       "Lines:",
       description.split("\n").map((line) => `"${line}"`)
     );

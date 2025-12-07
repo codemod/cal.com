@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { createDefaultAIPhoneServiceProvider } from "@calcom/features/calAIPhone";
 import { PrismaPhoneNumberRepository } from "@calcom/lib/server/repository/PrismaPhoneNumberRepository";
 import prisma from "@calcom/prisma";
+const logger = pino()
 
 import type { LazyModule, SWHMap } from "./__handler";
 import { HttpCode } from "./__handler";
@@ -44,7 +46,7 @@ const stripeWebhookProductHandler = (handlers: Handlers) => async (data: Data) =
   }
   const handlerGetter = handlers[productId as any];
   if (!handlerGetter) {
-    console.log("No product handler found for product", productId);
+    logger.info("No product handler found for product", productId);
     return {
       success: false,
       message: `No product handler found for product: ${productId}`,
@@ -53,7 +55,7 @@ const stripeWebhookProductHandler = (handlers: Handlers) => async (data: Data) =
   const handler = (await handlerGetter())?.default;
   // auto catch unsupported Stripe products.
   if (!handler) {
-    console.log("No product handler found for product", productId);
+    logger.info("No product handler found for product", productId);
     return {
       success: false,
       message: `No product handler found for product: ${productId}`,
@@ -88,7 +90,7 @@ async function handleCalAIPhoneNumberSubscriptionDeleted(
 
     return { success: true, subscriptionId: subscription.id };
   } catch (error) {
-    console.error("Failed to update phone number subscription:", error);
+    logger.error("Failed to update phone number subscription:", error);
     throw new HttpCode(500, "Failed to update phone number subscription");
   }
 }

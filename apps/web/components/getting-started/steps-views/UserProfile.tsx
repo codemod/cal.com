@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -65,7 +67,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
           );
         }
       } catch (error) {
-        console.error(error);
+        logger.error(error);
       }
 
       await utils.viewer.me.get.refetch();

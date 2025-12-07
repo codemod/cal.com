@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -283,7 +285,7 @@ const OnboardingPage = ({
                   await Promise.all(mutationPromises);
                   router.push("/event-types");
                 } catch (err) {
-                  console.error(err);
+                  logger.error(err);
                 }
               }}>
               <StepHeader

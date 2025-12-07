@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { z } from "zod";
+const logger = pino()
 
 import {
   bookingCreateBodySchemaForApi,
@@ -36,7 +38,7 @@ const getBookingDataSchemaForApi = ({
         const unwantedProps: string[] = [];
         legacyProps.forEach((legacyProp) => {
           if (typeof val[legacyProp as keyof typeof val] !== "undefined") {
-            console.error(
+            logger.error(
               `Deprecated: Unexpected falsy value for: ${unwantedProps.join(
                 ","
               )}. They can't be used with \`responses\`. This will become a 400 error in the future.`

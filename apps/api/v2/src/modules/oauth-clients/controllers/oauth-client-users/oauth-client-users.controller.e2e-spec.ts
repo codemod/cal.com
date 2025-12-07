@@ -1,3 +1,4 @@
+import pino from 'pino'
 import { bootstrap } from "@/app";
 import { AppModule } from "@/app.module";
 import { DEFAULT_EVENT_TYPES } from "@/ee/event-types/event-types_2024_04_15/constants/constants";
@@ -25,6 +26,7 @@ import { SchedulesRepositoryFixture } from "test/fixtures/repository/schedules.r
 import { TeamRepositoryFixture } from "test/fixtures/repository/team.repository.fixture";
 import { UserRepositoryFixture } from "test/fixtures/repository/users.repository.fixture";
 import { randomString } from "test/utils/randomString";
+const logger = pino()
 
 import { SUCCESS_STATUS } from "@calcom/platform-constants";
 import { slugify } from "@calcom/platform-libraries";
@@ -817,17 +819,17 @@ describe("OAuth Client Users Endpoints", () => {
       try {
         await userRepositoryFixture.delete(postResponseData.user.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       try {
         await userRepositoryFixture.delete(postResponseData2.user.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       try {
         await userRepositoryFixture.delete(platformAdmin.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       await app.close();
     });
@@ -1036,7 +1038,7 @@ describe("OAuth Client Users Endpoints", () => {
       try {
         await userRepositoryFixture.delete(postResponseData.user.id);
       } catch (e) {
-        console.log(e);
+        logger.info(e);
       }
       await app.close();
     });

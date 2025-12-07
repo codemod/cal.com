@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 const fs = require("fs");
 const path = require("path");
 const glob = require("glob");
@@ -34,7 +36,7 @@ const copyAppStoreStatic = () => {
       SVG_HASHES[appDirName] = hash;
     }
 
-    console.log(`Copied ${file} to ${destPath}`);
+    logger.info(`Copied ${file} to ${destPath}`);
   });
 
   // Write SVG hashes to a JSON file

@@ -1,7 +1,9 @@
+import pino from 'pino'
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import { describe, it, expect, test, beforeAll, afterAll } from "vitest";
+const logger = pino()
 
 import { prisma } from "@calcom/prisma";
 import type { User, Team, Prisma } from "@calcom/prisma/client";
@@ -181,13 +183,13 @@ describe("Booking ownership and access in Middleware", () => {
   });
 
   afterAll(async () => {
-    console.log("Cleaning up org", orgRef.id);
+    logger.info("Cleaning up org", orgRef.id);
     await prisma.team.delete({
       where: {
         id: orgRef.id,
       },
     });
-    console.log("Cleaning up users", [
+    logger.info("Cleaning up users", [
       adminUserRef.id,
       ownerUserRef.id,
       orgOwnerUserRef.id,
@@ -203,7 +205,7 @@ describe("Booking ownership and access in Middleware", () => {
   });
 
   test("should not throw error for bookings where user is an attendee", async () => {
-    console.log(createEventResult1.bookings[0].id);
+    logger.info(createEventResult1.bookings[0].id);
     const { req } = createMocks<CustomNextApiRequest, CustomNextApiResponse>({
       method: "GET",
       query: {

@@ -1,5 +1,7 @@
+import pino from 'pino'
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+const logger = pino()
 
 import logger from "@calcom/lib/logger";
 import prisma from "@calcom/prisma";
@@ -39,7 +41,7 @@ export async function handleQueuedFormResponseCleanup(request: NextRequest) {
       data: result,
     });
   } catch (error) {
-    console.error("Error during queued form response cleanup:", error);
+    logger.error("Error during queued form response cleanup:", error);
     return NextResponse.json(
       { status: "error", message: "Failed to cleanup queued form responses" },
       { status: 500 }

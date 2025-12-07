@@ -1,4 +1,6 @@
+import pino from 'pino'
 import { randomBytes } from "crypto";
+const logger = pino()
 
 import { TeamBilling } from "@calcom/features/ee/billing/teams";
 import { deleteWorkfowRemindersOfRemovedMember } from "@calcom/features/ee/teams/lib/deleteWorkflowRemindersOfRemovedMember";
@@ -293,7 +295,7 @@ export class TeamService {
         });
       }
     } catch (e) {
-      console.log(e);
+      logger.info(e);
     }
   }
 

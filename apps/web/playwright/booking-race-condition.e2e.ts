@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { expect } from "@playwright/test";
 import type { Page, Browser, Route, Response } from "@playwright/test";
 import type { z } from "zod";
+const logger = pino()
 
 import { CalendarCacheRepository } from "@calcom/features/calendar-cache/calendar-cache.repository";
 import { getTimeMin, getTimeMax } from "@calcom/features/calendar-cache/lib/datesForCache";
@@ -83,7 +85,7 @@ test.describe("Booking Race Condition Prevention", () => {
 
     expect(bookingResults.isRaceConditionPrevented).toBe(true);
 
-    console.log("Race condition prevention test results:", {
+    logger.info("Race condition prevention test results:", {
       totalBookings: bookingResults.bookings.length,
       responseStatuses: bookingResults.responseStatuses,
       sameHostSelected: bookingResults.sameHostSelected,

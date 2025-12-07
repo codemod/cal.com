@@ -1,4 +1,6 @@
+import pino from 'pino'
 import LicenseKeyService from "@calcom/features/ee/common/server/LicenseKeyService";
+const logger = pino()
 
 import type { TrpcSessionUser } from "../../../types";
 import type { TValidateLicenseInputSchema } from "./validateLicense.schema";
@@ -29,7 +31,7 @@ export const validateLicenseHandler = async ({ input }: ValidateLicenseOptions) 
       message: isValid ? "License key is valid" : "License key is invalid",
     };
   } catch (error) {
-    console.error("License validation failed:", error);
+    logger.error("License validation failed:", error);
     return {
       valid: false,
       message: "License key validation failed",

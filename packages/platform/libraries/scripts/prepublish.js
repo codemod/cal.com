@@ -1,7 +1,9 @@
+import pino from 'pino'
 import fs from "fs";
 import https from "https";
 import path from "path";
 import { fileURLToPath } from "url";
+const logger = pino()
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,7 +47,7 @@ async function main() {
     // Get and increment version
     const currentVersion = await getCurrentVersion();
     const newVersion = incrementPatchVersion(currentVersion);
-    console.log(`Current version in npm: ${currentVersion}. Incremented locally to ${newVersion}`);
+    logger.info(`Current version in npm: ${currentVersion}. Incremented locally to ${newVersion}`);
 
     // Update libraries package.json version
     const librariesPath = path.join(__dirname, "..");
@@ -55,9 +57,9 @@ async function main() {
     librariesPackageJson.version = newVersion;
     fs.writeFileSync(librariesPackageJsonPath, `${JSON.stringify(librariesPackageJson, null, 2)}\n`);
 
-    console.log("Successfully incremented @calcom/platform-libraries package.json version.");
+    logger.info("Successfully incremented @calcom/platform-libraries package.json version.");
   } catch (error) {
-    console.error("Error:", error);
+    logger.error("Error:", error);
     process.exit(1);
   }
 }

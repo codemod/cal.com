@@ -1,3 +1,5 @@
+import pino from 'pino'
+const logger = pino()
 // Theme application function - will be stringified and injected. So, it must not use anything from the closure
 export const applyTheme = function () {
   try {
@@ -54,7 +56,7 @@ export const applyTheme = function () {
 
     requestAnimationFrame(onReady);
   } catch (e) {
-    console.error("Error applying theme:", e);
+    logger.error("Error applying theme:", e);
   }
 };
 
@@ -73,6 +75,6 @@ export const applyToDesktopClass = function () {
 
     requestAnimationFrame(onReady);
   } catch (e) {
-    console.error("Error applying todesktop class:", e);
+    logger.error("Error applying todesktop class:", e);
   }
 };

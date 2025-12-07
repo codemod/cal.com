@@ -1,6 +1,8 @@
+import pino from 'pino'
 import { cloneDeep, merge } from "lodash";
 import { v5 as uuidv5 } from "uuid";
 import type { z } from "zod";
+const logger = pino()
 
 import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
 import { FAKE_DAILY_CREDENTIAL } from "@calcom/app-store/dailyvideo/lib/VideoApiAdapter";
@@ -814,7 +816,7 @@ export default class EventManager {
 
   public async updateCalendarAttendees(event: CalendarEvent, booking: PartialBooking) {
     if (booking.references.length === 0) {
-      console.error("Tried to update references but there wasn't any.");
+      logger.error("Tried to update references but there wasn't any.");
       return;
     }
     await this.updateAllCalendarEvents(event, booking);
@@ -1222,7 +1224,7 @@ export default class EventManager {
     for (const credential of this.crmCredentials) {
       if (isTaskerEnabledForSalesforceCrm) {
         if (!event.uid) {
-          console.error(
+          logger.error(
             `Missing bookingId when scheduling CRM event creation on event type ${event?.eventTypeId}`
           );
           continue;
