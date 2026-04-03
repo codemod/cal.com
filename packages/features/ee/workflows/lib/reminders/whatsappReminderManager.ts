@@ -17,12 +17,10 @@ import {
 } from "../reminders/templates/whatsapp/ContentSidMapping";
 import { scheduleSmsOrFallbackEmail, sendSmsOrFallbackEmail } from "./messageDispatcher";
 import type { BookingInfo, ScheduleTextReminderArgs, timeUnitLowerCase } from "./smsReminderManager";
-import {
-  whatsappEventCancelledTemplate,
-  whatsappEventCompletedTemplate,
-  whatsappEventRescheduledTemplate,
-  whatsappReminderTemplate,
-} from "./templates/whatsapp";
+import { whatsappEventCancelledTemplate } from "./templates/whatsapp/whatsappEventCancelledTemplate";
+import { whatsappEventCompletedTemplate } from "./templates/whatsapp/whatsappEventCompletedTemplate";
+import { whatsappEventRescheduledTemplate } from "./templates/whatsapp/whatsappEventRescheduledTemplate";
+import { whatsappReminderTemplate } from "./templates/whatsapp/whatsappEventReminderTemplate";
 
 const log = logger.getSubLogger({ prefix: ["[whatsappReminderManager]"] });
 
