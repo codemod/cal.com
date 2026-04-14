@@ -5,7 +5,7 @@ import { z, ZodError } from "zod";
 import prisma from "@calcom/prisma";
 import { BookingStatus } from "@calcom/prisma/enums";
 
-import { Reschedule } from "../lib";
+import Reschedule from "../lib/reschedule";
 
 const wipeMyCalendarBodySchema = z.object({
   initialDate: z.string(),

@@ -3,7 +3,7 @@ import { describe, test, expect, vi, beforeEach } from "vitest";
 import { WatchlistType } from "@calcom/prisma/enums";
 
 import { WatchlistFeature } from "../lib/facade/WatchlistFeature";
-import type { SpanFn } from "../lib/telemetry";
+import { SpanFn } from "../lib/telemetry/types";
 import { checkIfEmailIsBlockedInWatchlistController } from "./check-if-email-in-watchlist.controller";
 
 // Mock the DI container

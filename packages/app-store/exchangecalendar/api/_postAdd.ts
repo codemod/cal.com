@@ -10,7 +10,7 @@ import prisma from "@calcom/prisma";
 
 import checkSession from "../../_utils/auth";
 import { ExchangeAuthentication, ExchangeVersion } from "../enums";
-import { CalendarService } from "../lib";
+import CalendarService from "../lib/CalendarService";
 
 const formSchema = z
   .object({
