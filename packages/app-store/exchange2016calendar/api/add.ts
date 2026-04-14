@@ -8,7 +8,7 @@ import { defaultResponder } from "@calcom/lib/server/defaultResponder";
 import prisma from "@calcom/prisma";
 
 import getInstalledAppPath from "../../_utils/getInstalledAppPath";
-import { CalendarService } from "../lib";
+import CalendarService from "../lib/CalendarService";
 
 const bodySchema = z
   .object({

@@ -7,7 +7,7 @@ import { defaultResponder } from "@calcom/lib/server/defaultResponder";
 import prisma from "@calcom/prisma";
 
 import { encodeOAuthState } from "../../_utils/oauth/encodeOAuthState";
-import { getZoomAppKeys } from "../lib";
+import { getZoomAppKeys } from "../lib/getZoomAppKeys";
 
 async function handler(req: NextApiRequest) {
   // Get user
