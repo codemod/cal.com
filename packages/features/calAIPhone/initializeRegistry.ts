@@ -1,6 +1,6 @@
 import { AIPhoneServiceRegistry } from "./AIPhoneServiceRegistry";
 import { AIPhoneServiceProviderType } from "./interfaces/AIPhoneService.interface";
-import { RetellAIPhoneServiceProviderFactory } from "./providers/retellAI";
+import { RetellAIPhoneServiceProviderFactory } from "./providers/retellAI/RetellAIPhoneServiceProviderFactory";
 
 /**
  * Initialize the AI Phone Service Registry
