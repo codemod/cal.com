@@ -2,7 +2,7 @@ import { describe, test, expect, vi, beforeEach } from "vitest";
 
 import { WatchlistType } from "@calcom/prisma/enums";
 
-import type { SpanFn } from "../lib/telemetry";
+import { SpanFn } from "../lib/telemetry/types";
 import { checkIfUsersAreBlocked } from "./check-if-users-are-blocked.controller";
 
 // Mock the DI container
