@@ -10,7 +10,7 @@ import prisma from "@calcom/prisma";
 import type { Prisma } from "@calcom/prisma/client";
 import { BookingStatus } from "@calcom/prisma/enums";
 
-import { Reschedule } from "../lib";
+import Reschedule from "../lib/reschedule";
 import { initVitalClient, vitalEnv } from "../lib/client";
 
 interface EventType {

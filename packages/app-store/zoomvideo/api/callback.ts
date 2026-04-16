@@ -7,7 +7,7 @@ import prisma from "@calcom/prisma";
 import getInstalledAppPath from "../../_utils/getInstalledAppPath";
 import createOAuthAppCredential from "../../_utils/oauth/createOAuthAppCredential";
 import { decodeOAuthState } from "../../_utils/oauth/decodeOAuthState";
-import { getZoomAppKeys } from "../lib";
+import { getZoomAppKeys } from "../lib/getZoomAppKeys";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const state = decodeOAuthState(req);
