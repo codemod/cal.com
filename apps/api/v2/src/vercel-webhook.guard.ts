@@ -1,5 +1,6 @@
 import * as crypto from "node:crypto";
 import { CanActivate, ExecutionContext, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import { getEnv } from "@/env";
 
 @Injectable()
 export class VercelWebhookGuard implements CanActivate {
@@ -9,7 +10,7 @@ export class VercelWebhookGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const signature = request.headers["x-vercel-signature"];
     // biome-ignore lint/style/noProcessEnv: Environment variable access required for webhook secret
-    const webhookSecret = process.env.VERCEL_PROMOTE_WEBHOOK_SECRET;
+    const webhookSecret = getEnv("VERCEL_PROMOTE_WEBHOOK_SECRET");
 
     if (!webhookSecret) {
       this.logger.error("VERCEL_PROMOTE_WEBHOOK_SECRET is not defined");

@@ -20,12 +20,13 @@ import { TRPCExceptionFilter } from "./filters/trpc-exception.filter";
 import { HttpExceptionFilter } from "@/filters/http-exception.filter";
 import { PrismaExceptionFilter } from "@/filters/prisma-exception.filter";
 import { ZodExceptionFilter } from "@/filters/zod-exception.filter";
+import { getEnv } from "@/env";
 
 const logger: Logger = new Logger("Bootstrap");
 
 export const bootstrap = (app: NestExpressApplication): NestExpressApplication => {
   try {
-    if (!process.env.VERCEL) {
+    if (!getEnv("VERCEL", "")) {
       app.enableShutdownHooks();
     }
     app.enableVersioning({
@@ -76,8 +77,8 @@ export const bootstrap = (app: NestExpressApplication): NestExpressApplication =
     app.useGlobalFilters(new CalendarServiceExceptionFilter());
     app.use(cookieParser());
 
-    if (process?.env?.API_GLOBAL_PREFIX) {
-      app.setGlobalPrefix(process?.env?.API_GLOBAL_PREFIX);
+    if (getEnv("API_GLOBAL_PREFIX", "")) {
+      app.setGlobalPrefix(getEnv("API_GLOBAL_PREFIX"));
     }
 
     return app;

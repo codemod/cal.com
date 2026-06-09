@@ -6,7 +6,7 @@ const loadConfig = (): AppConfig => {
   const apiPort = Number(getEnv("API_PORT", "5555"));
   const apiUrl = getEnv("API_URL", "http://localhost");
   let portSuffix = "";
-  if (process.env.API_PORT && env === "development") {
+  if (getEnv("API_PORT", "") && env === "development") {
     portSuffix = `:${apiPort}`;
   }
 

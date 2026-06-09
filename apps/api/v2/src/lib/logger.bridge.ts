@@ -1,5 +1,6 @@
 import { Injectable, Logger as NestLogger, Scope } from "@nestjs/common";
 import type { Logger as TsLogger } from "tslog";
+import { getEnv } from "@/env";
 
 // 1. Define an interface for the settings
 interface IMyLoggerSettings {
@@ -38,8 +39,8 @@ export class Logger
 
   // Define default settings
   private static readonly defaultSettings: IMyLoggerSettings = {
-    minLevel: process?.env?.LOGGER_BRIDGE_LOG_LEVEL
-      ? Number(process.env.LOGGER_BRIDGE_LOG_LEVEL)
+    minLevel: getEnv("LOGGER_BRIDGE_LOG_LEVEL", "")
+      ? Number(getEnv("LOGGER_BRIDGE_LOG_LEVEL", ""))
       : LogLevel.INFO, // Default to INFO level
     displayTimestamp: true,
     logFormat: "pretty",

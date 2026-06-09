@@ -2,7 +2,7 @@ import { getEnv } from "@/env";
 import * as Sentry from "@sentry/nestjs";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
-if (process.env.SENTRY_DSN) {
+if (getEnv("SENTRY_DSN", "")) {
   // Ensure to call this before requiring any other modules!
   Sentry.init({
     dsn: getEnv("SENTRY_DSN"),
