@@ -22,6 +22,7 @@ import type { Prisma, Credential, User } from "@calcom/prisma/client";
 import { stripeKeysResponseSchema } from "./utils/stripeDataSchemas";
 
 import stringify = require("qs-stringify");
+import { getEnv } from "@/env";
 
 export type OAuthCallbackState = {
   accessToken: string;
@@ -68,7 +69,7 @@ export class StripeService {
         email: userEmail,
         first_name: userName || undefined,
         /** We need this so E2E don't fail for international users */
-        country: process.env.NEXT_PUBLIC_IS_E2E ? "US" : undefined,
+        country: getEnv("NEXT_PUBLIC_IS_E2E", "") ? "US" : undefined,
       },
       redirect_uri: this.redirectUri,
       state: JSON.stringify(state),

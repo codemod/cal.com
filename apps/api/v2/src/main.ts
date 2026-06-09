@@ -13,8 +13,9 @@ import { AppModule } from "./app.module";
 import { bootstrap } from "./bootstrap";
 import { loggerConfig } from "./lib/logger";
 import type { AppConfig } from "@/config/type";
+import { getEnv } from "@/env";
 
-if (process.env.NODE_ENV === "production") {
+if (getEnv("NODE_ENV", "development") === "production") {
   process.env.TRIGGER_VERSION = TRIGGER_VERSION;
 }
 const logger: Logger = new Logger("App");
@@ -52,7 +53,7 @@ class NestServer {
 // -----------------------------------------------------------------------------
 // LOCAL DEVELOPMENT STARTUP
 // -----------------------------------------------------------------------------
-if (!process.env.VERCEL) {
+if (!getEnv("VERCEL", "")) {
   run().catch((error: Error) => {
     logger.error("Failed to start Cal Platform API", { error: error.stack });
     process.exit(1);

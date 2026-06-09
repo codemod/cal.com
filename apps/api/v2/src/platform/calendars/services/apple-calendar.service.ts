@@ -8,6 +8,7 @@ import { SUCCESS_STATUS, APPLE_CALENDAR_TYPE, APPLE_CALENDAR_ID } from "@calcom/
 import { symmetricEncrypt, symmetricDecrypt } from "@calcom/platform-libraries";
 import { BuildCalendarService } from "@calcom/platform-libraries/app-store";
 import type { Credential } from "@calcom/prisma/client";
+import { getEnv } from "@/env";
 
 @Injectable()
 export class AppleCalendarService implements CredentialSyncCalendarApp {
@@ -75,7 +76,7 @@ export class AppleCalendarService implements CredentialSyncCalendarApp {
       const hasCalendarWithGivenCredentials = existingAppleCalendarCredentials.find(
         (calendarCredential: Credential) => {
           const decryptedKey = JSON.parse(
-            symmetricDecrypt(calendarCredential.key as string, process.env.CALENDSO_ENCRYPTION_KEY || "")
+            symmetricDecrypt(calendarCredential.key as string, getEnv("CALENDSO_ENCRYPTION_KEY", ""))
           );
 
           if (decryptedKey.username === username) {
@@ -97,7 +98,7 @@ export class AppleCalendarService implements CredentialSyncCalendarApp {
       if (!!hasCalendarWithGivenCredentials && !hasMatchingUsernameAndPassword) {
         await this.credentialRepository.upsertUserAppCredential(
           APPLE_CALENDAR_TYPE,
-          symmetricEncrypt(JSON.stringify({ username, password }), process.env.CALENDSO_ENCRYPTION_KEY || ""),
+          symmetricEncrypt(JSON.stringify({ username, password }), getEnv("CALENDSO_ENCRYPTION_KEY", "")),
           userId,
           hasCalendarWithGivenCredentials.id
         );
@@ -113,7 +114,7 @@ export class AppleCalendarService implements CredentialSyncCalendarApp {
         type: APPLE_CALENDAR_TYPE,
         key: symmetricEncrypt(
           JSON.stringify({ username, password }),
-          process.env.CALENDSO_ENCRYPTION_KEY || ""
+          getEnv("CALENDSO_ENCRYPTION_KEY", "")
         ),
         userId: userId,
         teamId: null,

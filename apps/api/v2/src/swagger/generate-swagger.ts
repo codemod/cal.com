@@ -35,7 +35,7 @@ export async function generateSwaggerForApp(app: NestExpressApplication<Server>)
     spawnSync("node", [biomeBin, "format", "--write", docsOutputFile], { stdio: "inherit" });
   }
 
-  if (!process.env.DOCS_URL) {
+  if (!getEnv("DOCS_URL", "")) {
     SwaggerModule.setup("docs", app, document, {
       customCss: ".swagger-ui .topbar { display: none }",
     });

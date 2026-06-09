@@ -10,6 +10,7 @@ import { Injectable } from "@nestjs/common";
 import { SUCCESS_STATUS, ICS_CALENDAR_TYPE, ICS_CALENDAR } from "@calcom/platform-constants";
 import { symmetricEncrypt } from "@calcom/platform-libraries";
 import { BuildIcsFeedCalendarService } from "@calcom/platform-libraries/app-store";
+import { getEnv } from "@/env";
 
 @Injectable()
 export class IcsFeedService implements ICSFeedCalendarApp {
@@ -33,7 +34,7 @@ export class IcsFeedService implements ICSFeedCalendarApp {
       ICS_CALENDAR,
       key: symmetricEncrypt(
         JSON.stringify({ urls, skipWriting: readonly }),
-        process.env.CALENDSO_ENCRYPTION_KEY || ""
+        getEnv("CALENDSO_ENCRYPTION_KEY", "")
       ),
       userId: userId,
       teamId: null,

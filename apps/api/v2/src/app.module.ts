@@ -23,6 +23,7 @@ import { PrismaModule } from "@/modules/prisma/prisma.module";
 import { RedisModule } from "@/modules/redis/redis.module";
 import { RedisService } from "@/modules/redis/redis.service";
 import { VercelWebhookController } from "@/vercel-webhook.controller";
+import { getEnv } from "@/env";
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { VercelWebhookController } from "@/vercel-webhook.controller";
 
     RedisModule,
     BullModule.forRoot({
-      redis: `${process.env.REDIS_URL}${process.env.NODE_ENV === "production" ? "?tls=true" : ""}`,
+      redis: `${getEnv("REDIS_URL")}${getEnv("NODE_ENV", "development") === "production" ? "?tls=true" : ""}`,
     }),
     ThrottlerModule.forRootAsync({
       imports: [RedisModule],

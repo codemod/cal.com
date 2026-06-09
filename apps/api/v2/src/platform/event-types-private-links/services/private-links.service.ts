@@ -8,6 +8,7 @@ import { Injectable, NotFoundException, BadRequestException } from "@nestjs/comm
 
 import { generateHashedLink, isLinkExpired } from "@calcom/platform-libraries/private-links";
 import { CreatePrivateLinkInput, PrivateLinkOutput, UpdatePrivateLinkInput } from "@calcom/platform-types";
+import { getEnv } from "@/env";
 
 @Injectable()
 export class PrivateLinksService {
@@ -33,7 +34,7 @@ export class PrivateLinksService {
         id: created.link,
         eventTypeId,
         isExpired: isLinkExpired(created as any),
-        bookingUrl: `${process.env.NEXT_PUBLIC_WEBAPP_URL || "https://cal.com"}/d/${created.link}`,
+        bookingUrl: `${getEnv("NEXT_PUBLIC_WEBAPP_URL", "https://cal.com")}/d/${created.link}`,
         expiresAt: created.expiresAt ?? null,
         maxUsageCount: (created as any).maxUsageCount ?? null,
         usageCount: (created as any).usageCount ?? 0,
@@ -54,7 +55,7 @@ export class PrivateLinksService {
         id: l.link,
         eventTypeId,
         isExpired: isLinkExpired(l as any),
-        bookingUrl: `${process.env.NEXT_PUBLIC_WEBAPP_URL || "https://cal.com"}/d/${l.link}`,
+        bookingUrl: `${getEnv("NEXT_PUBLIC_WEBAPP_URL", "https://cal.com")}/d/${l.link}`,
         expiresAt: l.expiresAt ?? null,
         maxUsageCount: l.maxUsageCount ?? null,
         usageCount: l.usageCount ?? 0,
@@ -85,7 +86,7 @@ export class PrivateLinksService {
         id: updated.link,
         eventTypeId,
         isExpired: isLinkExpired(updated as any),
-        bookingUrl: `${process.env.NEXT_PUBLIC_WEBAPP_URL || "https://cal.com"}/d/${updated.link}`,
+        bookingUrl: `${getEnv("NEXT_PUBLIC_WEBAPP_URL", "https://cal.com")}/d/${updated.link}`,
         expiresAt: updated.expiresAt ?? null,
         maxUsageCount: updated.maxUsageCount ?? null,
         usageCount: updated.usageCount ?? 0,

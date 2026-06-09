@@ -1,6 +1,7 @@
 import Stripe from "stripe";
+import { getEnv } from "@/env";
 
-const stripeApiKey = process.env.STRIPE_API_KEY || "";
+const stripeApiKey = getEnv("STRIPE_API_KEY", "");
 export const stripeInstance = new Stripe(stripeApiKey, {
   apiVersion: "2020-08-27",
 });

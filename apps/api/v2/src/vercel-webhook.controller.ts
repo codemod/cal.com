@@ -11,6 +11,7 @@ import {
 import { ApiExcludeController } from "@nestjs/swagger";
 import { VercelWebhookGuard } from "./vercel-webhook.guard";
 import { API_VERSIONS_VALUES } from "@/lib/api-versions";
+import { getEnv } from "@/env";
 
 interface VercelWebhookPayload {
   type?: string;
@@ -50,7 +51,7 @@ export class VercelWebhookController {
     }
 
     // biome-ignore lint/style/noProcessEnv: Environment variable access required for trigger.dev API
-    const TRIGGER_VERSION = process.env.TRIGGER_VERSION;
+    const TRIGGER_VERSION = getEnv("TRIGGER_VERSION");
 
     if (!TRIGGER_VERSION) {
       this.logger.error("TRIGGER_VERSION is not defined");
@@ -66,7 +67,7 @@ export class VercelWebhookController {
 
   private async promoteTriggerDeployment(version: string, maxRetries: number = 3): Promise<void> {
     // biome-ignore lint/style/noProcessEnv: Environment variable access required for trigger.dev API
-    const triggerSecretKey = process.env.TRIGGER_SECRET_KEY;
+    const triggerSecretKey = getEnv("TRIGGER_SECRET_KEY");
 
     const url = `https://api.trigger.dev/api/v1/deployments/${version}/promote`;
 
