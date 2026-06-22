@@ -35,7 +35,7 @@ export class BookingGuestsController_2024_08_13 {
   @Post("/")
   @HttpCode(HttpStatus.OK)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @Throttle({
     limit: 5,
     ttl: 60000,

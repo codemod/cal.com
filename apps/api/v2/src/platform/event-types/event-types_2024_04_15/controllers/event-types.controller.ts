@@ -66,7 +66,7 @@ export class EventTypesController_2024_04_15 {
 
   @Post("/")
   @Permissions([EVENT_TYPE_WRITE])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   async createEventType(
     @Body() body: CreateEventTypeInput_2024_04_15,
     @GetUser() user: UserWithProfile
@@ -81,7 +81,7 @@ export class EventTypesController_2024_04_15 {
 
   @Get("/:eventTypeId")
   @Permissions([EVENT_TYPE_READ])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   async getEventType(
     @Param("eventTypeId", ParseIntPipe) eventTypeId: number,
     @GetUser() user: UserWithProfile
@@ -100,7 +100,7 @@ export class EventTypesController_2024_04_15 {
 
   @Get("/")
   @Permissions([EVENT_TYPE_READ])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   async getEventTypes(@GetUser() user: UserWithProfile): Promise<GetEventTypesOutput> {
     const eventTypes = await getEventTypesByViewer({
       id: user.id,
@@ -169,7 +169,7 @@ export class EventTypesController_2024_04_15 {
 
   @Patch("/:eventTypeId")
   @Permissions([EVENT_TYPE_WRITE])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @HttpCode(HttpStatus.OK)
   async updateEventType(
     @Param() params: EventTypeIdParams_2024_04_15,
@@ -187,7 +187,7 @@ export class EventTypesController_2024_04_15 {
 
   @Delete("/:eventTypeId")
   @Permissions([EVENT_TYPE_WRITE])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   async deleteEventType(
     @Param() params: EventTypeIdParams_2024_04_15,
     @Param("eventTypeId", ParseIntPipe) eventTypeId: number,

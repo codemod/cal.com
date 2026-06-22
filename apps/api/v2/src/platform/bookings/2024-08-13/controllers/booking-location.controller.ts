@@ -49,7 +49,7 @@ export class BookingLocationController_2024_08_13 {
   @HttpCode(HttpStatus.OK)
   @Throttle({ name: "booking_location_update", limit: 5, ttl: 60000, blockDuration: 60000 })
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Update booking location for an existing booking",

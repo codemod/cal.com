@@ -48,7 +48,7 @@ export class BookingAttendeesController_2024_08_13 {
 
   @Get("/")
   @Permissions([BOOKING_READ])
-  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Get all attendees for a booking",
@@ -71,7 +71,7 @@ export class BookingAttendeesController_2024_08_13 {
 
   @Get("/:attendeeId")
   @Permissions([BOOKING_READ])
-  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Get a specific attendee for a booking",
@@ -95,7 +95,7 @@ export class BookingAttendeesController_2024_08_13 {
   @Post("/")
   @HttpCode(HttpStatus.CREATED)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard, PermissionsGuard)
   @Throttle({
     limit: 5,
     ttl: 60000,
@@ -134,7 +134,7 @@ export class BookingAttendeesController_2024_08_13 {
   @Delete("/:attendeeId")
   @HttpCode(HttpStatus.OK)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @Throttle({
     limit: 5,
     ttl: 60000,
