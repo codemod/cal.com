@@ -223,7 +223,7 @@ export class BookingsController_2024_08_13 {
   @Get("/:bookingUid/recordings")
   @Pbac(["booking.readRecordings"])
   @Permissions([BOOKING_READ])
-  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Get all the recordings for the booking",
@@ -244,7 +244,7 @@ export class BookingsController_2024_08_13 {
   @Get("/:bookingUid/transcripts")
   @Pbac(["booking.readRecordings"])
   @Permissions([BOOKING_READ])
-  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Get Cal Video real time transcript download links for the booking",
@@ -267,7 +267,7 @@ export class BookingsController_2024_08_13 {
   }
 
   @Get("/")
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @Permissions([BOOKING_READ])
   @ApiOperation({
@@ -390,7 +390,7 @@ export class BookingsController_2024_08_13 {
   @Post("/:bookingUid/mark-absent")
   @HttpCode(HttpStatus.OK)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Mark a booking absence",
@@ -415,7 +415,7 @@ export class BookingsController_2024_08_13 {
   @Post("/:bookingUid/reassign")
   @HttpCode(HttpStatus.OK)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Reassign a booking to auto-selected host",
@@ -439,7 +439,7 @@ export class BookingsController_2024_08_13 {
   @Post("/:bookingUid/reassign/:userId")
   @HttpCode(HttpStatus.OK)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Reassign a booking to a specific host",
@@ -470,7 +470,7 @@ export class BookingsController_2024_08_13 {
   @Post("/:bookingUid/confirm")
   @HttpCode(HttpStatus.OK)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Confirm a booking",
@@ -494,7 +494,7 @@ export class BookingsController_2024_08_13 {
   @Post("/:bookingUid/decline")
   @HttpCode(HttpStatus.OK)
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Decline a booking",
@@ -517,7 +517,7 @@ export class BookingsController_2024_08_13 {
   }
 
   @Get("/:bookingUid/calendar-links")
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @Permissions([BOOKING_READ])
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
@@ -538,7 +538,7 @@ export class BookingsController_2024_08_13 {
   }
 
   @Get("/:bookingUid/references")
-  @UseGuards(ApiAuthGuard, BookingUidGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, PermissionsGuard)
   @Permissions([BOOKING_READ])
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
@@ -567,7 +567,7 @@ export class BookingsController_2024_08_13 {
   @HttpCode(HttpStatus.OK)
   @Pbac(["booking.readRecordings"])
   @Permissions([BOOKING_READ])
-  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard)
+  @UseGuards(ApiAuthGuard, BookingUidGuard, BookingPbacGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({
     summary: "Get Video Meeting Sessions. Only supported for Cal Video",

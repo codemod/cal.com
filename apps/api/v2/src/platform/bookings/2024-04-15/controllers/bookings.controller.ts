@@ -127,7 +127,7 @@ export class BookingsController_2024_04_15 {
   ) {}
 
   @Get("/")
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @Permissions([BOOKING_READ])
   @ApiQuery({ name: "filters[status]", enum: Status_2024_04_15, required: true })
   @ApiQuery({ name: "limit", type: "number", required: false })
@@ -289,7 +289,7 @@ export class BookingsController_2024_04_15 {
 
   @Post("/:bookingUid/mark-no-show")
   @Permissions([BOOKING_WRITE])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   async markNoShow(
     @GetUser() user: UserWithProfile,
     @Body() body: MarkNoShowInput_2024_04_15,

@@ -29,7 +29,7 @@ export class EventTypesPrivateLinksController {
 
   @Post("/")
   @Permissions([EVENT_TYPE_WRITE])
-  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard)
+  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({ summary: "Create a private link for an event type" })
   async createPrivateLink(
@@ -47,7 +47,7 @@ export class EventTypesPrivateLinksController {
 
   @Get("/")
   @Permissions([EVENT_TYPE_READ])
-  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard)
+  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({ summary: "Get all private links for an event type" })
   async getPrivateLinks(
@@ -63,7 +63,7 @@ export class EventTypesPrivateLinksController {
 
   @Patch("/:linkId")
   @Permissions([EVENT_TYPE_WRITE])
-  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard)
+  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({ summary: "Update a private link for an event type" })
   async updatePrivateLink(
@@ -82,7 +82,7 @@ export class EventTypesPrivateLinksController {
 
   @Delete("/:linkId")
   @Permissions([EVENT_TYPE_WRITE])
-  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard)
+  @UseGuards(ApiAuthGuard, EventTypeOwnershipGuard, PermissionsGuard)
   @ApiHeader(API_KEY_OR_ACCESS_TOKEN_HEADER)
   @ApiOperation({ summary: "Delete a private link for an event type" })
   async deletePrivateLink(

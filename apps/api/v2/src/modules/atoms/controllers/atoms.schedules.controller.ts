@@ -36,6 +36,7 @@ import { FindDetailedScheduleByIdReturnType } from "@calcom/platform-libraries/s
 import { ApiResponse, UpdateAtomScheduleDto } from "@calcom/platform-types";
 
 import { SchedulesAtomsService } from "../services/schedules-atom.service";
+import { PermissionsGuard } from "@/modules/auth/guards/permissions/permissions.guard";
 
 /*
 Endpoints used only by platform atoms, reusing code from other modules, data is already formatted and ready to be used by frontend atoms
@@ -53,7 +54,7 @@ export class AtomsSchedulesController {
 
   @Get("/schedules")
   @Version(VERSION_NEUTRAL)
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @Permissions([SCHEDULE_READ])
   async getSchedule(
     @GetUser() user: UserWithProfile,
@@ -75,7 +76,7 @@ export class AtomsSchedulesController {
 
   @Get("/schedules/event-type/:eventSlug")
   @Version(VERSION_NEUTRAL)
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @Permissions([SCHEDULE_READ])
   async getScheduleByEventSlug(
     @GetUser() user: UserWithProfile,
@@ -90,7 +91,7 @@ export class AtomsSchedulesController {
 
   @Get("/schedules/all")
   @Version(VERSION_NEUTRAL)
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @Permissions([SCHEDULE_READ])
   async getAllUserSchedules(
     @GetUser() user: UserWithProfile
@@ -105,7 +106,7 @@ export class AtomsSchedulesController {
 
   @Patch("schedules/:scheduleId")
   @Permissions([SCHEDULE_WRITE])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: "Update atom schedule" })
   async updateSchedule(
     @GetUser() user: UserWithProfile,
@@ -126,7 +127,7 @@ export class AtomsSchedulesController {
 
   @Post("schedules/create")
   @Permissions([SCHEDULE_WRITE])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: "Create atom schedule" })
   async createSchedule(
     @GetUser() user: UserWithProfile,
@@ -142,7 +143,7 @@ export class AtomsSchedulesController {
 
   @Post("schedules/:scheduleId/duplicate")
   @Permissions([SCHEDULE_WRITE])
-  @UseGuards(ApiAuthGuard)
+  @UseGuards(ApiAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: "Duplicate existing schedule" })
   async duplicateExistingSchedule(
     @GetUser() user: UserWithProfile,
